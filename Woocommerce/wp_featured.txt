@@ -1,0 +1,4 @@
+### продукты с звездочкой
+meta_key = _featured
+meta_value = yes
+

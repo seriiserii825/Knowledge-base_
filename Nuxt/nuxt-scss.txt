@@ -1,0 +1,1 @@
+npm i -D node-sass sass-loader@10.1.1

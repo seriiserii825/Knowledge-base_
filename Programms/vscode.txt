@@ -1,0 +1,36 @@
+{
+    "name": "My Server",
+    "host": "ftp14.hostland.ru",
+    "protocol": "ftp",
+    "port": 21,
+    "username": "host1670806_tacchino",
+    "password": "QBSdJHYm",
+    "remotePath": "/host1670806.hostland.pro/htdocs/html-tacchino",
+    "uploadOnSave": false,
+    "watcher": {
+        "files": "**/*.{php,scss,css,css.map,js}",
+        "autoUpload": true,
+        "autoDelete": true
+    },
+    "ignore": [
+        ".vscode",
+        ".git",
+        ".DS_Store",
+        "node_modules",
+        ".idea"
+    ]
+}
+
+If you installed via Snap:
+
+$sudo snap remove vscode
+
+If you installed via apt:
+
+$sudo apt-get purge code
+
+If you installed via Ubuntu Software, open Ubuntu Software, look for the app in the installed category, and click on remove.
+
+Remove settings
+
+$cd ~ && rm -rf .vscode && rm -rf .config/Code

@@ -1,0 +1,9 @@
+.nuxt - системные файлы, ее мы не трогаем
+assets - склаывают scss, js некомпелируеммые еще. 
+components - компоненты
+layouts - layouts
+middleware - сущности middleware
+pages - страницы
+static - файлы, которые будут доступны через slash. 
+nuxt.config.js - файл конфигурации для приложения
+

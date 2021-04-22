@@ -1,0 +1,4 @@
+
+    global $woocommerce;
+    vardump($woocommerce->cart->cart_contents_count);
+    vardump($woocommerce->cart->get_cart_total());

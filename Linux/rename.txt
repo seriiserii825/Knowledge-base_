@@ -1,0 +1,2 @@
+rename -v 's/\ /-/g' *
+rename 's/\d+/sprintf("%02d", $&)/e'

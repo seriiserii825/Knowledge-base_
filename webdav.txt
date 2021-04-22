@@ -1,0 +1,4 @@
+sudo apt install gvfs davfs2
+davs://seriiburduja@mail.ru@webdav.cloud.mail.ru/
+
+/run/user/1000/gvfs/dav:host=webdav.cloud.mail.ru,ssl=true,user=seriiburduja%40mail.ru

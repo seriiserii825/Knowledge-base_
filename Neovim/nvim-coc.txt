@@ -1,0 +1,116 @@
+coc-css coc-emmet coc-eslint coc-explorer coc-fzf-preview coc-git coc-highlight coc-json coc-phpactor coc-stylelint coc-snippets coc-spell-checker coc-svg coc-translator coc-tsserver coc-prettier
+
+
+Conquerer of Completion
+This plugin is too featureful (bloated) to explain in a single blog post
+
+Good thing the author provided extensive documentation here
+
+Install with vim-plug
+
+" Stable version of coc
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Keeping up to date with master
+
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+make sure you have yarn installed if you choose the second way
+
+npm i -g yarn
+Create a directory called plug-config and an entry for coc
+
+mkdir ~/.config/nvim/plug-config
+
+touch ~/.config/nvim/plug-config/coc.vim
+Create basic config file
+Head over to the readme and grab his example config
+
+Add the following to your init.vim
+
+source $HOME/.config/nvim/plug-config/coc.vim
+Checking coc health
+You can run :checkhealth and there should now be an entry for coc
+
+You can use g:coc_node_path to point to your node executable
+
+You can also run :CocInfo to get some useful info
+
+Install extensions
+You can install extensions for languages like this:
+
+:CocInstall coc-json coc-python coc-snippets coc-vimlsp
+There are many more extensions to choose from here:
+
+coc-extensions
+
+You can list all of the extension commands with:
+
+:CocList commands
+
+You can uninstall an extension with:
+
+1
+:CocUninstall coc-html
+You can manage your extensions with:
+
+1
+:CocList extensions
+Hit to see a list of options for each extension
+
+Configuration
+Run :CocConfig this will open the file ~/.config/nvim/coc-settings.json
+
+here you can add language servers
+
+and other configuration like autoformat and adding a location for snippets (I'll go over snippets later)
+
+1
+{
+2
+  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "javascript", "graphql", "html", "yaml",  "json", "python"],
+3
+​
+4
+  // python config
+5
+  "python.linting.enabled": true,
+6
+  "python.linting.pylintEnabled": true,
+7
+​
+8
+  "snippets.ultisnips.directories":
+9
+  [
+10
+    "UltiSnips",
+11
+    "~/.config/nvim/utils/snips"
+12
+  ]
+13
+​
+14
+}
+for more info on configuring your settings checkout this page
+
+Optional install watchman
+For watchman supprt install watchman
+
+Automatically reinstall the extensions you use
+
+If you use neovim and already have node installed, you can use the following script to reinstall your favorite extensions
+
+#!/usr/bin/bash
+set -o nounset    # error when referencing undefined variable
+set -o errexit    # exit when command fails
+# Install extensions
+mkdir -p ~/.config/coc/extensions
+cd ~/.config/coc/extensions
+if [ ! -f package.json ]
+then
+  echo '{"dependencies":{}}'> package.json
+fi
+# Change extension names to the extensions you need
+npm install coc-snippets coc-python coc-tsserver coc-html coc-css coc-json coc-yaml --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod

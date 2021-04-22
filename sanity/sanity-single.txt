@@ -1,0 +1,105 @@
+https://www.frontendstumbles.com/creating-singleton-pages-with-sanity/
+1=======. create file
+singletonAbout.js
+
+Write
+// in singletonAbout.js
+
+export default {
+    title: 'About Me',
+    name: 'about',
+    type: 'document',
+   __experimental_actions: [/*'create',*/ 'update', /*'delete',*/ 'publish'],
+    fields: [
+        {
+            title: 'Title',
+            name: 'title',
+            type: 'string',
+            validation: Rule => Rule.required()
+        },
+        {
+            title: 'Description',
+            name: 'description',
+            type: 'string',
+            validation: Rule => Rule.required()
+        },
+    ]
+}
+
+
+2=========. Connect in schema.js
+import singletonAbout from './singletonAbout'
+
+3===========. Create custom structure file studio-structure.js in the root of project
+sanity-structure:
+// in sanity-structure.js
+
+import S from "@sanity/desk-tool/structure-builder";
+
+export default () =>
+  S.list()
+    .title("Content")
+    .items([
+        S.listItem()
+            .title("About Me")
+            .child(
+                S.editor()
+                    .id('about')
+                    .schemaType("about")
+                    .documentId("singleton-about")
+            )
+    ]);
+
+Go to sanity.json and connect this file  
+{
+      "name": "part:@sanity/desk-tool/structure",
+      "path": "./sanity-structure.js"
+    
+}
+Okay that looks confusing - let me take you through this step by step.
+
+S.list() This says that we want to create a vertical pane.
+
+.title("Content") Here we give the pane the title of 'Content' just like it has normally.
+
+.items([]) Here we define the items that will appear in this pane.
+
+S.listItem() Inside the items array we create our first list item.
+
+.title We give the first list item a title of 'About Me'. This is going to be where we define our singleton!
+
+.child(...) This creates a new child pane when the list item is clicked on. Inside the parentheses we will define what that child pane will contain.
+
+S.editor() This shows the content editor in the child pane. We specify what this editor displays with the three methods below...
+
+.id('about') Set this to the name of the singleton.
+
+.schemaType("about") Here we define which schema this editor will use to generate fields. We want this to use the about schema so it has been filled in accordingly.
+
+.documentId("singleton-about") This will create a single document with the _id of 'singleton-about' and open it in the editor.
+
+4.============Edit singleton
+
+// in sanity-structure.js
+
+import S from "@sanity/desk-tool/structure-builder";
+
+const hiddenDocTypes = listItem => ![
+    "about"
+  ].includes(listItem.getId())
+
+export default () =>
+  S.list()
+    .title("Content")
+    .items([
+        S.listItem()
+            .title("About Me")
+            .child(
+                S.editor()
+                    .id('about')
+                    .schemaType("about")
+                    .documentId("singleton-about")
+            ),
+        ...S.documentTypeListItems()
+            .filter(hiddenDocTypes)
+    ]);

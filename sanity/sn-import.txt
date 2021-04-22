@@ -1,0 +1,1 @@
+sanity dataset import ./../../../Downloads/all-sample-data.gz production --replace

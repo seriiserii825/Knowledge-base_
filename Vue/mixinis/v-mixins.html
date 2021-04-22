@@ -1,0 +1,63 @@
+#=============== ListMixins.js
+<script>
+export default {
+	data() {
+		return {
+			title: "Fiat",
+			names: ['Vlad', 'Elena', 'Igor', 'Alex'],
+			searchName: ''
+		}
+	},
+	computed: {
+		filteredNames() {
+			return this.names.filter(item => {
+				return item.toLowerCase().indexOf(this.searchName.toLowerCase()) !== -1
+			})
+		}
+	}
+}
+</script>
+
+#================== App.vue 
+<template>
+  <div>
+    <div>
+      <h2>{{ title }}</h2>
+      <ul>
+        <li v-for="name of filteredNames">{{ name }}</li>
+      </ul>
+      <input type="text" v-model="searchName">
+    </div>
+
+    <app-list></app-list>
+  </div>
+</template>
+
+<script>
+import ListMixin from "./ListMixin";
+
+export default {
+  data() {
+    return {
+      title: "Fiat",
+    }
+  },
+  mixins: [ListMixin]
+}
+</script>
+#================ List.vue
+<template>
+  <div>
+    <h2>List</h2>
+    <ul>
+      <li v-for="name of filteredNames">{{ name }}</li>
+    </ul>
+    <input type="text" v-model="searchName">
+  </div>
+</template>
+<script>
+import ListMixin from "./ListMixin";
+export default {
+  mixins: [ListMixin]
+}
+</script>

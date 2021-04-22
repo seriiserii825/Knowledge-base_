@@ -1,0 +1,14 @@
+  modules: [
+    "nuxt-fontawesome"
+  ],
+  fontawesome: {
+    component: "fa"
+  },
+
+<fa :icon="fas.faSignOutAlt" />
+
+import { fas } from "@fortawesome/free-solid-svg-icons";
+  computed: {
+    fas() {
+      return fas;
+    },

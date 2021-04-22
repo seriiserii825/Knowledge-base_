@@ -1,0 +1,5 @@
+1.) Download a https://www.nerdfonts.com/
+
+2.) Unzip and copy to /usr/local/share/fonts with sudo
+
+3.) Run the command fc-cache -fv to manually rebuild the font cache

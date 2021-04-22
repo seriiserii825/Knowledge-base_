@@ -1,0 +1,145 @@
+#Install pass
+sudo apt install pass
+
+#Generate key
+gpg --full-gen-key
+
+#Проверяем список публичных ключей:
+gpg --list-keys
+
+#И своих приватных:
+gpg --list-secret-keys
+
+/home/setevoy/.gnupg/pubring.kbx
+--------------------------------
+sec   rsa2048 2019-04-25 [SC]
+DEB0D4AD41CC2612B1944D448D22D6610B2F6067
+uid           [ultimate] setevoy (my main) <reg@domain.kiev.ua>
+ssb   rsa2048 2019-04-25 [E]
+
+#Удаление ключа
+Что бы удалить ключ — надо удалить его приватную часть, после чего можно удалить публичную.
+
+Удаляем приватный ключ:
+
+gpg --delete-secret-key E130BB49AAA234F2BE2A7F96714F9CBFDA191430
+
+#Резервное копирование GPG-ключей
+Т.к. ключём будет шифроваться хранилище паролей — то терять этот ключ не хочется.
+
+З#абекапить ключи можно либо просто скопировав весь каталог ~/.gnupg (в случае, если используется GnuPG):
+
+ll .gnupg/
+total 52
+drwx------ 2 setevoy setevoy  4096 Jan 22 12:44 crls.d
+drwx------ 2 setevoy setevoy  4096 Apr 25 10:04 openpgp-revocs.d
+drwx------ 2 setevoy setevoy  4096 Apr 25 10:11 private-keys-v1.d
+-rw-r--r-- 1 setevoy setevoy 13732 Apr 25 10:14 pubring.kbx
+-rw-r--r-- 1 setevoy setevoy 12317 Apr 25 09:58 pubring.kbx~
+-rw-r----- 1 setevoy setevoy   676 Apr 25 09:54 sshcontrol
+-rw------- 1 setevoy setevoy  1440 Apr 25 10:14 trustdb.gpg
+
+#Либо экспортировав приватные ключи в отдельное хранилище:
+
+gpg --export-secret-keys > ~/Dropbox/Backups/gpg-setevoy-arch-work-secret-backup.gpg
+
+#При экспорте будет запрошен пароль от вашего секретного ключа/ей:
+А восстановить его можно с помощью --import.
+
+#Удалим имеющийся ключ:
+
+gpg --delete-secret-key setevoy
+
+#И восстановим его из бекапа:
+
+gpg --import ~/Dropbox/Backups/gpg-setevoy-arch-work-secret-backup.gpg
+gpg: key 8D22D6610B2F6067: "setevoy (my main) <reg@domain.kiev.ua>" not changed
+gpg: key 8D22D6610B2F6067: secret key imported
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg:       secret keys read: 1
+gpg:   secret keys imported: 1
+
+Проверяем:
+gpg --list-secret-keys
+/home/setevoy/.gnupg/pubring.kbx
+--------------------------------
+sec   rsa2048 2019-04-25 [SC]
+DEB0D4AD41CC2612B1944D448D22D6610B2F6067
+uid           [ultimate] setevoy (my main) <reg@domain.kiev.ua>
+ssb   rsa2048 2019-04-25 [E]
+
+Чтобы иметь возможность сохранять измененные файлы с помощью импортированного приватного ключа, нужно задать права. 
+
+gpg --edit-key <KEY_ID>
+gpg> trust
+Вам будет предложено выбрать уровень доверия из следующего:
+
+1 = I don't know or won't say
+2 = I do NOT trust
+3 = I trust marginally
+4 = I trust fully
+5 = I trust ultimately
+m = back to the main menu
+Я выбрал 5, так как я создал ключ, поэтому, конечно, я доверяю ему в конечном счете:). Он попросит вас подтвердить свое решение:
+
+Your decision? 5
+Do you really want to set this key to ultimate trust? (y/N) y
+После подтверждения, вы должны иметь возможность шифровать с помощью этого ключа.
+
+Кроме стандартного хранилища — pass может создать его в виде git-репозитория, и вести историю всех изменений.
+
+Если глобальные настройки Git-пользователя ещё не сделаны — выполняем:
+
+git config --global user.email reg@domain.kiev.ua
+git config --global user.name "setevoy"
+
+Создаём git-репозиторий для уже созданного хранилища:
+Создаем хранилище
+
+pass init serii
+
+pass git init
+
+Initialized empty Git repository in /home/setevoy/.password-store/.git/
+[master (root-commit) 7e19ab0] Add current contents of password store.
+1 file changed, 1 insertion(+)
+create mode 100644 .gpg-id
+[master 19aaf2c] Configure git repository for gpg file diff.
+1 file changed, 1 insertion(+)
+create mode 100644 .gitattributes
+Re-playCopy to ClipboardPauseFull View
+И теперь доступна вся история, как с обычным Git:
+
+cd .password-store/
+git log
+commit d8f791453fd1e8be7cf6126cde7f32df3bd351cc (HEAD -> master)
+Author: setevoy <reg@domain.kiev.ua>
+Date:   Thu Apr 25 11:08:19 2019 +0300
+Configure git repository for gpg file diff.
+commit d49c886510221f31268f22cd74d0859965bafb7b
+Author: setevoy <reg@domain.kiev.ua>
+Date:   Thu Apr 25 11:08:19 2019 +0300
+Add current contents of password store.
+
+Далее можно создать приватный репозиторий в Github или Bitbucket, добавить вашу базу pass в него, и синхронизировать базы между разными компьютерами через единый git-репозиторий, выполняет git push/git pull.
+
+Хотя мысль о том, что бы хранить все свои пароли пусть и в приватном репозитории, пусть в зашифрованных файлах, но в Github — имхо идея очень так себе.
+
+Другой вариант — поднять Git-сервер где-то у себя, и синхронизировать через него.
+
+Поиск паролей
+Для поиска у pass есть две опции — find, и grep.
+
+find выполняет поиск по именам каталогов и файлов:
+
+pass find setevoy
+Search Terms: setevoy
+├── rtfm.co.ua
+└── admin
+└── setevoy
+А grep — по тексту всех файлов:
+
+pass grep rtfm.
+rtfm.co.ua/admin/setevoy:
+URL: rtfm.co.ua

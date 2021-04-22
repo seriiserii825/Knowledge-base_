@@ -1,0 +1,1 @@
+wc_get_product

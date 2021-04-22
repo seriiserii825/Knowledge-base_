@@ -1,0 +1,12 @@
+If heroku repository doesn't exist
+heroku login
+heroku create
+git add .
+git commit
+git push heroku master
+
+I heroku exist
+
+cd my-project/
+git init
+heroku git:remote -a st-portfolio-smilga

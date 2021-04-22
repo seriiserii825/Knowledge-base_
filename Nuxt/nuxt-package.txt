@@ -1,0 +1,5 @@
+dev - script для запуска приложения.
+build - production приложение
+start - запустить build, где запустится и server и client. 
+generate - сгенерировать статические страницы в build, если используем single page application.
+
