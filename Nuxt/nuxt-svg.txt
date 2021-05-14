@@ -1,0 +1,67 @@
+https://github.com/nuxt-community/svg-module
+
+npm install --save-dev @nuxtjs/svg
+
+// nuxt.config.js
+export default {
+  buildModules: ["@nuxtjs/svg"],
+};
+
+file-loader
+<template>
+  <img src="~assets/nuxt.svg" />
+</template>
+
+<template>
+  <img src="~assets/nuxt.svg?data" />
+</template>
+<img src="data:image/svg+xml;base64,P...2h913j1g18h98hr" />
+
+vue-svg-loader
+<template>
+  <NuxtLogo />
+</template>
+
+<script>
+  import NuxtLogo from "~/assets/nuxt.svg?inline";
+
+  export default {
+    components: { NuxtLogo },
+  };
+</script>
+
+raw-loader
+Load the raw SVG data as HTML using raw-loader:
+
+<template>
+  <div v-html="rawNuxtLogo" />
+</template>
+
+<script>
+  import rawNuxtLogo from "~/assets/nuxt.svg?raw";
+
+  export default {
+    data() {
+      return { rawNuxtLogo };
+    },
+  };
+</script>
+<div>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 298">
+    <g fill-rule="nonzero" fill="none"><path></path></g>
+  </svg>
+</div>
+
+Dynamic import
+
+<template>
+  <div v-html="require(`../assets/${name}.svg?raw`)" />
+</template>
+
+<script>
+  export default {
+    props: {
+      name: { type: String, default: "image" },
+    },
+  };
+</script>
