@@ -1,3 +1,4 @@
+https://wpruse.ru/finty-ushami/wordpress-contact-form-to-ajax/
 <?php
 function true_localize_example() {
 	wp_enqueue_script( 'truescript', get_template_directory_uri() . '/js/ajax.js', [], null, false );
