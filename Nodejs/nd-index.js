@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+// before routes to show res.body response 
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/about', (req, res) => {
   res.render('about');
