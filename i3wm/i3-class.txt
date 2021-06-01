@@ -1,2 +1,0 @@
-xprop | grep CLASS
-

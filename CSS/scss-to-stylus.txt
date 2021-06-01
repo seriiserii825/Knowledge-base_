@@ -1,1 +1,0 @@
-curl -F file=@/your/local/file.scss http://sass2stylus.com/api > new_file.styl

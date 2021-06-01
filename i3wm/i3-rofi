@@ -1,1 +1,0 @@
-If rofi is passed the -dmenu option, or run as dmenu (ie, /usr/bin/dmenu is symlinked to /usr/bin/rofi), it will use the data passed from STDIN.
