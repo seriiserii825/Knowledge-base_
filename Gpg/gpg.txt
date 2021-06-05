@@ -1,6 +1,8 @@
 #Install pass
 sudo apt install pass
 
+pass init serii
+
 #Generate key
 gpg --full-gen-key
 
@@ -23,23 +25,6 @@ ssb   rsa2048 2019-04-25 [E]
 Удаляем приватный ключ:
 
 gpg --delete-secret-key E130BB49AAA234F2BE2A7F96714F9CBFDA191430
-
-#Резервное копирование GPG-ключей
-Т.к. ключём будет шифроваться хранилище паролей — то терять этот ключ не хочется.
-
-З#абекапить ключи можно либо просто скопировав весь каталог ~/.gnupg (в случае, если используется GnuPG):
-
-ll .gnupg/
-total 52
-drwx------ 2 setevoy setevoy  4096 Jan 22 12:44 crls.d
-drwx------ 2 setevoy setevoy  4096 Apr 25 10:04 openpgp-revocs.d
-drwx------ 2 setevoy setevoy  4096 Apr 25 10:11 private-keys-v1.d
--rw-r--r-- 1 setevoy setevoy 13732 Apr 25 10:14 pubring.kbx
--rw-r--r-- 1 setevoy setevoy 12317 Apr 25 09:58 pubring.kbx~
--rw-r----- 1 setevoy setevoy   676 Apr 25 09:54 sshcontrol
--rw------- 1 setevoy setevoy  1440 Apr 25 10:14 trustdb.gpg
-
-#Либо экспортировав приватные ключи в отдельное хранилище:
 
 gpg --export-secret-keys > ~/Dropbox/Backups/gpg-setevoy-arch-work-secret-backup.gpg
 
@@ -100,46 +85,3 @@ git config --global user.name "setevoy"
 pass init serii
 
 pass git init
-
-Initialized empty Git repository in /home/setevoy/.password-store/.git/
-[master (root-commit) 7e19ab0] Add current contents of password store.
-1 file changed, 1 insertion(+)
-create mode 100644 .gpg-id
-[master 19aaf2c] Configure git repository for gpg file diff.
-1 file changed, 1 insertion(+)
-create mode 100644 .gitattributes
-Re-playCopy to ClipboardPauseFull View
-И теперь доступна вся история, как с обычным Git:
-
-cd .password-store/
-git log
-commit d8f791453fd1e8be7cf6126cde7f32df3bd351cc (HEAD -> master)
-Author: setevoy <reg@domain.kiev.ua>
-Date:   Thu Apr 25 11:08:19 2019 +0300
-Configure git repository for gpg file diff.
-commit d49c886510221f31268f22cd74d0859965bafb7b
-Author: setevoy <reg@domain.kiev.ua>
-Date:   Thu Apr 25 11:08:19 2019 +0300
-Add current contents of password store.
-
-Далее можно создать приватный репозиторий в Github или Bitbucket, добавить вашу базу pass в него, и синхронизировать базы между разными компьютерами через единый git-репозиторий, выполняет git push/git pull.
-
-Хотя мысль о том, что бы хранить все свои пароли пусть и в приватном репозитории, пусть в зашифрованных файлах, но в Github — имхо идея очень так себе.
-
-Другой вариант — поднять Git-сервер где-то у себя, и синхронизировать через него.
-
-Поиск паролей
-Для поиска у pass есть две опции — find, и grep.
-
-find выполняет поиск по именам каталогов и файлов:
-
-pass find setevoy
-Search Terms: setevoy
-├── rtfm.co.ua
-└── admin
-└── setevoy
-А grep — по тексту всех файлов:
-
-pass grep rtfm.
-rtfm.co.ua/admin/setevoy:
-URL: rtfm.co.ua
