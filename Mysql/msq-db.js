@@ -26,3 +26,31 @@ async function start() {
   }
 }
 start();
+
+#Model
+
+const Sequelize = require("sequelize");
+const sequelize = require("./../utils/database.js");
+
+const todo = sequelize.define("Todo", {
+  id: {
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+    type: Sequelize.INTEGER
+  },
+  title: {
+    allowNull: false,
+    type: Sequelize.STRING
+  },
+  done: {
+    allowNull: false,
+    type: Sequelize.TINYINT
+  },
+  date: {
+    allowNull: false,
+    type: Sequelize.DATE
+  }
+});
+
+module.exports = todo;
