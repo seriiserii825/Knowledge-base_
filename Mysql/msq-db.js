@@ -17,6 +17,8 @@ module.exports = sequelize;
 #index.js
 const sequelize = require("./utils/database");
 
+
+
 async function start() {
   try {
     await sequelize.sync();
@@ -26,6 +28,9 @@ async function start() {
   }
 }
 start();
+
+## Delete field
+await sequelize.sync({force: true});
 
 #Model
 
