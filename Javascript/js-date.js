@@ -31,17 +31,17 @@ console(difference); //in milliseconds
 
 ================
 
-  const options = {}
-  
-  if (format.includes('date')) {
-    options.day = '2-digit'
-    options.month = 'long'
-    options.year = 'numeric'
-  }
-  if (format.includes('time')) {
-    options.hour = '2-digit'
-    options.minute = '2-digit'
-    options.second = '2-digit'
-  }
-  
-  return new Intl.DateTimeFormat('ru-RU', options).format(new Date(value))
+    formateDate(date) {
+      console.log(date, "date");
+      let options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false
+      };
+
+      return new Intl.DateTimeFormat("ro", options).format(new Date(date));
+    }
