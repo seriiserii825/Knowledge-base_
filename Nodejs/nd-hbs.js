@@ -19,3 +19,12 @@ app.get("/", (req, res) => {
 {{> footer }}
 </body>
 </html>
+
+The cleanest method is to make sure the the handlebars-input is a proper plain javascript object. This can be done in Mongoose, by calling toJSON() or toObject
+app.get('/test', function (_req, res) {
+    Kitten.find({}).then(kittens => {
+        res.render('test.hbs', {
+            kittens: kittens.map(kitten => kitten.toJSON())
+        })
+    })
+});

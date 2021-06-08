@@ -14,3 +14,14 @@ This action changes the value of the -Xmx option used by the JVM and restarts Ph
 Disable language injections: File -> Settings -> Language injections. Untick as many boxes as you're comfortable with. HTML was the real killer for me.
 Disable inspections: File -> Settings -> Inspections. Untick as many as you don't need.
 Disable unused plugins: File -> Settings -> Plugins. Untick unused.
+
+### phpstorm.desktop
+[Desktop Entry]
+Version=1.0
+Name=BackMeUp
+Comment=Back up your data with one click
+Exec=/home/alex/Documents/backup.sh
+Icon=/home/alex/Pictures/backup.png
+Terminal=false
+Type=Application
+Categories=Utility;Application;
