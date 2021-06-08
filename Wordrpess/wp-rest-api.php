@@ -1,3 +1,5 @@
+!!!! Warning !!!!
+After create new url, need to save permalinks
 //rest-api.php
 <?php
 if (!defined('ABSPATH')) {
