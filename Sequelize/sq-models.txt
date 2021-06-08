@@ -3,6 +3,47 @@ Admins - table
 Admin - single in query 
 Fields: string, eunm(select), text, integer
 
-npx sequelize model:generate --name Admin --attributes name:string,email:string,password:string
+ npx sequelize model:generate --name IssueBook --attributes categoryId:integer,bookId:integer,userId:integer,days_issued:integer,issued_date:date,is_returned:enum,returned_date:date,status:enum
 
 
+Remove timestam from Model
+  Admin.init({
+    name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Admin',
+    timestamps: false
+  });
+
+### Set default param
+setDefaultValueFor Enum in migration
+status: {
+        type: Sequelize.ENUM('1', '0'),
+        defaultValue: '1'
+},
+
+also we need to do this and in the model 
+status: DataTypes.ENUM('1', '0')
+
+
+### Create reference 
+      categoryId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "Categories"
+          },
+          key: 'id'
+        }
+      },
+
+Table name we can find in migration
+    await queryInterface.createTable('Categories', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+
+After will finish to set all migrations, need to type:
+npx sequelize db:migrate
