@@ -1,0 +1,8 @@
+Admins id, name, email, password, createAt, updateAt - (id, createdAt, updatedAt will be created by default)
+Admins - table
+Admin - single in query 
+Fields: string, eunm(select), text, integer
+
+npx sequelize model:generate --name Admin --attributes name:string,email:string,password:string
+
+
