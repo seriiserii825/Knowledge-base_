@@ -1,0 +1,37 @@
+<script>
+//app.js
+const fileUpload = require('express-fileupload');
+app.use(fileUpload({
+  createParentPath: true
+}));
+
+//router
+
+    //cover_image = attribute name of input type file
+    const image_attr = req.files.cover_image;
+    image_attr.mv("./public/uploads/" + image_attr.name);
+
+    //Validation
+    const available_image_extensions = ['image/jpg', 'image/jpeg', 'image/png'];
+    if(available_image_extensions.includes(image_attr.mimetype))
+
+    
+    const book = await Book.create({
+      name,
+      categoryId: dd_category,
+      descriptioin: description,
+      amount,
+      cover_image: '/public/uploads/' + image_attr.name,
+      author,
+      status
+    });
+    
+    if (book) {
+      req.flash('success', `Book ${name} was created`);
+      res.redirect('/admin/add-book');
+    } else {
+      req.flash('error', `Error during create book`);
+      res.redirect('/admin/add-book');
+    }
+</script>
+
