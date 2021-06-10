@@ -1,0 +1,13 @@
+<script>
+//In model Book
+      Book.belongsTo(models.Category);
+
+// in Route Book
+
+    const books = await Book.findAll({
+      include: {
+        model: Category,
+        attributes: ['name']
+      }
+    });
+</script>
