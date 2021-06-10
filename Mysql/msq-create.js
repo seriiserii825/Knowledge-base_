@@ -12,18 +12,16 @@ fetch('/api/todo', {
 })
   .catch(error => console.log(error, 'error'))
 
-//router
-router.post('/', async(req, res) => {
-  try {
-    const todo = await Todo.create({
-      title: req.body.title,
-      done: 0
-    });
-    res.status(201).json({todo});
-    
-  }catch (e) {
-    console.log(e, 'e')
-    res.status(500).json('Server error')
-  }
-  
-});
+const CategoryModel = require('./../models').Category;
+
+/* GET users listing. */
+router.route('/admin/add-category')
+  .get(function (req, res, next) {
+    res.render('admin/add-category', { title: 'Express' });
+  })
+  .post(async function (req, res, next) {
+    const { name, status } = req.body;
+      const category = await CategoryModel;
+      await category.create({name, status})
+      res.redirect('/admin/add-category');
+  });

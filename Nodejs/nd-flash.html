@@ -1,0 +1,27 @@
+<script>
+app.js
+const flash = require('express-flash')
+const session = require('express-session')
+
+
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: 'secret_key'
+}))
+app.use(flash());
+
+//router
+req.flash('success', 'success message');
+</script>
+
+<!--ejs -->
+
+<% if(messages.success) { %>
+<div class="message-box">
+    <div class="alert alert-success">
+        <%- messages.success %>
+    </div>
+</div>
+<% } %>
+
