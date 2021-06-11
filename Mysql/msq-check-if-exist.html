@@ -1,0 +1,27 @@
+<script>
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
+    try {
+      const category = await CategoryModel;
+      const candidate = await CategoryModel.findOne({
+        where: {
+          name: {
+            [Op.eq]: req.body.name
+          }
+        }
+      });
+      
+      if(candidate){
+        req.flash('error', `Category "${name}" already exists`);
+        res.render('admin/add-category');
+      }else{
+        await category.create({ name, status })
+        req.flash('success', `Category "${name}" was created`);
+        res.render('admin/add-category');
+      }
+    } catch (e) {
+      res.render('admin/add-category');
+    }
+
+</script>
