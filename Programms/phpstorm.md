@@ -15,13 +15,5 @@ Disable language injections: File -> Settings -> Language injections. Untick as 
 Disable inspections: File -> Settings -> Inspections. Untick as many as you don't need.
 Disable unused plugins: File -> Settings -> Plugins. Untick unused.
 
-### phpstorm.desktop
-[Desktop Entry]
-Version=1.0
-Name=BackMeUp
-Comment=Back up your data with one click
-Exec=/home/alex/Documents/backup.sh
-Icon=/home/alex/Pictures/backup.png
-Terminal=false
-Type=Application
-Categories=Utility;Application;
+sudo tar -xzf PhpStorm-*.tar.gz -C /opt
+in phpstorm -> tools -> create desktop launcher
