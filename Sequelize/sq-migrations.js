@@ -189,3 +189,6 @@ npx sequelize db:migrate
 
 If have an error in terminal, need to fix migration and run comand again, it will create just broken migration.
 
+
+Sequelize meta - table with migrations created by sequelize, do not touch. 
+
