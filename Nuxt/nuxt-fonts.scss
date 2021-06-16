@@ -1,0 +1,12 @@
+assets
+  scss
+    partials
+      fonts.scss
+    my.scss
+
+@font-face {
+  font-family: Garamond;
+  src: url("../fonts/GaramondRegular.woff2") format('woff2'), url("../fonts/GaramondRegular.woff") format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
