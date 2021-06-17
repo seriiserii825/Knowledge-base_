@@ -2,6 +2,7 @@
 sudo apt install pass
 
 pass init serii
+sudo apt install gnupg
 
 #Generate key
 gpg --full-gen-key
