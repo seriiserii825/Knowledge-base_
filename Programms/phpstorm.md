@@ -17,3 +17,7 @@ Disable unused plugins: File -> Settings -> Plugins. Untick unused.
 
 sudo tar -xzf PhpStorm-*.tar.gz -C /opt
 in phpstorm -> tools -> create desktop launcher
+
+### autoprefixer
+disable.
+file > settings > editor > emmet > css > "auto insert css vendor prefixes"

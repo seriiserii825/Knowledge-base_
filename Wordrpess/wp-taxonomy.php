@@ -48,3 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $tax = get_taxonomy('category');
 $labels = get_taxonomy_labels( $tax );
+
+
+$term = get_the_terms($post, 'writer')[0];
+$field = get_field('some', $term->taxonomy . '_' . $term->term_id)
