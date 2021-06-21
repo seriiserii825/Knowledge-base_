@@ -2,6 +2,7 @@
 npm install nuxt-i18n
 
 ### nuxt-config-modules
+<code>
  ['nuxt-i18n', {
       detectBrowserLanguage: {
         useCookie: true,
@@ -51,6 +52,7 @@ npm install nuxt-i18n
       langDir: 'lang/',
       defaultLocale: 'it',
     }]
+</code>
 
 ### menu
 li
