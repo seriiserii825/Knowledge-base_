@@ -69,3 +69,7 @@ export default {
     contacts: 'Contacts'
   },
 }
+
+### language switcher
+nuxt-link(v-if="$i18n.locale !== 'it'" :to="switchLocalePath('it')") It
+nuxt-link(v-if="$i18n.locale !== 'en'" :to="switchLocalePath('en')") En
