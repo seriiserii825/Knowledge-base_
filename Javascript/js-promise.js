@@ -1,34 +1,37 @@
-const wringOut = (count) =>
-  new Promise((resolve, reject) => {
-    if (count > 5000) {
-      reject(new Error("Больше не могу отжатсья"));
-    } else {
-      setTimeout(() => {
-        console.log(`отжался ${count} раз`);
-        resolve();
-      }, count);
+const promise1 = new Promise((resolve, reject) => {
+ setTimeout(() => {
+  resolve('Promise1 выполнен');
+ }, 2000);
+});
+const promise2 = new Promise((resolve, reject) => {
+ setTimeout(() => {
+  reject('Promise2 отклонен');
+ }, 1500);
+});
+Promise.all([promise1, promise2])
+  .then((data) => console.log(data[0], data[1]))
+  .catch((error) => console.log(error));  // Promise2 отклонен
+
+
+  fetch({ store }) {
+    const result = [];
+    if (store.getters['home/home'].length === 0) {
+      result.push(store.dispatch('home/fetchHome'));
     }
-  });
-
-const squatting = (count) =>
-  new Promise((resolve, reject) => {
-    if (count > 5000) {
-      reject(new Error("Больше не могу приседать"));
-    } else {
-      setTimeout(() => {
-        console.log(`присел ${count} раз`);
-        resolve();
-      }, count);
+    if (store.getters["solutions/getSolutions"].length === 0) {
+      result.push(store.dispatch('solutions/fetchSolutions'));
     }
-  });
+    if (store.getters["tipo/getTipo"].length === 0) {
+      result.push(store.dispatch('tipo/fetchTipo'));
+    }
+    if (store.getters["portfolio/getPortfolio"].length === 0) {
+      result.push(store.dispatch('portfolio/fetchPortfolio'));
+    }
+    if (store.getters["options/getOptions"].length === 0) {
+      result.push(store.dispatch('options/fetchOptions'));
+    }
 
-const myTraining = async () => {
-  try {
-    await wringOut(200000);
-    await squatting(200);
-  } catch (e) {
-    console.log(e, " somethings wrong here");
-  }
-};
-
-myTraining();
+    return Promise.all(result)
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
+  },
