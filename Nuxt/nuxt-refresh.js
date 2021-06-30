@@ -1,0 +1,1 @@
+this.$router.app.refresh();
