@@ -47,6 +47,8 @@ step 5:
 Add new ssh keys 
 $ cd ~/.ssh
 
+ssh-add -D delete all keys
+
 $ ssh-add id_rsa_personal
 $ ssh-add id_rsa_work
 
@@ -58,9 +60,8 @@ check configuration is right by pinging to github with below commands
 $ ssh -T github.com-personal
 $ ssh -T github.com-work
 
-step 7:
-Always clone repo by adding hostname in remote url
-e.g. git@github.com to git@github.com-personal
 
-git clone git@github.com-personal:sagarjunnarkar/sagarjunnarkar.github.io.git
-git@github.com-work:coder-train/multiple-git-accounts-demo.git
+user ssh-key in .gitconfig
+
+[core]
+sshCommand = ssh -i ~/.ssh/id_rsa_work
