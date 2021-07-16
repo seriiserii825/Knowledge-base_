@@ -1,0 +1,6 @@
+"dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+"predev": "fuser -k 3000/tcp && echo 'Terminated' || echo 'Nothing was running on the 3000'",
+"build": "nuxt build",
+"start": "cross-env NODE_ENV=production node server/index.js",
+"generate": "nuxt generate",
+"heroku-postbuild": "npm run build"
