@@ -19,3 +19,17 @@ function redirect_to_checkout() {
 	$checkout_url = $woocommerce->cart->get_checkout_url();
 	return $checkout_url;
 }
+                                                <?php
+                                                echo apply_filters(
+                                                      'woocommerce_loop_add_to_cart_link',
+                                                      sprintf(
+                                                            '<a href="%s" rel="nofollow" data-product_id="%s" data-product_sku="%s" class="button %s ajax_add_to_cart product_type_%s woocommerce-LoopProduct-link">%s</a>',
+                                                            esc_url($product->add_to_cart_url()),
+                                                            esc_attr($product->get_id()),
+                                                            esc_attr($product->get_sku()),
+                                                            $product->is_purchasable() ? 'add_to_cart_button' : '',
+                                                            esc_attr($product->product_type),
+                                                            esc_html($product->add_to_cart_text())
+                                                      ),
+                                                      $product
+                                                ); ?>
