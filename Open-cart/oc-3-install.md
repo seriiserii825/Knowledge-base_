@@ -17,3 +17,5 @@ class ControllerExtensionThemeMyTheme extends Controller {
 #Upload the theme (don't worry, no files will be over-written)!
 #In the OpenCart Admin, Install and Enable your Theme in Extensions
 #Switch to the Theme in Settings
+
+#switch storage in config, admin/config to ../../storage/
