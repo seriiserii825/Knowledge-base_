@@ -1,3 +1,5 @@
+vue-meta
+
   head() {
     return {
       title: `Post | ${this.post.title}`,
