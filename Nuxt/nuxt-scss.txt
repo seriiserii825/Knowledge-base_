@@ -1,1 +1,2 @@
+npm install --save-dev pug pug-plain-loader
 npm i -D node-sass sass-loader@10.1.1

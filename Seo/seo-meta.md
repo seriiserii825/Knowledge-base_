@@ -17,3 +17,12 @@ head(){
         }
 }
 
+  head(){
+    return {
+      title: "Home page",
+      meta: [
+        {hid: "description", name: "description", content: "Description for home page"},
+        {hid: "robots", name: "robots", content: "noindex,nofollow"},
+      ]
+    }
+  },
