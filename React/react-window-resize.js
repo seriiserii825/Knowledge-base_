@@ -1,6 +1,22 @@
-  const [ww, setWw] = useState(window.innerWidth);
+import { useState, useEffect } from "react";
+
+function getSize() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  }
+}
+
+function useWindowSize() {
+  const [size, setSize] = useState(getSize());
+
   useEffect(() => {
     window.addEventListener('resize', function() {
-      setWw(window.innerWidth);
-    })
+      setSize(getSize());
+    });
   }, []);
+
+  return size;
+}
+
+export default useWindowSize;
