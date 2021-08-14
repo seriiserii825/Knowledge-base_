@@ -1,4 +1,7 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
+const { username } = useParams();
 
         <BrowserRouter>
           <Header/>
