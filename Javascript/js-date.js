@@ -31,7 +31,7 @@ console(difference); //in milliseconds
 
 ================
 
-    formateDate(date) {
+    formatDate(date) {
       console.log(date, "date");
       let options = {
         year: "numeric",
