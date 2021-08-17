@@ -12,7 +12,9 @@ useEffect(() => {
 useEffect(() => {
   const ourRequest = axios.CancelToken.source();
   async function fetchPost() {
-    const result = await axios.get(`${API_AXIOS_URL}/post/${id}`);
+    const result = await axios.get(`${API_AXIOS_URL}/post/${id}`, {
+      cancelToken: ourRequest.token,
+    });
     setPost(result.data);
     setLoading(false);
   }
