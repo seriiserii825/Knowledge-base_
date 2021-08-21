@@ -1,3 +1,9 @@
+const filePath = path.join(process.cwd(), "data", "feedback.json");
+const fileData = fs.readFileSync(filePath, "utf-8");
+const data = JSON.parse(fileData);
+data.push({ user: user, email: email });
+fs.writeFileSync(filePath, JSON.stringify(data));
+
 fs.mkdir(path.join(__dirname, "notes"), (err) => {
   if (err) throw err;
 });
@@ -35,13 +41,13 @@ fs.rename(
     if (err) throw err;
   }
 );
-fs.stat('foo.txt', function(err, stat) {
-    if(err == null) {
-        console.log('File exists');
-    } else if(err.code === 'ENOENT') {
-        // file does not exist
-        fs.writeFile('log.txt', 'Some log\n');
-    } else {
-        console.log('Some other error: ', err.code);
-    }
+fs.stat("foo.txt", function (err, stat) {
+  if (err == null) {
+    console.log("File exists");
+  } else if (err.code === "ENOENT") {
+    // file does not exist
+    fs.writeFile("log.txt", "Some log\n");
+  } else {
+    console.log("Some other error: ", err.code);
+  }
 });
