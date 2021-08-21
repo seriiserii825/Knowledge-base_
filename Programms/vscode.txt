@@ -34,3 +34,18 @@ If you installed via Ubuntu Software, open Ubuntu Software, look for the app in 
 Remove settings
 
 $cd ~ && rm -rf .vscode && rm -rf .config/Code
+
+#Manjaro
+Acquire build files from Arch Linux user repository.
+curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/visual-studio-code-bin.tar.gz
+
+Extract the downloaded package
+tar -xvf visual-studio-code-bin.tar.gz
+
+Change directory to the extracted package
+cd visual-studio-code-bin
+
+Build and install the package
+makepkg -si
+
+
