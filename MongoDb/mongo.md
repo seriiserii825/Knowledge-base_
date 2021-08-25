@@ -1,3 +1,6 @@
+sudo chown serii:serii -R /tmp/mongodb-27017.sock
+systemctl unmask mongod && sudo service mongod start
+sudo mongo
 #commands
 use - go to db, or create
 show collections - show collections
@@ -9,6 +12,7 @@ db.dropDatabase() - delete db
 db.users.drop() - drop collection
 
 ## Utilities
+
 mongostat - show some info about dbs.
 mongotop - show spent time to work with dbs.
 mongoimport/mongoexport - import, export data in JSON, TSV, CSV format
@@ -22,4 +26,3 @@ mongoimport --db testDb --collection users --file ./users.json
 mongodump --archive=./dump.archive --db testDb
 mongorestore --archive=./dump.archive --db testDb
 mongorestore --archive=./dump.archive --nsInclude testDb
-
