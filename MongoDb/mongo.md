@@ -1,6 +1,12 @@
 sudo chown serii:serii -R /tmp/mongodb-27017.sock
 systemctl unmask mongod && sudo service mongod start
 sudo mongo
+
+#mongo tools
+wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+Update
+sudo apt-get install -y mongodb-org
 #commands
 use - go to db, or create
 show collections - show collections
