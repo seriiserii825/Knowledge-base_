@@ -1,5 +1,6 @@
+Install mongo server and mongo shell
 sudo chown serii:serii -R /tmp/mongodb-27017.sock
-systemctl unmask mongod && sudo service mongod start
+sudo mkdir -p /data/db
 sudo mongo
 
 #mongo tools
