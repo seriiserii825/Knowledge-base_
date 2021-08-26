@@ -32,3 +32,6 @@ mongoimport --db testDb --collection users --file ./users.json
 mongodump --archive=./dump.archive --db testDb
 mongorestore --archive=./dump.archive --db testDb
 mongorestore --archive=./dump.archive --nsInclude testDb
+
+MONGODB_URI = mongodb://localhost:27017
+MONGODB_DB = blog
