@@ -34,4 +34,21 @@ Promise.all([promise1, promise2])
     return Promise.all(result)
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
-  },
+  }
+
+
+
+axios.$patch(
+  process.env.baseUrl + "/api/v1/page/" + this.$route.params.id,
+  formData
+).catch(err => {
+  if (err.response) {
+    console.log(err.response.data.message, 'err.response.data.message');
+    this.$message.error(err.response.data.message);
+    this.loading = false;
+  } else if (err.request) {
+    this.$message.error(err.request);
+    console.log(err.request, 'err.request')
+    this.loading = false;
+  }
+});
