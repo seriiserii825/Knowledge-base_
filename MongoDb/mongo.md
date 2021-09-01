@@ -33,6 +33,9 @@ mongoimport --db testDb --collection users --file ./users.json
 mongodump --archive=./dump.archive --db testDb
 mongorestore --archive=./dump.archive --db testDb
 mongorestore --archive=./dump.archive --nsInclude testDb
+mongorestore --archive=bludelego-30-08-2021.archive
 
 MONGODB_URI = mongodb://localhost:27017
 MONGODB_DB = blog
+
+db.collection.dropIndexes()
