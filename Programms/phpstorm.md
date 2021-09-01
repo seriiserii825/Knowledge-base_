@@ -17,7 +17,7 @@ Disable language injections: File -> Settings -> Language injections. Untick as 
 Disable inspections: File -> Settings -> Inspections. Untick as many as you don't need.
 Disable unused plugins: File -> Settings -> Plugins. Untick unused.
 
-sudo tar -xzf PhpStorm-\*.tar.gz -C /opt
+sudo tar -xzf PhpStorm\*.tar.gz -C /opt
 cd /opt/PhpStorm-212.4746.100/bin and type ./phpstorm.md
 in phpstorm -> tools -> create desktop launcher
 
