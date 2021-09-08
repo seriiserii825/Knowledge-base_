@@ -40,3 +40,19 @@ function eg_create_sitemap()
     fwrite($fp, $sitemap);
     fclose($fp);
 }
+
+
+function getPropertiesId()
+{
+
+	$result = [];
+	$api_result = callAPI('https://api.bludelego.it/api/realestate/v1/immobili/all', 'get');
+	// $api_result_all = callAPI('https://api.bludelego.it/api/realestate/v1/all');
+	$list_json = json_decode($api_result);
+	$result = $list_json->data;
+	// foreach ($list as $item) {
+	// 	$result[] = $item->id;
+	// }
+
+	return $result;
+}
