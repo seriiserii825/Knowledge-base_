@@ -30,7 +30,7 @@ function eg_create_sitemap()
     foreach ($adsForSitemap as $item) {
         setup_postdata($post);
         $sitemap .= "\t" . '<url>' . "\n" .
-            "\t\t" . '<loc>https://www.imprendocasa.it/ads?id=' . $item->id . '</loc>' .
+            "\t\t" . '<loc>' . get_home_url() . '/ads?id=' . $item->id . '</loc>' .
             "\n\t\t" . '<lastmod>' . $item->updated_at . '</lastmod>' .
             "\n\t\t" . '<changefreq>monthly</changefreq>' .
             "\n\t" . '</url>' . "\n";
@@ -55,4 +55,41 @@ function getPropertiesId()
 	// }
 
 	return $result;
+}?>
+
+//sitemap.css
+<style>
+title {
+  display: block;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  margin-left: 3rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
 }
+url {
+  display: block;
+  padding: 0.2rem 3rem;
+}
+loc {
+  /* display: block; */
+  color: black;
+}
+lastmod {
+  /* display: block; */
+  color: green;
+}
+changefreq {
+  /* display: block; */
+  color: blue;
+}
+</style>
+
+robots.txt
+
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+
+Sitemap: https://www.imprendocasa.it/sitemap.xml
