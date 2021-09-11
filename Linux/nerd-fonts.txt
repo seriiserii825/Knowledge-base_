@@ -3,3 +3,14 @@
 2.) Unzip and copy to /usr/local/share/fonts with sudo
 
 3.) Run the command fc-cache -fv to manually rebuild the font cache
+
+4.) Devicons
+
+remove directory
+~/.config/ranger/plugins/ranger_devicons
+
+git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
+
+echo "default_linemode devicons" >> $HOME/.config/ranger/rc.conf
+
+restart
