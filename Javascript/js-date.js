@@ -45,3 +45,6 @@ console(difference); //in milliseconds
 
       return new Intl.DateTimeFormat("ro", options).format(new Date(date));
     }
+
+# unique id
+new Date().valueOf()
