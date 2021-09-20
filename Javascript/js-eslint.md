@@ -1,4 +1,5 @@
-npm i eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-node eslint-plugin-prettier eslint-plugin-react eslint-plugin-vue prettier -D
+npm i eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-import eslint-plugin-node eslint-plugin-prettier eslint-plugin-vue prettier -D
+eslint-plugin-jsx-a11y eslint-plugin-react
 
 #error
 npm install -g install-peerdeps
