@@ -27,6 +27,9 @@ mongodump - create dump
 mongorestore - restore dump
 mongofiles - work with files in GridFS.
 
+Clone
+mongodump --archive --db=nuxt-eccommerce-original | mongorestore --archive --nsFrom='nuxt-eccommerce-original._' --nsTo='pallina._'
+
 mongoexport --db testDb --collection users --out ./users.json
 mongoimport --db testDb --collection users --file ./users.json
 
