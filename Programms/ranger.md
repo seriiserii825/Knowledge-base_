@@ -32,7 +32,6 @@ dd: отметить файл, чтобы вырезать
 pp: вставить файл
 <delete>: удалить выбранный файл.
 
-
 #Вкладки:
 <ctrl>-n = Создать новую вкладку
 <ctrl>-w = Закрыть текущую вкладку
@@ -59,10 +58,22 @@ chmod – изменить права на текущий файл.
 -w: Не возвращать сразу после выполнения команды.
 -c: выполнить команду на текущий файл (не на выбранные файлы).
 
-
-
 #Также Ranger позволяет объединять файлы в группы для выполнения замены. Это делается при помощи заполнителей:
 %f: заменить выделенный файл
 %d: заменить текущий каталог
 %s: заменить выбранные файлы
 %t : заменить текущие отмеченные файлы.
+
+Image preview
+
+1. install python3
+2. install pip
+   sudo apt install python3-pip
+3. install x11 tools
+   sudo apt install libx11-dev
+   sudo apt-get install libxext-dev
+   Done.
+4. In ranger set
+
+set preview_images_method ueberzug
+set preview_images true
