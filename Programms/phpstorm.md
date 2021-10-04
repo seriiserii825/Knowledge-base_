@@ -18,7 +18,7 @@ Disable inspections: File -> Settings -> Inspections. Untick as many as you don'
 Disable unused plugins: File -> Settings -> Plugins. Untick unused.
 
 sudo tar -xzf PhpStorm\*.tar.gz -C /opt
-cd /opt/PhpStorm-212.4746.100/bin and type ./phpstorm.md
+cd /opt/PhpStorm-212.4746.100/bin and type sudo ./phpstorm.sh
 in phpstorm -> tools -> create desktop launcher
 
 ### autoprefixer
