@@ -1,10 +1,10 @@
 //======================= Check is array
-const arr = [1,2, 12, 10, 14];
+const arr = [1, 2, 12, 10, 14];
 const value = Array.isArray(arr);
 console.log(value);
 
 //Find index
-const arr = [1,2, 12, 10, 14];
+const arr = [1, 2, 12, 10, 14];
 const value = arr.indexOf(12);
 
 //======================= Array methods
@@ -16,8 +16,8 @@ value = arr.slice(0, 2); // cut array
 value = arr.splice(0, 1, 99); // replace
 value = arr.reverse(); // reverse
 value = arr.concat([1, 2, 3]); // join arrays
-value = arr.join(' '); // array to string
-value = 'some'.split(''); // string to array
+value = arr.join(" "); // array to string
+value = "some".split(""); // string to array
 
 // Unique values
 let values = [3, 1, 3, 5, 2, 4, 4, 4];
@@ -25,14 +25,14 @@ let uniqueValues = [...new Set(values)];
 
 // Find in array
 let users = [
-  { id: 11, name: 'Adam', age: 23, group: 'editor' },
-  { id: 47, name: 'John', age: 28, group: 'admin' },
-  { id: 85, name: 'William', age: 34, group: 'editor' },
-  { id: 97, name: 'Oliver', age: 28, group: 'admin' }
+  { id: 11, name: "Adam", age: 23, group: "editor" },
+  { id: 47, name: "John", age: 28, group: "admin" },
+  { id: 85, name: "William", age: 34, group: "editor" },
+  { id: 97, name: "Oliver", age: 28, group: "admin" },
 ];
-let res = users.filter(it => it.name.includes('oli'));
+let res = users.filter((it) => it.name.includes("oli"));
 // Нечувствительный к регистру
-let res = users.filter(it => new RegExp('oli', "i").test(it.name));
+let res = users.filter((it) => new RegExp("oli", "i").test(it.name));
 
 //Union arrays
 let arrA = [1, 4, 3, 2];
@@ -42,4 +42,12 @@ let arrB = [5, 2, 6, 7, 1];
 // Пересечение в массивах
 let arrA = [1, 4, 3, 2];
 let arrB = [5, 2, 6, 7, 1];
-arrA.filter(it => arrB.includes(it)); // returns [1, 2]
+arrA.filter((it) => arrB.includes(it)); // returns [1, 2]
+
+//Divide array
+const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //… your array, filled with values
+const n = 3; //tweak this to add more items per line
+
+const result = new Array(Math.ceil(items.length / n))
+  .fill()
+  .map((_) => items.splice(0, n));
