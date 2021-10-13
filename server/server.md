@@ -35,19 +35,26 @@
   Поля server_name и location / {} измените на:
   server_name your-domain.com www.your-domain.com;
 
-location / {
-proxy_pass http://localhost:5000; # Порт на котором запускается node.js приложение
-proxy_http_version 1.1;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection 'upgrade';
-proxy_set_header Host $host;
-proxy_cache_bypass $http_upgrade;
-}
+  server {
+  listen 185.26.120.38;
+  root /home/boss/apps/nuxt-bludelego;
+  index index.html;
+  location / {
+  proxy_pass http://localhost:3000; # Порт на котором запускается node.js приложение
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection 'upgrade';
+  proxy_set_header Host $host;
+  proxy_cache_bypass $http_upgrade;
+  }
+  }
+
+sudo ln -s /etc/nginx/sites-available/nuxt-bludelego.conf /etc/nginx/sites-enabled/nuxt-bludelego.conf
 
 #Map
 
 - create /home/boss/Sites
-- sudo chmod -R /home/boss/Sites
+- sudo chmod -R 777 /home/boss/Sites
 - vim /etc/nginx/sites-avaible/mysite.com (create config)
   https://i.imgur.com/z3Zk00t.png
 - sudo ln -s /etc/nginx/sites-avaible/mysite.com /etc/nginx/sites-enabled/mysite.com
@@ -91,9 +98,9 @@ node -v
 
 #Pm2
 
-- sudo apt install pm2 -g
+- npm install pm2@latest -g
 - pm2 start server.js
-- pm2 start npm --name "name in pm2 table" -- start(start from nuxt start)
+- pm2 start
 - pm2 startup ubuntu - start pm2 when server restart
 
 #Git
@@ -121,3 +128,26 @@ certbot renew --dry-run(certificat will be to 90 days)
 
 When certificat will finish need to tipy in terminal
 certbot renew
+
+All you need to add to your universal Nuxt app for serving it though PM2 is a file called ecosystem.config.js. Create a new file with that name in your root project directory and add the following content:
+
+module.exports = {
+apps: [
+{
+name: 'NuxtAppName',
+exec_mode: 'cluster',
+instances: 'max', // Or a number of instances
+script: './node_modules/nuxt/bin/nuxt.js',
+args: 'start'
+}
+]
+}
+
+Build and serve the app
+Now build your app with npm run build.
+
+And serve it with pm2 start.
+
+Check the status pm2 ls.
+
+Your Nuxt application is now serving!
