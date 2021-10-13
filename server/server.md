@@ -17,7 +17,7 @@
 - chmod 600 .ssh/authorize_keys
 - exit - go to root user
 - /etc/ssh/ssh_config - change port from 22 to 5050, and PermitRouteLogin - no, PasswordAuthentification - no, Just user boss cant enter to server.
-- server ssh restart
+- service ssh restart
 - /etc/sudoers - add line boss ALL=(ALL) NOPASSWD: ALL - user can work without print a password
 - ssh -p 5050 root@IP_ADDRESS check if we cant enter with root
 - ssh -p 5050 boss@IP_ADDRESS
