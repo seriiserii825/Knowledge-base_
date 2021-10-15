@@ -16,7 +16,7 @@
 - .ide_rsa.pug - public key
 - chmod 600 .ssh/authorize_keys
 - exit - go to root user
-- /etc/ssh/ssh_config - change port from 22 to 5050, and PermitRouteLogin - no, PasswordAuthentification - no, Just user boss cant enter to server.
+- /etc/ssh/ssh_config - change port from 22 to 5050, and PermitRouteLogin - no
 - service ssh restart
 - /etc/sudoers - add line boss ALL=(ALL) NOPASSWD: ALL - user can work without print a password
 - ssh -p 5050 root@IP_ADDRESS check if we cant enter with root
@@ -53,6 +53,7 @@ sudo ln -s /etc/nginx/sites-available/nuxt-bludelego.conf /etc/nginx/sites-enabl
 
 #Map
 
+- grep -w 80 /etc/services - check port avaible on site
 - create /home/boss/Sites
 - sudo chmod -R 777 /home/boss/Sites
 - vim /etc/nginx/sites-avaible/mysite.com (create config)
@@ -77,6 +78,8 @@ sudo ln -s /etc/nginx/sites-available/nuxt-bludelego.conf /etc/nginx/sites-enabl
 - sudo ufw status verbose
 - sudo ufw enable
 - sudo ufw status
+- sudo ufw status numbered
+- sudo ufw delete 4 (item in numbered list)
 
 #Node js
 sudo apt install curl
