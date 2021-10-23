@@ -4,7 +4,9 @@
 # User
 
 - adduser boss
-- gpasswd -a boss sudo - add user to admin
+  - deluser boss - delete user
+  - rm /home/boss - delete boss home dir
+- gpasswd -a boss sudo - add user to admin(to create or delete use sudo, to insert password)
 - su - boss - connect boss as user
 
 # Ssh
@@ -69,7 +71,7 @@ sudo ln -s /etc/nginx/sites-available/nuxt-bludelego.conf /etc/nginx/sites-enabl
 
 - sudo apt install ufw -y
 - sudo ufw default deny incoming (deny access to server)
-- sudo ufw default allow outgoing
+- sudo ufw default allow outgoing (allow all outgoing connections from our vps)
 - sudo ufw allow ssh
 - sudo ufw allow 'Nginx Full'
 - sudo ufw allow http
