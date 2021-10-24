@@ -4,8 +4,8 @@
 # User
 
 - adduser boss
-  - deluser boss - delete user
-  - rm /home/boss - delete boss home dir
+     - deluser boss - delete user
+     - rm /home/boss - delete boss home dir
 - gpasswd -a boss sudo - add user to admin(to create or delete use sudo, to insert password)
 - su - boss - connect boss as user
 
@@ -37,19 +37,19 @@
   Поля server_name и location / {} измените на:
   server_name your-domain.com www.your-domain.com;
 
-  server {
-  listen 185.26.120.38;
-  root /home/boss/apps/nuxt-bludelego;
-  index index.html;
-  location / {
-  proxy_pass http://localhost:3000; # Порт на котором запускается node.js приложение
-  proxy_http_version 1.1;
-  proxy_set_header Upgrade $http_upgrade;
-  proxy_set_header Connection 'upgrade';
-  proxy_set_header Host $host;
-  proxy_cache_bypass $http_upgrade;
-  }
-  }
+     server {
+     listen 185.26.120.38;
+     root /home/boss/apps/nuxt-bludelego;
+     index index.html;
+     location / {
+     proxy_pass http://localhost:3000; # Порт на котором запускается node.js приложение
+     proxy_http_version 1.1;
+     proxy_set_header Upgrade $http_upgrade;
+     proxy_set_header Connection 'upgrade';
+     proxy_set_header Host $host;
+     proxy_cache_bypass $http_upgrade;
+     }
+     }
 
 sudo ln -s /etc/nginx/sites-available/nuxt-bludelego.conf /etc/nginx/sites-enabled/nuxt-bludelego.conf
 
