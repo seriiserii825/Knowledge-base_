@@ -1,1 +1,2 @@
-find -name "\*.flac" -exec ffmpeg -i {} -acodec libmp3lame -ab 320k {}.mp3 \;
+sudo apt-get install flac lame
+find . -name '\*.flac' -exec sh -c 'flac -cd "{}" | lame - "{}".mp3' \;
