@@ -37,3 +37,12 @@ $ ssh-add -t <seconds>
 ssh -T git@github.com
 
 ssh-copy-id user@server
+
+==== Buffer
+sudo apt-get install xauth -y
+sudo vim /etc/ssh/sshd_config
+X11Forwarding yes
+X11DisplayOffset 10
+X11UseLocalhost no
+
+ssh -X root@ip_addr
