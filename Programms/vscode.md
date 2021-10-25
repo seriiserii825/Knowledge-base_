@@ -48,4 +48,16 @@ cd visual-studio-code-bin
 Build and install the package
 makepkg -si
 
+#sftp
+Shutdown / Quit VS Code.
+Locate the following file:
+Mac OS X:
+~/.vscode/extensions/liximomo.sftp-1.12.9/node_modules/ssh2-streams/lib/sftp.js
 
+Windows:
+C:\Users\account_name\.vscode\extensions\liximomo.sftp-1.12.9\node_modules\ssh2-streams\lib\sftp.js
+Make a backup copy of the file.
+Modify line 388, which should be:
+if ( code === STATUS_CODE . OK ) { changing it to:
+if (code === STATUS_CODE.OK || code === STATUS_CODE.NO_SUCH_FILE) {
+Save the file.
