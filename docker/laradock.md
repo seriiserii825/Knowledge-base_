@@ -1,53 +1,123 @@
-В директории с вашими проектами (или будущими проектами) необходимо склонировать репозиторий laradock.
-#Shell
-$ ~/projects
-$ git clone https://github.com/laradock/laradock.git
+Установить Docker CE и docker-compose на систему, если у вас MacOS или Windows 
+вы можете скачать установщик с офф. сайта
 
-#create project
-$ cd ~/projects
-$ mkdir laradock-example
-$ mkdir laradock-example/public
-$ touch laradock-example/public/index.php
+https://www.docker.com/get-started
 
-#Затем в /etc/hosts добавим такую строку
-127.0.0.1    laradock-example.local
+Если же у вас Linux проводим установку как указано здесь:
 
-#В файле нам надо исправить всего 2 строки
-server_name laradock-example.local;
-root /var/www/laradock-example/public;
+https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce
+Далее устанавливаем docker-compose
+https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-16-04
 
-#Еще в папке ~/projects/laradock нам надо скопировать файл env-example под новым именем .env.
-$ cd ~/projects/laradock
-$ cp env-example .env
+Переходим в домашнюю директорию, создаем папку для проектов и внутри копируем проект из репозитория
+git clone git@bitbucket.org:cntechnology/linkmuse.git
 
-#Теперь мы можем попробовать запустить наши контейнеры
-$ cd ~/projects/laradock/  
-$ docker-compose up -d nginx php-fpm mysql workspace
+Также клонируем LaraDock в папку проектов
+git clone https://github.com/Laradock/laradock.git
 
-#Вот так можно выключить mysql и apache. По этому же принципу можно выключить другие службы.
-$ sudo service  mysql stop 
-$ sudo service  apache2 stop
+Переходим в Laradock и копируем файл конфигурации
+cd laradock && cp env-example .env
 
-#После этого необходимо повторно запустить docker-compose. В случае успеха лог в консоли будет короткий:
-$ docker-compose up -d nginx php-fpm mysql workspace
-Starting laradock_applications_1 ...  
-Starting laradock_applications_1 
-Starting laradock_applications_1 ... done 
-Recreating laradock_workspace_1 ...  
-Recreating laradock_workspace_1 ... done 
-Creating laradock_php-fpm_1 ...  
-Creating laradock_php-fpm_1 ... done 
-Creating laradock_nginx_1 ...  
-Creating laradock_nginx_1 ... done
+Далее редактируем .env
+Ищем и выставляем значение в true
+WORKSPACE_INSTALL_MONGO
+PHP_FPM_INSTALL_MONGO
+PHP_FPM_INSTALL_MEMCACHED
+WORKSPACE_INSTALL_LARAVEL_INSTALLER
 
-#Теперь осталось установить laravel. Для этого нам необходимо открыть терминал контейнера workspace:
-$ docker-compose exec workspace bash
+По умолчанию суперпользователь в MySQL имеет логин root и пароль root но вы можете изменить пароль выставив его в .env 
+MYSQL_ROOT_PASSWORD
 
-#И уже в нем перейдем в папку /var/www/laradock-example, удалим там все содержимое и установим laravel.
-Содержимое можем удалить из под root
-# cd /var/www/laradock-example
-# rm -R public
-# exit
+Далее сохраняем файл и переходим к настройке docker-compose.yml
+Ищем в файле следующий блок и убераем в нем строку ${DATA_PATH_HOST}/mysql:/var/lib/mysql (т.к DATA_PATH_HOST не используется по умолчанию)
+Должно получится примерно так, нужно это для корректной работы phpMyAdmin.
+
+### MySQL ################################################
+    mysql:
+      build:
+        context: ./mysql
+        args:
+          - MYSQL_VERSION=${MYSQL_VERSION}
+      environment:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - TZ=${WORKSPACE_TIMEZONE}
+      volumes:
+       # - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
+        - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+      ports:
+        - "${MYSQL_PORT}:3306"
+      networks:
+        - backend
+
+Также ищем блок Mongo и меняем его чтобы получилось так
+Так как по умолчанию авторизация в Mongo в LaraDock отключена, мы используем другую версию
+
+### MongoDB ##############################################
+    mongo:
+      build: ./mongo
+      image: bitnami/mongodb:3.6
+      ports:
+        - "${MONGODB_PORT}:27017"
+      environment:
+        - MONGODB_ROOT_PASSWORD=<ROOT_PASSWORD>
+      volumes:
+        - ${DATA_PATH_HOST}/mongo:/data/db
+      networks:
+        - backend
+
+Далее сохраняем файл и переходим к настройке Nginx, переходим в папку ./nginx/sites
+Переименовываем laravel.conf.example в laravel.conf и копируем laravel.conf в linkmuse.conf
+Открываем файл и меняем <server_name> на подходящий и <root> на /var/www/linkmuse/public, сохраняем и закрываем
+
+Далее редактируем файл /etc/hosts
+127.0.0.1       <server_name>
+
+Теперь переходим в папку проекта и устанавливаем все зависимости
+composer install && npm install
+
+Далее отредактируем файл конфигурации cp .env.example .env
+DB_HOST=mysql
+REDIS_HOST=redis
+MONGO_DB_HOST=mongo
+
+Далее осталось только запустить LaraDock и подождать пока он всё сделает
+Переходим в папку laradock и выполняем следующую команду
+
+sudo docker-compose up -d nginx mysql phpmyadmin mongo redis workspace 
+
+Примерный вывод в конце должен быть таким:
+Starting laradock_mongo_1            ... done
+Starting laradock_docker-in-docker_1 ... done
+Starting laradock_mysql_1            ... done
+Starting laradock_redis_1            ... done
+Starting laradock_workspace_1        ... done
+Starting laradock_phpmyadmin_1       ... done
+Starting laradock_php-fpm_1          ... done
+Starting laradock_nginx_1            ... done
+
+
+Теперь чтобы перейти в phpMyAdmin мы переходим по адресу localhost:8080
+Сервер: mysql
+Логин: root
+Пароль: root (если не указывали свой)
+
+MongoDB будет доступна по хосту 127.0.0.1 в MongoDB Compass и.т.п
+
+Чтобы просмотреть логи по контейнеру нужно выполнить
+sudo docker-compose logs <container_name>
+
+Чтобы войти в рабочее окружение с терминала нужно выполнить команду 
+sudo docker-compose exec workspace bash
+
+Или например если нужно войти в MySQL
+sudo docker-compose exec mysql bash
+
+ВАЖНО: команда docker-compose работает только в корне папки laradock !
+
+Документация по LaraDock: http://laradock.io/documentation/
 
 #А вот устанавливать Laravel лучше под обычным пользвателем:
 $ docker-compose exec --user=laradock workspace bash   
