@@ -1,11 +1,21 @@
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+### 
+switch from php version
+sudo update-alternatives --config php
+
 ### Установка php7.2
 sudo apt-get install software-properties-common python-software-properties
 sudo add-apt-repository -y ppa:ondrej/php
 sudo apt-get update
 
-sudo apt-get install php7.2 php7.2-cli php7.2-common
-sudo apt-get install php7.2-curl php7.2-gd php7.2-json php7.2-mbstring php7.2-intl php7.2-mysql php7.2-xml php7.2-zip
+sudo apt -y install php7.2 php7.2-fpm php7.2-mysql php7.2-mbstring php7.2-xml php7.2-gd php7.2-curl php-common php7.2-cli php7.2-common php7.2-json php7.2-opcache php7.2-readline
 php -v
+
+
+sudo systemctl enable php7.2-fpm (after restart system)
+sudo service php7.2-fpm start
 
 
 ### php.ini
