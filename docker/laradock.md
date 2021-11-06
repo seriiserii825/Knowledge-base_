@@ -19,6 +19,7 @@ root /var/www/laradock-example/public;
 #Еще в папке ~/projects/laradock нам надо скопировать файл env-example под новым именем .env.
 $ cd ~/projects/laradock
 $ cp env-example .env
+php7.4 display_errors = On
 
 #Теперь мы можем попробовать запустить наши контейнеры
 $ cd ~/projects/laradock/  
