@@ -23,7 +23,7 @@ php7.4 display_errors = On
 
 #Теперь мы можем попробовать запустить наши контейнеры
 $ cd ~/projects/laradock/  
-$ docker-compose up -d nginx php-fpm mysql workspace
+$ sudo docker-compose up -d nginx php-fpm mysql workspace
 
 #Вот так можно выключить mysql и apache. По этому же принципу можно выключить другие службы.
 $ sudo service  mysql stop 
