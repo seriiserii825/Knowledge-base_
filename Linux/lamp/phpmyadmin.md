@@ -12,8 +12,6 @@ After installed
 mysql -u root -p
 mysql>INSTALL COMPONENT "file://component_validate_password";
 
-cd /usr/share/phpmyadmin/libraries/
- sudo vim sql.lib.php 
-613 line
-|| (count($analyzed_sql_results['select_expr']) == 1
-https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-20-04
+curl -O -k https://raw.githubusercontent.com/skurudo/phpmyadmin-fixer/master/pma.sh 
+sudo chmod +x pma.sh 
+sudo ./pma.sh
