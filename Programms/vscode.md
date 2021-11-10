@@ -21,33 +21,6 @@
     ]
 }
 
-If you installed via Snap:
-
-$sudo snap remove vscode
-
-If you installed via apt:
-
-$sudo apt-get purge code
-
-If you installed via Ubuntu Software, open Ubuntu Software, look for the app in the installed category, and click on remove.
-
-Remove settings
-
-$cd ~ && rm -rf .vscode && rm -rf .config/Code
-
-#Manjaro
-Acquire build files from Arch Linux user repository.
-curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/visual-studio-code-bin.tar.gz
-
-Extract the downloaded package
-tar -xvf visual-studio-code-bin.tar.gz
-
-Change directory to the extracted package
-cd visual-studio-code-bin
-
-Build and install the package
-makepkg -si
-
 #sftp
 Shutdown / Quit VS Code.
 Locate the following file:
@@ -61,3 +34,4 @@ Modify line 388, which should be:
 if ( code === STATUS_CODE . OK ) { changing it to:
 if (code === STATUS_CODE.OK || code === STATUS_CODE.NO_SUCH_FILE) {
 Save the file.
+Relaunch VS Code; test by uploading or downloading from your sftp server. The error should not be present.
