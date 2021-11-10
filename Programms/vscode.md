@@ -22,6 +22,8 @@
 }
 
 #sftp
+https://stackoverflow.com/questions/67506693/error-no-such-file-sftp-liximomo-extension
+
 Shutdown / Quit VS Code.
 Locate the following file:
 Mac OS X:
