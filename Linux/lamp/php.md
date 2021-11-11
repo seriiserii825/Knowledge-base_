@@ -1,3 +1,9 @@
+#remove
+sudo apt-get purge php7.*
+sudo apt-get autoclean
+sudo apt-get autoremove
+
+#display errors
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -17,6 +23,11 @@ php -v
 sudo systemctl enable php7.2-fpm (after restart system)
 sudo service php7.2-fpm start
 
+# php 7.4
+sudo apt install php7.4 -y
+sudo apt install php7.4-fpm php7.4-cli php7.4-mysql php7.4-curl php7.4-json -y
+sudo systemctl start php7.4-fpm
+sudo systemctl enable php7.4-fpm
 
 ### php.ini
 sudo vim /etc/php7/apache/php.ini
