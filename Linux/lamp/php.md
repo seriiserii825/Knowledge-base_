@@ -14,7 +14,9 @@ sudo update-alternatives --config php
 
 ## php 8
 sudo apt install php
-sudo apt install php-common php-mysql php-cgi php-mbstring php-curl php-gd php-xml php-xmlrpc php-pear php-fpm
+sudo apt install php8.0 php8.0-{bz2,cgi,common,cli,curl,intl,dev,fpm,gd,imagick,mbstring,mysql,opcache,readline,xml,zip}    
+sudo update-alternatives --set php /usr/bin/php8.0
+sudo service php8.0-fpm start
 sudo systemctl status php8.0-fpm
 
 ### Установка php7.2
