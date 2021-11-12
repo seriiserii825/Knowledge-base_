@@ -1,3 +1,6 @@
+php artisan config:clear
+php artisan config:cache
+sudo chown -R www-data:www-data storage
 server {
         listen 80;
         listen [::]:80;
