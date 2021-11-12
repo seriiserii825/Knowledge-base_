@@ -32,7 +32,7 @@ server {
                 if (!-f $document_root$fastcgi_script_name) {return 404;}
                 fastcgi_param HTTP_PROXY "";
                 include fastcgi_params;
-                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+                fastcgi_pass unix:/var/run/php/php8.0-fpm.sock;
                 fastcgi_index index.php;
                 fastcgi_param SCRIPT_FILENAME $request_filename;
         }

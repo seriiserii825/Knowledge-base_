@@ -12,6 +12,11 @@ ini_set('display_errors', '1');
 switch from php version
 sudo update-alternatives --config php
 
+## php 8
+sudo apt install php
+sudo apt install php-common php-mysql php-cgi php-mbstring php-curl php-gd php-xml php-xmlrpc php-pear php-fpm
+sudo systemctl status php8.0-fpm
+
 ### Установка php7.2
 sudo apt-get install software-properties-common python-software-properties
 sudo add-apt-repository -y ppa:ondrej/php
