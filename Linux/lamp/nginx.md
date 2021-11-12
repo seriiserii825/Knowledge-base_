@@ -17,6 +17,8 @@ server {
 
         root /var/www/oop.local;
         index index.html index.htm index.nginx-debian.html;
+        error_log  /var/log/nginx/error.log;
+        access_log  /var/log/nginx/access.log;
 
         server_name oop.local www.oop.local;
 
@@ -44,7 +46,7 @@ server {
 sudo ln -s /etc/nginx/sites-available/nuxt-bludelego.conf /etc/nginx/sites-enabled/nuxt-bludelego.conf
 
 #nginx conf
-sudo nano /etc/nginx/nginx.conf
+sudo vim /etc/nginx/nginx.conf
 remove # from line server_names_hash_bucket_size
 sudo systemctl restart nginx
 sudo systemctl status nginx
