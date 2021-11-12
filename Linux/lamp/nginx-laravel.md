@@ -1,6 +1,9 @@
-php artisan config:clear
-php artisan config:cache
 sudo chown -R www-data:www-data storage
+cp .env.example .env
+php artisan key:generate
+php artisan cache:clear 
+php artisan config:clear
+
 server {
         listen 80;
         listen [::]:80;
