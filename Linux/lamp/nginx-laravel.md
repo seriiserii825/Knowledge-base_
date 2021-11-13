@@ -1,5 +1,7 @@
 sudo chown -R www-data:www-data storage
 cp .env.example .env
+sudo chmod -R guo+w storage
+sudo chmod -R gu+w storage
 php artisan key:generate
 php artisan cache:clear 
 php artisan config:clear
