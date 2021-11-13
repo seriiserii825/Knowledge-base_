@@ -10,3 +10,11 @@ public function up()
             ");
         });
 }
+
+public function down()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            //
+            \Illuminate\Support\Facades\DB::statement(" ALTER TABLE `laravel`.`posts` CHANGE COLUMN `created_at` `created_at` TIMESTAMP NULL DEFAULT NULL , CHANGE COLUMN `updated_at` `updated_at` TIMESTAMP NULL DEFAULT NULL ; ");
+        });
+}
