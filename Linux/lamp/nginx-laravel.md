@@ -1,7 +1,7 @@
-sudo chown -R www-data:www-data storage
-cp .env.example .env
-sudo chmod -R guo+w storage
-sudo chmod -R gu+w storage
+sudo chown -R $USER:www-data storage
+sudo chown -R $USER:www-data bootstrap/cache
+sudo chmod -R 775 storage
+sudo chmod -R 775 bootstrap/cache
 php artisan key:generate
 php artisan cache:clear 
 php artisan config:clear
