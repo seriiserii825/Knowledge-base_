@@ -1,5 +1,4 @@
-sudo chown -R $USER:www-data storage
-sudo chown -R $USER:www-data bootstrap/cache
+sudo chown -R www-data:serii oop.local
 sudo chmod -R 775 storage
 sudo chmod -R 775 bootstrap/cache
 php artisan key:generate
