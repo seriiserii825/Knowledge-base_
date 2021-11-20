@@ -1,6 +1,8 @@
 sudo chown -R serii:www-data oop.local
 sudo chmod -R 775 storage
 sudo chmod -R 775 bootstrap/cache
+php artisan serve
+
 php artisan key:generate
 php artisan cache:clear 
 php artisan config:clear
