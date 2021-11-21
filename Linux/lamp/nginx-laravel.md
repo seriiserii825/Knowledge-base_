@@ -1,4 +1,5 @@
 sudo chown -R serii:www-data storage
+sudo chown -R serii:www-data bootstrap
 sudo chmod -R 775 storage
 sudo chmod -R 775 bootstrap/cache
 php artisan serve
