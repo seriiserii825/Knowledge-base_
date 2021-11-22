@@ -1,6 +1,9 @@
-sudo chown -R www-data:www-data
+sudo chown -R www-data:www-data storage
+sudo chown -R www-data:www-data bootstrap
 sudo chmod -R 775 storage
 sudo chmod -R 775 bootstrap/cache
+php artisan serve
+
 php artisan key:generate
 php artisan cache:clear 
 php artisan config:clear
