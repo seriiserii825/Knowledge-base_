@@ -1,47 +1,38 @@
+!!!! just for vue 2 !!!
 <div id="app">
-  <button v-on:click="add()">Add</button>
-  <transition-group  name="card" tag="ul">
-    <li class="card" v-for="item in items" :key="item.id">Id: {{ item.id }}</li>  
-  </transition-group>
+            <template v-else-if="filtered.length > 0" :key="2">
+                <transition-group appear name="list" tag="ul" class="page-portfolio__posts">
+                    <li class="list-item portfolio-post page-portfolio__posts-item" v-for="item in filtered" :key="item.img">
+                        <div class="portfolio-post__img">
+                            <img :src="item.img" alt="">
+                        </div>
+                        <header class="portfolio-post__header">
+                            <ul>
+                                <li>{{ item.parent_term }}</li>
+                                <li>{{ item.term_name }}</li>
+                            </ul>
+                        </header>
+                        <footer class="portfolio-post__footer">
+                            <h2 class="portfolio-post__title">{{ item.title }}</h2>
+                            <a :href="item.url" target="_blank" class="btn">Vai al sito</a>
+                        </footer>
+                    </li>
+                </transition-group>
+            </template>
 </div>
-
-<script>
-new Vue({
-  el: "#app",
-  methods: {
-    add: function () {
-      this.items.push({
-        id: Math.random()
-      })
-    }
-  },
-  data: function () {
-    return {
-      items: [
-        {
-          id: 1
-        },
-        {
-          id: 2
-        }
-      ]
-    }
-  }
-})
-</script>
-
 <style>
-.card {
-  transition: all 0.5s;
+.list-item {
+	transition: all 1s;
+}
+.list-enter,
+.list-leave-to {
+	opacity: 0;
+	transform: scale(0.6);
+}
 
-}
-.mega-item-enter-active, .mega-item-leave-active {
-  transition: opacity 1s;
-}
-.mega-item-enter, .mega-item-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-.mega-item-move {
-  transition: all 1s ease;
+.list-leave,
+.list-enter-to {
+	opacity: 1;
+	transform: scale(1);
 }
 </style>
