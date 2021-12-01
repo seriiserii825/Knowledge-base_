@@ -1,6 +1,3 @@
-#folding
-vim.foldfix
-
 #sftp
 https://stackoverflow.com/questions/67506693/error-no-such-file-sftp-liximomo-extension
 /home/serii/.vscode/extensions/liximomo.sftp-1.12.9
@@ -12,4 +9,7 @@ ext install JoeBerria.statusbarerror
 
 #tabs
 Workbench Appearence -> Workbench Tree indent
+
+#folding
+vim.foldfix
 
