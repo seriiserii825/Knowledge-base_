@@ -1,5 +1,5 @@
 <?php
-// http://youdomain.com/wp-json/wp/v2/all-terms?term=you_taxonomy
+
 class all_terms
 {
     public function __construct()
@@ -15,16 +15,23 @@ class all_terms
 
     public function get_all_terms($object)
     {
-// $return['categories'] = get_terms('category');
-//        $return['tags'] = get_terms('post_tag');
+//        $return = array();
         $return = get_terms( [
             'taxonomy' => $_GET['term'],
             'hide_empty' => false,
         ] );
+//        $return['tags'] = get_terms('post_tag');
+// Get taxonomies
+//        $args = array(
+//            'public' => true,
+//            '_builtin' => false
+//        );
+//        $output = 'names'; // or objects
+//        $operator = 'and'; // 'and' or 'or'
 //        $taxonomies = get_taxonomies($args, $output, $operator);
 //        foreach ($taxonomies as $key => $taxonomy_name) {
 //            if ($taxonomy_name = $_GET['term']) {
-//                $return[] = get_terms($taxonomy_name);
+//                $return = get_terms($taxonomy_name);
 //            }
 //        }
         return new WP_REST_Response($return, 200);
