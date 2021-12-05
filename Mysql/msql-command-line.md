@@ -34,5 +34,10 @@ create table lesson(
 id INT AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(255) NOT NULL,
 teacher_id INT NOT NULL,
-FOREIGN_KEY (teacher_id)
+foreign_key (teacher_id) references teacher(id)
 );
+
+#teacher insert
+insert into teacher (surname) values ("Ivanov");
+
+

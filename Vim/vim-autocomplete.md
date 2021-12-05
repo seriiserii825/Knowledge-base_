@@ -1,3 +1,24 @@
+#first method =============
+in .vimrc
+"Autocomplete
+  Plugin 'vim-scripts/AutoComplPop'
+
+set complete+=kspell
+set completeopt=menuone,longest
+set shortmess+=c
+
+function! Tab_Or_Complete()
+  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    return "\<C-N>"
+  else
+    return "\<Tab>"
+  endif
+endfunction
+:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+:set dictionary="/usr/dict/words"
+
+#default method =================
+
 #autocomplete path
 assets/
 c+x,c+f - autocomplete

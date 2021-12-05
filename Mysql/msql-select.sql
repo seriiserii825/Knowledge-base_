@@ -1,6 +1,11 @@
 # select without doubles
 SELECT DISTINCT Continent FROM country;
 
+# by id
+SELECT Country FROM country WHERE id=1;
+SELECT Country FROM country WHERE id>1;
+SELECT Country FROM country WHERE Name="London";
+
 # limit
 SELECT Country FROM country LIMIT 10;
 
