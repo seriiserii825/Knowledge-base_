@@ -1,33 +1,10 @@
-#==================
-#contry and cities by code
-SELECT city.Name, country.Name from city, country where country.Code = city.CountryCode;
+#
+Выбираем teacher.surname и lesson.name из таблицы teacher, делаем INNER JOIN с таблицой lesson, где teacher.id = lesson.teacher_id;
+SELECT teacher.surname, lesson.name FROM teacher INNER JOIN lesson ON teacher.id = lesson.teacher_id; 
 
-## join
-SELECT city.Name, country.Name FROM city JOIN country ON country.Code = city.CountryCode;
+Подадут под выборку и учителя, у которых нет уроков
+SELECT teacher.surname, lesson.name FROM teacher LEFT JOIN lesson ON teacher.id = lesson.teacher_id; 
 
-#===============
-#select
-SELECT Customers.FirstName, Products.ProductName, Orders.CreatedAt
-  FROM Customers, Products, Orders
-    WHERE Customers.Id = Orders.CustomerId AND Products.id = Orders.ProductId;
 
-#join
-SELECT Customers.FirstName, Products.ProductName, Orders.CreatedAt
-  FROM Orders(from orders, because in orders we have customerId and productId)
-    JOIN Customers ON Customers.Id = Orders.CustomerId
-    JOIN Products ON Products.Id = Orders.ProductId;
-
-#===============
-#join
-SELECT city.Name, country.Name, countrylanguage.Language
-  FROM country
-    JOIN city ON city.CountryCode = country.Code
-    JOIN countrylanguage ON countrylanguage.CountryCode = country.Code
-      WHERE countrylanguage.IsOfficial = 'T';
-
-# LEFT JOIN | RIGHT JOIN
-
-SELECT Customers.FirstName, Orders.CreatedAt, Orders.ProductCount, Orders.Price, Orders.ProductId 
-  FROM Orders 
-    LEFT JOIN Customers 
-        ON Orders.CustomerId = Customers.Id
+Подадут под выборку и уроки, у которых нет учителей
+SELECT teacher.surname, lesson.name FROM teacher RIGHT JOIN lesson ON teacher.id = lesson.teacher_id; 

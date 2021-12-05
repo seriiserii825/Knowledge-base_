@@ -1,3 +1,4 @@
+# объединение таблиц
 SELECT Clients.FirstName, Clients.LastName FROM Clients
 UNION 
 SELECT Employees.FirstName, Employees.LastName FROM Employees;
