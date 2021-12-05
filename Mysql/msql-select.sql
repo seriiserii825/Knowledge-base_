@@ -6,6 +6,9 @@ SELECT Country FROM country WHERE id=1;
 SELECT Country FROM country WHERE id>1;
 SELECT Country FROM country WHERE Name="London";
 
+#alias 
+select id as identificator, surname as family from teacher;
+
 # limit
 SELECT Country FROM country LIMIT 10;
 
