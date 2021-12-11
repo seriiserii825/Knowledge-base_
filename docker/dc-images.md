@@ -17,7 +17,7 @@ cowsay "Hello"
 docker commit myapp serii366/cowsay
 
 #run app
-docker run serii366/cowsay cowsay "Hello world!"
+docker run serii366/cowsay cowsay "Hello world"
 
 #push app
 docker login -u serii366
