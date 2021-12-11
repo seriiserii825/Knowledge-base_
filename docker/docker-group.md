@@ -14,3 +14,7 @@ docker run hello-world
 
 #Reboot if still got error
 reboot
+
+#denied errors
+sudo chgrp docker /lib/systemd/system/docker.socket
+sudo chmod g+w /lib/systemd/system/docker.socket

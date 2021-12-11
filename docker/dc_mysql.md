@@ -1,14 +1,5 @@
-В .env laradoc- заменить версию latest на 5.7
+#run mysql
+docker run mysql
 
-Удалить директорию ~/.laradock/data/mysql
-docker-compose build mysql
-
-
-docker-compose exec --user=laradock workspace bash
-
-
-В файле .env проекта поменять DB_HOST=mysql
-docker-compose exec mysql bash
-mysql -u root -proot
-
-
+#run with root password
+docker run -e MYSQL_ROOT_PASSWORD=root mysql(in e environment set password for mysql user root as root)
