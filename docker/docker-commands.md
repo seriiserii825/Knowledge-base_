@@ -5,6 +5,9 @@ docker run -it ubuntu bash
 docker run -h some
 docker run --name Ubuntu
 
+#exec
+docker exec -it lv-test_php-fpm_1 /bin/sh 
+
 #logs
 docker logs Ubuntu
 
