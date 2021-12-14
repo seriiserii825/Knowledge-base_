@@ -15,3 +15,11 @@ vim.foldfix
 
 #font
 "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+
+#phpcs
+composer require squizlabs/php_codesniffer
+- Press Command + , (Click Code -> Preferences -> Settings)
+- Select User Settings and locate 'PHP CodeSniffer'
+- Scroll to 'Executatble Path' and put
+- /Users/your-username/.composer/vendor/bin/phpcs
+- This fixed the issue for me, I hope it does for you too. Cheers!
