@@ -13,3 +13,5 @@ Workbench Appearence -> Workbench Tree indent
 #folding
 vim.foldfix
 
+#font
+"editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
