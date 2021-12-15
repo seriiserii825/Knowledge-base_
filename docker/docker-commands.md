@@ -26,5 +26,11 @@ docker -rm Ubuntu
 docker container stop $(docker container ls -aq)
 docker container prune -f
 
+#remove container and image
+docker ps
+docker stop <containerid>
+docker rm <containerid>
+docker rmi <imageid>
+
 #remove all images
 docker rmi $(docker images -q) --force

@@ -21,5 +21,11 @@ composer require squizlabs/php_codesniffer
 - Press Command + , (Click Code -> Preferences -> Settings)
 - Select User Settings and locate 'PHP CodeSniffer'
 - Scroll to 'Executatble Path' and put
-- /Users/your-username/.composer/vendor/bin/phpcs
+- ~/.config/.composer/vendor/bin/phpcs
 - This fixed the issue for me, I hope it does for you too. Cheers!
+
+.profile
+export PATH=~/.config/composer/vendor/bin:$PATH
+
+
+
