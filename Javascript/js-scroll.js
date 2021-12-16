@@ -20,3 +20,17 @@ window.scrollBy({
 document.querySelector('.hello').scrollIntoView({ 
   behavior: 'smooth' 
 });
+
+// Scroll to element
+ const homeIntro = document.querySelector('.home-intro');
+    const homeIntroHeight = homeIntro.clientHeight;
+
+    homeIntro.addEventListener('scroll', () => {
+        if (homeIntro.offsetHeight + homeIntro.scrollTop >= homeIntro.scrollHeight) {
+            homeIntro.classList.add('in-back');
+            window.scrollTo({
+                top: homeIntroHeight + 100,
+                behavior: "smooth"
+            });
+        }
+    })
