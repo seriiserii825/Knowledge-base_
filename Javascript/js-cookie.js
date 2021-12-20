@@ -1,56 +1,66 @@
-function setCookie(name, value, daysToLive) {
-    // Encode value in order to escape semicolons, commas, and whitespace
-    var cookie = name + "=" + encodeURIComponent(value);
-    
-    if(typeof daysToLive === "number") {
-        /* Sets the max-age attribute so that the cookie expires
-        after the specified number of days */
-        cookie += "; max-age=" + (daysToLive*24*60*60);
-        
-        document.cookie = cookie;
-    }
-}
+    cookieStore.getAll().then(cookies => {
+        cookies.forEach(item => {
+            const name = item.name;
+            let scope = "";
+            let type = "";
+            let part = "";
+            let expires = "";
 
-function getCookie(name) {
-    // Split cookie string and get all individual name=value pairs in an array
-    var cookieArr = document.cookie.split(";");
-    
-    // Loop through the array elements
-    for(var i = 0; i < cookieArr.length; i++) {
-        var cookiePair = cookieArr[i].split("=");
-        
-        /* Removing whitespace at the beginning of the cookie name
-        and compare it with the given string */
-        if(name == cookiePair[0].trim()) {
-            // Decode the cookie value and return
-            return decodeURIComponent(cookiePair[1]);
-        }
-    }
-    
-    // Return null if not found
-    return null;
-}
-function checkCookie() {
-    // Get cookie using our custom function
-    var firstName = getCookie("firstName");
-    
-    if(firstName != "") {
-        alert("Welcome again, " + firstName);
-    } else {
-        firstName = prompt("Please enter your first name:");
-        if(firstName != "" && firstName != null) {
-            // Set cookie using our custom function
-            setCookie("firstName", firstName, 30);
-        }
-    }
-}
-// Creating a cookie
-document.cookie = "firstName=Christopher; path=/; max-age=" + 30*24*60*60;
-
-// Updating the cookie
-document.cookie = "firstName=Alexander; path=/; max-age=" + 365*24*60*60;
-// Deleting a cookie
-document.cookie = "firstName=; max-age=0";
-
-// Specifying path and domain while deleting cookie
-document.cookie = "firstName=; path=/; domain=example.com; max-age=0";
+            const expiresYear = new Date(item.expires).getFullYear();
+            const currentYear = new Date().getFullYear();
+            const remainsYear = expiresYear - currentYear;
+            switch (name) {
+                case "wpglobus-language":
+                case "wpglobus-language-old":
+                    scope = "Registra in modo anonimo la scelta dell'utente in merito alla lingua di visualizzazione del sito";
+                    type = "HTTP Cookie - Tecnico";
+                    part = "Prima parte";
+                    expires =  remainsYear === 1 ? "1 anno" : remainsYear;
+                    switch (remainsYear) {
+                        case 1:
+                            expires = "1 anno";
+                            break;
+                        case 2:
+                            expires = "2 anni";
+                            break;
+                        default:
+                            expires = "1 anno";
+                            break;
+                    }
+                    break;
+                case "cookie_notice_accepted":
+                    scope = "Registra se l'utente ha o meno visualizzato il coookie banner in modo da non mostrarlo nuovamente ad ogni visualizzazione di pagina";
+                    type = "HTTP Cookie - Tecnico";
+                    part = "Prima parte";
+                    expires =  remainsYear === 1 ? "1 anno" : remainsYear;
+                    switch (remainsYear) {
+                        case 1:
+                            expires = "1 anno";
+                            break;
+                        case 2:
+                            expires = "2 anni";
+                            break;
+                        case remainsYear > 2:
+                            expires = "Persistente";
+                            break;
+                        default:
+                            expires = "Persistente";
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            let table = document.querySelector('#privacy-table tbody');
+            table.insertAdjacentHTML('afterbegin', `
+               <tr>
+                    <td>${name}</td>
+                    <td>${scope}</td>
+                    <td>${expires}</td>
+                    <td>${type}</td>
+                    <td>${part}</td>
+                </tr>
+            `);
+        })
+    })
+    // cookieStore.get('NAME_OF_THE_COOKIE').then(cookies => console.log(cookies))
