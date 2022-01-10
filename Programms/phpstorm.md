@@ -25,3 +25,9 @@ in phpstorm -> tools -> create desktop launcher
 
 disable.
 file > settings > editor > emmet > css > "auto insert css vendor prefixes"
+
+### hotkeys
+ctrl+up - navigation bar
+ctrl+n - new file
+ctrl+up - delete - delete file
+ctrl+alt+n - select in sidebar
