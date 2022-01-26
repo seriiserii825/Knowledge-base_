@@ -12,7 +12,7 @@ nvm ls-remote | grep -i "latest lts"
         v6.17.1   (Latest LTS: Boron)
         v8.15.1   (Latest LTS: Carbon)
        v10.15.3   (Latest LTS: Dubnium)
-nvm install 10.15.3
+nvm install 12.22.9
 nvm ls
 nvm use <version_number>
 nvm uninstall <version_number>
