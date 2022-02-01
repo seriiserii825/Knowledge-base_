@@ -2,6 +2,10 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
+sudo apt install php-xml
+sudo apt-get install php-mbstring
+
+
 #check version
 docker -v 
 
