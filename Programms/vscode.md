@@ -28,4 +28,12 @@ composer require squizlabs/php_codesniffer
 export PATH=~/.config/composer/vendor/bin:$PATH
 
 
+#settings
+~/Documents/vscode/
+
+~/.config/Code/User on Linux (in my case, an, Ubuntu derivative)
+
+#extensions
+~/.vscode/extensions
+
 
