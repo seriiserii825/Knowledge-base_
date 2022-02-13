@@ -25,4 +25,10 @@ When using the c flag, you need to confirm for each match what to do. Vim will o
 :% s/<\/\?\(li\|font\|a\)[^>]*>//g
 
 # remove all tags
-:% s/<\_.\{-1,\}>//g
+:% s/<[^>]*>//g
+
+#remove blank lines
+:g/^\s*$/d
+^ begin of a line
+\s* at least 0 spaces and as many as possible (greedy)
+$ end of a line
