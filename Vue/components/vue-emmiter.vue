@@ -1,3 +1,19 @@
+#Laravel ==================
+##app.js
+window.Reload = new Vue();
+
+##emitter
+Reload.$emit('AfterAdd');
+
+##on
+created(){
+  Reload.$on('AfterAdd', () => {
+      this.getItems();
+  });
+}
+
+
+#vue ===================
 #=================== Main
 export const emmitCounter = new Vue();
 
