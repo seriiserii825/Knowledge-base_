@@ -1,15 +1,36 @@
 //sort array o objects by field
-    function dynamicSort(property) {
-      let sortOrder = 1;
-      if(property[0] === "-") {
-        sortOrder = -1;
-        property = property.substr(1);
-      }
-      return function (a,b) {
-        /* next line works with strings and numbers,
-         * and you may want to customize it to your needs
-         */
-        let result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-        return result * sortOrder;
-      }
-    }
+compareValues(key, order = 'asc') {
+    return function innerSort(a, b) {
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            // property doesn't exist on either object
+            return 0;
+        }
+
+        const varA = (typeof a[key] === 'string') ?
+            a[key].toUpperCase() : a[key];
+        const varB = (typeof b[key] === 'string') ?
+            b[key].toUpperCase() : b[key];
+
+        let comparison = 0;
+        if (varA > varB) {
+            comparison = 1;
+        } else if (varA < varB) {
+            comparison = -1;
+        }
+        return (
+            (order === 'desc') ? (comparison * -1) : comparison
+        );
+    };
+}
+
+// array is sorted by band, in ascending order by default
+singers.sort(compareValues('band'));
+
+// array is sorted by band in descending order
+singers.sort(compareValues('band', 'desc'));
+
+// array is sorted by name in ascending order
+singers.sort(compareValues('name'));
+
+// array is sorted by date if birth in descending order
+singers.sort(compareValues('born', 'desc'));
