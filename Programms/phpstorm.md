@@ -1,3 +1,25 @@
+#constructor
+generate
+
+#search
+file
+action
+class
+
+#if
+alt+enter = simplify
+
+#posfix
+autocompletions
+
+#surround with template
+##surround with emmet 
+alt+enter inject html
+
+#carret at the end of selection
+alt+shift+g
+
+
 ### Буфер обмена
 
 touch ~/.ideavimrc
