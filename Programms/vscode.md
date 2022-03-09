@@ -13,6 +13,9 @@ Workbench Appearence -> Workbench Tree indent
 #folding
 vim.foldfix
 
+#remove empty line in replace(use regular expresion)
+^(\s)*$\n
+
 #font
 "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
 
