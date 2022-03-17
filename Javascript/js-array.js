@@ -1,5 +1,8 @@
-const range = ({from = 0, to, step = 1, length = Math.ceil((to - from) / step)}) => 
-  Array.from({length}, (_, i) => from + i * step)
+const range = ({from = 0, to, step = 1, length = Math.ceil((to - from) / step)}) => Array.from({length}, (_, i) => from + i * step);
+
+range({from = 0, to, step = 1, length = Math.ceil((to - from) / step)}){
+  return Array.from({length}, (_, i) => from + i * step);
+}
 
 console.log(
   range({length: 5}), // [0, 1, 2, 3, 4]
