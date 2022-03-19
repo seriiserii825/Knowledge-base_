@@ -16,13 +16,4 @@ app.get('/', (req, res) => {
   res.json({ message: 'ok' });
 });
 
-sequelize.authenticate().then(() => {
-  console.log('success')
-}).catch(err => {
-  console.log(err, 'err')
-})
-
-app.listen(PORT, () => {
-  console.log('App is running')
-});
 
