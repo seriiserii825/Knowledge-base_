@@ -1,10 +1,13 @@
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
-GitCopy
- 
+#clone this repo in the root of your user profile
+cd ~/ from anywhere then 
+#clone
+git clone https://github.com/nvm-sh/nvm.git .nvm
 
-Обновим среду оболочки, для чего требуется закрыть и снова открыть терминал, либо выполнить команду:
-source ~/.profile
-nvm --version
+#source
+cd ~/.nvm and check out the latest version with git checkout v0.39.1
+activate nvm by sourcing it from your shell: . ./nvm.sh
+
+#install
 nvm ls-remote | grep -i "latest lts"
 
 // в моём случае результат таков
