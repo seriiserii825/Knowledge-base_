@@ -13,3 +13,8 @@ su - ${USER}
 id -nG
 sudo usermod -aG docker serii
 
+#error
+sudo chmod 666 /var/run/docker.sock
+sudo usermod -aG docker serii
+sudo chmod 666 /var/run/docker.sock
+newgrp docker
