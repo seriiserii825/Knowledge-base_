@@ -77,3 +77,17 @@ Image preview
 
 set preview_images_method ueberzug
 set preview_images true
+
+#devicons
+git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
+
+echo "default_linemode devicons" >> $HOME/.config/ranger/rc.conf
+
+##Download single font
+
+##Copy the fonts to 
+/usr/local/share/fonts or a subfolder 
+
+##and then run 
+sudo fc-cache -fv. 
+
