@@ -276,3 +276,8 @@ Run :CocConfig this will open the file ~/.config/nvim/coc-settings.json
 "typescript.suggest.autoImports": true,
 "snippets.userSnippetsDirectory": "~/.config/nvim/snips"
 }
+
+# here how to use extension
+https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+
+
