@@ -1,7 +1,13 @@
+# set as default editor
+
+sudo update-alternatives --all
+
 https://www.chrisatmachine.com/Neovim/01-vim-plug/
 
-#Installing Neovim
-##Ubuntu
+# Installing Neovim
+
+## Ubuntu
+
 sudo apt install neovim
 
 #Create config
@@ -24,18 +30,18 @@ touch ~/.config/nvim/vim-plug/plugins.vim
 ##Add the following to ~/.config/nvim/vim-plug/plugins.vim
 " auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  "autocmd VimEnter * PlugInstall
-  "autocmd VimEnter * PlugInstall | source $MYVIMRC
+silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"autocmd VimEnter _ PlugInstall
+"autocmd VimEnter _ PlugInstall | source $MYVIMRC
 endif
 call plug#begin('~/.config/nvim/autoload/plugged')
-    " Better Syntax Support
-    Plug 'sheerun/vim-polyglot'
-    " File Explorer
-    Plug 'scrooloose/NERDTree'
-    " Auto pairs for '(' '[' '{'
-    Plug 'jiangmiao/auto-pairs'
+" Better Syntax Support
+Plug 'sheerun/vim-polyglot'
+" File Explorer
+Plug 'scrooloose/NERDTree'
+" Auto pairs for '(' '[' '{'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 #Source your plugins
