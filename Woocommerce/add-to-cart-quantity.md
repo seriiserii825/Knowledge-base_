@@ -1,7 +1,7 @@
 ## functions.php
 
-```
-function cs_wc_loop_add_to_cart_scripts()
+```php
+<?php function cs_wc_loop_add_to_cart_scripts()
 {
     if (is_shop() || is_product_category() || is_product_tag() || is_product()) : ?>
 
@@ -21,7 +21,7 @@ add_action('wp_footer', 'cs_wc_loop_add_to_cart_scripts');
 
 ## templates/loop/add-to-cart.php
 
-```
+```php
 <?php
 /**
  * Custom Loop Add to Cart.
