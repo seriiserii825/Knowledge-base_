@@ -3,3 +3,5 @@ deb download
 
 fzf --preview='head -n 30 {}'
 fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'
+
+:verbose inoremap
