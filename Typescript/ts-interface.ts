@@ -28,10 +28,40 @@ function some(x: ITest): string{
 }
 
 //================================ Cast type
-const c = (point: IPoint) => {
+const cv = (point: IPoint) => {
   const e: I3DPoint = point as I3DPoint;
   return e;
 }
 
 const h =   document.querySelector('body');
 
+
+// homework
+const data = {
+  user: "name",
+  info: {
+    desc: "desc",
+    isActive: true
+  },
+  tags: [
+    {
+      title: "tag",
+      value: 1000
+    }
+  ]
+}
+interface IInfo  {
+  desc: string
+  isActive: boolean
+}
+interface Itags {
+  title: string
+  value: number
+}
+interface IUser  {
+  userId: number
+  id: number
+  title: string
+  info: IInfo
+  tags: Itags[]
+}
