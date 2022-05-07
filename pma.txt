@@ -1,1 +1,0 @@
-pma@localhost user password = cgeLYjiGTUSdrvIEyPKNcAuKR6551PG2
