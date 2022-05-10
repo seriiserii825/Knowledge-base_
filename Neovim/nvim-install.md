@@ -8,7 +8,7 @@ chmod u+x nvim.appimage
 Move the file to the following location
 
 sudo mv nvim.appimage nvim  
-sudo mv nvim /usr/local/bin 
+sudo mv nvim /usr/local/bin
 
 which nvim
 nvim --version
