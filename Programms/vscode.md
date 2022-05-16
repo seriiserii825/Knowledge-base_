@@ -20,4 +20,9 @@ vim.foldfix
 "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
 
 ~/.config/Code/User (settings, keybindings)
-~/.vscode/extensions on Linux and Mac OS X
+
+On the old machine:
+code --list-extensions > vscode-extensions.list
+
+On the new machine:
+cat vscode-extensions.list | xargs -L 1 code --install-extension
