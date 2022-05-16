@@ -1,0 +1,11 @@
+Git - open git status
+s - staged
+u - unstaged
+x - remove from staged
+Enter - open file in new window
+
+:Diff - diff files
+cc - commit
+:x - save after commit
+gpl - git pull
+gp - git push
