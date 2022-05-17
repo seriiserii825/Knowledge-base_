@@ -4,6 +4,9 @@ https://stackoverflow.com/questions/67506693/error-no-such-file-sftp-liximomo-ex
 in package.json am schimbat versiunea la ssh2 ("ssh2": "^1.1.0",);
 npm install
 
+# vim emmet expand problem
+Change vim version to 1.16.0
+
 #status bar
 ext install JoeBerria.statusbarerror
 
