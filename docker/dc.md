@@ -18,3 +18,12 @@ sudo chmod 666 /var/run/docker.sock
 sudo usermod -aG docker serii
 sudo chmod 666 /var/run/docker.sock
 newgrp docker
+
+#prune system
+docker system prune
+
+#remove containers
+docker rm -vf $(docker ps -a -q)
+
+#remove images
+docker rmi -f $(docker images -a -q)
