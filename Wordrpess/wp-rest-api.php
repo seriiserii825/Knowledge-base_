@@ -3,34 +3,67 @@ After create new url, need to save permalinks
 //rest-api.php
 <?php
 if (!defined('ABSPATH')) {
-	exit; // Exit if accessed directly
+    exit; // Exit if accessed directly
 }
-function products_register_search()
+function blog_register_search()
 {
-	register_rest_route('products/v1', 'search', [
-		'methods' => WP_REST_SERVER::READABLE,
-		'callback' => 'productsSearchResults',
-	]);
+    register_rest_route('blog/v1', 'search', [
+        'methods' => WP_REST_SERVER::READABLE,
+        'callback' => 'blogSearchResults',
+    ]);
 }
-add_action('rest_api_init', 'products_register_search');
-function productsSearchResults($data)
-{
-	$products_result = [];
-	$products = new WP_Query([
-		'post_type' => 'product',
-		'posts_per_page' => -1,
-		's' => sanitize_text_field($data['term']),
-	]);
-	while ($products->have_posts()) {
-		$products->the_post();
-		array_push($products_result, [
-			'title' => get_the_title(),
-			'url' => get_the_permalink(),
-			'img' => get_the_post_thumbnail_url(get_the_ID(), 'thumbnail')
-		]);
-	}
 
-	return $products_result;
+add_action('rest_api_init', 'blog_register_search');
+function blogSearchResults($data)
+{
+    $tipo = $data['tipo'];
+    $per_page = $data['per_page'];
+
+    $blog_result = [];
+
+    function getTax($value, $slug, $value_type = 'id')
+    {
+        return [
+            'taxonomy' => $slug,
+            'field' => $value_type,
+            'terms' => $value,
+        ];
+    }
+
+    $tax_query = ['relation' => 'AND'];
+
+    if (!empty($tipo)) {
+        $tax_query[] = getTax($tipo, 'type', 'id');
+    }
+
+    $blog = new WP_Query([
+        'post_type' => 'blog',
+        'posts_per_page' => $per_page,
+        'tax_query' => [
+            $tax_query
+        ],
+    ]);
+
+    while ($blog->have_posts()) {
+        $blog->the_post();
+        $slug = basename(get_permalink(get_the_ID()));
+
+        $blog_result[] = [
+            'id' => get_the_ID(),
+            'title' => html_entity_decode(get_the_title()),
+            'url' => get_the_permalink(),
+            'img' => get_the_post_thumbnail_url(get_the_ID(), 'full'),
+            'type' => get_the_terms(get_the_ID(), 'type')[0]->name,
+            'text' => get_the_content(),
+            'slug' => $slug
+        ];
+    }
+
+    return [
+        "blogs" => $blog_result,
+        "tipo" => $tipo,
+        "total" => $blog->found_posts
+    ];
 }
 
 // v-search.php ==================================
