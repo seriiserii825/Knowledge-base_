@@ -26,3 +26,8 @@ const clone = JSON.parse(JSON.stringify(persone));
 	let values = Object.values(ob);//array of object values
 	let entries = Object.entries(ob);//array of keys and values
 	let fromEntriesToObject = Object.fromEntries([['some', 'first'], ['new', 'second']]);//Object from array
+
+//empty object
+function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
