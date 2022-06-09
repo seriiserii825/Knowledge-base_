@@ -3,3 +3,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 sudo apt-get purge google-chrome-stable
 mv ~/.config/google-chrome/ ~/.config/google-chrome.bak/
+
+#cors
+chrome://flags/#allow-insecure-localhost
+dissallow
