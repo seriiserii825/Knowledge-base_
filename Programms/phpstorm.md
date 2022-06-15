@@ -1,11 +1,3 @@
-#constructor
-generate
-
-#search
-file
-action
-class
-
 #if
 alt+enter = simplify
 
@@ -53,3 +45,6 @@ ctrl+up - navigation bar
 ctrl+n - new file
 ctrl+up - delete - delete file
 ctrl+alt+n - select in sidebar
+
+### reset to default settings
+remove /home/serii/.config/JetBrains
