@@ -1,3 +1,8 @@
+# Import
+For import go to config file and set maxfilesize
+wp-content/plugins/all-in-one-wp-migration/
+
+# Restore
 # If you don't want to pay for the PRO version of this plugin, and you want to use the "Restore from Server" functionally that was present in the version 6.77, follow the instructions below:
 Open the js file: wp-content/plugins/all-in-one-wp-migration/lib/view/assets/javascript/backups.min.js
 
