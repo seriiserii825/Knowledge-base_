@@ -1,1 +1,2 @@
-npm i sequelize sequelize-cli mysql2 nodemon bcrypt express-fileupload express-session express-flash
+npm i sequelize sequelize-cli mysql2 nodemon bcrypt jsonwebtoken colors body-parser cookie-parser cross-env 
+
