@@ -35,6 +35,7 @@ cat vscode.list | xargs -L 1 code --install-extension
 #extensions
 alefragnani.project-manager
 amiralizadeh9480.laravel-extra-intellisense
+ducfilan.pug-formatter
 Atishay-Jain.All-Autocomplete
 bmewburn.vscode-intelephense-client
 christian-kohler.path-intellisense
