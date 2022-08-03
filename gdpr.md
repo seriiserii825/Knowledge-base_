@@ -10,18 +10,16 @@
 ## Check if there is Googe Analytics Tracking code; if yes, find it and remove it - Use developer tools - Network - search for Collect
 
 ## Install Matomo Analytics - Ethical Stats. Powerful Insights, with the setting attached
-- Gets started → Enable Tracking now
-- Settings -> Tab Tracking
-    a) Add tracking code --> Default Tracking
-    b) Disable cookie: check it
-    c) Enable ecommerce: Uncheck it
-- Settings > Matomo Admin
-  - Privacy
-    - Rendi anonimi
-      Rendi anonimi gli (check)
-      Machera completamente (check)
-      Usa anchi gli indirizzo (Si)
-      Sostituici ID (Check)
+- scoatem pluginul matomo si inlocuim cu cod in header plus adaugam in matomo.atf.care
+- http://matomo.atf.care/
+- user atf
+- pass Bludelego2022!
+- in meniu alegem all website
+- add a new website
+- denumirea url fara https apoi link de la site
+- codul de adaugat il gasiti in tracking code
+- pluginul matomo de dezinstalat!!!!
+- siteurile care sunt subdomenii cu altuofianco.com nu le puneti matomo!!!! sunt inca in dezvoltare nu sunt finisate
 
 ## Change privacy policy page (table with cookies);
 <table>
