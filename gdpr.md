@@ -1,4 +1,6 @@
 ## Check if there is Google Map; if yes change with OpenStreetMap
+https://leaflet-extras.github.io/leaflet-providers/preview/
+
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 24,
     attribution:
