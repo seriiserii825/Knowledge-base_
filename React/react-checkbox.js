@@ -35,13 +35,6 @@ function App() {
           : topping
       )
     )
-
-    // or
-    // setToppings([
-    //   ...toppings.slice(0, index),
-    //   { ...toppings[index], checked: !toppings[index].checked },
-    //   ...toppings.slice(index + 1),
-    // ]);
   }
 
   const selectAll = () => {
