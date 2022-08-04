@@ -7,15 +7,6 @@ https://leaflet-extras.github.io/leaflet-providers/preview/
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
-	L.tileLayer(
-		'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png',
-		{
-			maxZoom: 24,
-			attribution:
-				'&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-		}
-	).addTo(mymap);
-
 ## If there is the plugin Altuofianco, remove it
 
 ## Check if there is Googe Analytics Tracking code; if yes, find it and remove it - Use developer tools - Network - search for Collect
