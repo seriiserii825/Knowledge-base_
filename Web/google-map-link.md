@@ -18,3 +18,20 @@ https://www.google.com/maps?ll=43.12345,-76.12345&q=food&amp;z=14
 
 #String search as destination
 https://www.google.com/maps?saddr=My+Location&daddr=Pinckney+Hugo+Group
+
+
+
+function getLatLong($district)
+{
+	$address = $district; //here we can get the name of the district
+	$geo = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($district) . '&sensor=false&key=AIzaSyDwb3N34D-V3uayueVVZKL6sSgePwkmDfU');
+	// We convert the JSON to an array
+	$geo = json_decode($geo, true);
+	// If everything is cool
+	if ($geo['status'] == 'OK') {
+		// We set our values
+		$latitude = $geo['results'][0]['geometry']['location']['lat'];
+		$longitude = $geo['results'][0]['geometry']['location']['lng'];
+		return ['latitude' => $latitude, 'longtitude' => $longitude];
+	}
+}
