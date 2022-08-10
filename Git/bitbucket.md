@@ -15,7 +15,8 @@ Host bitbucket.org
   Hostname bitbucket.org
   IdentityFile ~/.ssh/id_rsa
 
-Host sites-bludelego
+Host bitbucket.org-b
   Hostname bitbucket.org
   PreferredAuthentications publickey
   IdentityFile ~/.ssh/sites-bludelego
+
