@@ -4,3 +4,12 @@ function getUniqueBy(arr, prop) {
 }
 
 clients = getUniqueBy(clients, "client_id");
+
+# by 2 properties
+const uniqueAgents = filteredAgents.filter(function (a) {
+    var key = a.nome + '|' + a.cognome;
+    if (!this[key]) {
+        this[key] = true;
+        return true;
+    }
+}, Object.create(null));
