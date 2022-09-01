@@ -1,5 +1,5 @@
 <div class="home-intro__video">
-  <div data-video="<?php echo $code; ?>" id="player"></div>
+  <div data-video="video_id" id="player"></div>
 </div>
 
 <script>
