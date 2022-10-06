@@ -1,0 +1,2 @@
+ i=0; for f in *; do mv ${f} $((i=++i)).ext; done
+
