@@ -34,3 +34,6 @@ When using the c flag, you need to confirm for each match what to do. Vim will o
 ^ begin of a line
 \s* at least 0 spaces and as many as possible (greedy)
 $ end of a line
+
+#remove spaces to one
+:%s/\s\+$/\ /g

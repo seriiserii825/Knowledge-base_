@@ -1,4 +1,3 @@
-<?php 
   <?php
   $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
   $articoli = new WP_Query([
@@ -27,6 +26,4 @@
 
     </div>
     <?php wp_pagenavi(array('query' => $articoli)); ?>
-  </div>?>
-
-
+  </div>
