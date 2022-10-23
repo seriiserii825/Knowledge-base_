@@ -36,11 +36,12 @@ sudo service ssh restart
 
 # Add user to sudo
 - /etc/sudoers - add line boss ALL=(ALL) NOPASSWD: ALL - user can work without print a password
-- ssh -p 5050 root@IP_ADDRESS check if we cant enter with root
-- ssh -p 5050 boss@IP_ADDRESS
 
-# Nginx
-
+# change port
+sudo vim /etc/ssh/sshd_config
+Port to 5050
+ssh -p 5050 root@IP_ADDRESS check if we cant enter with root
+ssh -p 5050 boss@IP_ADDRESS
 
 #Map
 

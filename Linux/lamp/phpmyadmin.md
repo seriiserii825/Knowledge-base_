@@ -12,6 +12,6 @@ After installed
 mysql -u root -p
 mysql>INSTALL COMPONENT "file://component_validate_password";
 
-curl -O -k https://raw.githubusercontent.com/skurudo/phpmyadmin-fixer/master/pma.sh 
-sudo chmod +x pma.sh 
-sudo ./pma.sh
+sudo phpenmod mbstring
+
+sudo systemctl restart apache2
