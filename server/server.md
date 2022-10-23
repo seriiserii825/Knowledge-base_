@@ -1,25 +1,41 @@
-- connect to server throw ssh.
-- Update and Upgrade on server
-
 # User
+sudo useradd -m -d /home/username -s /bin/bash username
+passwd username
 
-- adduser boss
-     - deluser boss - delete user
-     - rm /home/boss - delete boss home dir
-- gpasswd -a boss sudo - add user to admin(to create or delete use sudo, to insert password)
-- su - boss - connect boss as user
+## Теперь для того, чтобы предоставить пользователю sudo-привилегии, его нужно добавить в группу sudo. Это делается командой: 
+usermod -aG sudo username
 
-# Ssh
+## Копировать содержимое публичного ключа в .ssh/authorized_keys
+ 
+# Установим username владельцем этого каталога (также будет создана группа с тем же именем):
+chown -R username:username /home/username/.ssh
+chmod 700 /home/username/.ssh
+chmod 600 /home/username/.ssh/authorized_keys
 
-- password for ssh will be from the hosting email
-- mkdir .ssh
-- chmod 700 .ssh
-- vim .ssh/authorize_keys - add here our public key.
-- .ide_rsa.pug - public key
-- chmod 600 .ssh/authorize_keys
-- exit - go to root user
-- /etc/ssh/ssh_config - change port from 22 to 5050, and PermitRouteLogin - no
-- service ssh restart
+# Теперь можно залогиниться на сервер под новым пользователем без использования пароля:
+
+ssh username@your_server_ip
+
+#Если нужно запустить команду с правами администратора, введите sudo перед ней, например:
+
+sudo команда
+
+#Этот шаг не является обязательным, но для повышения безопасности можно отключить дистанционный доступ для суперпользователя root.
+## В этом случае пользователям всегда будет необходимо подключаться под собственными учетными записями, что позволит отслеживать действия на сервере, видеть, кем были внесены те или иные изменения и т.д.
+## Для отключения доступа root откройте файл /etc/ssh/sshd_config:
+
+sudo nano /etc/ssh/sshd_config
+
+
+## Найдите строку PermitRootLogin и замените ее текущее значение на:
+
+PermitRootLogin no
+
+# После выполненных действий перезапустите службу SSH:
+ 
+sudo service ssh restart
+
+# Add user to sudo
 - /etc/sudoers - add line boss ALL=(ALL) NOPASSWD: ALL - user can work without print a password
 - ssh -p 5050 root@IP_ADDRESS check if we cant enter with root
 - ssh -p 5050 boss@IP_ADDRESS
@@ -108,7 +124,8 @@ certbot renew --dry-run(certificat will be to 90 days)
 When certificat will finish need to tipy in terminal
 certbot renew
 
-All you need to add to your universal Nuxt app for serving it though PM2 is a file called ecosystem.config.js. Create a new file with that name in your root project directory and add the following content:
+All you need to add to your universal Nuxt app for serving it though PM2 is a file called ecosystem.config.js.
+Create a new file with that name in your root project directory and add the following content:
 
 module.exports = {
 apps: [
