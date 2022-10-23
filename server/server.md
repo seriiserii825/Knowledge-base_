@@ -43,13 +43,31 @@ Port to 5050
 ssh -p 5050 root@IP_ADDRESS check if we cant enter with root
 ssh -p 5050 boss@IP_ADDRESS
 
-#Map
-
-- grep -w 80 /etc/services - check port avaible on site
-- create /home/boss/Sites
-- sudo chmod -R 777 /home/boss/Sites
+#Nginx
+Install nginx
 - vim /etc/nginx/sites-avaible/mysite.com (create config)
   https://i.imgur.com/z3Zk00t.png
+server {
+        listen 80;
+        listen [::]:80;
+
+
+        root /var/www/html;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name доменное_имя;
+
+        location / {
+                proxy_pass http://localhost:ваш_порт;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+        }
+
+}
 - sudo ln -s /etc/nginx/sites-avaible/mysite.com /etc/nginx/sites-enabled/mysite.com
 - remove default_server from nginx config(not for default config)
 - sudo nginx -t (check file for errors)
@@ -98,19 +116,6 @@ node -v
 - pm2 start
 - pm2 startup ubuntu - start pm2 when server restart
 
-#Git
-
-- install git
-
-#Mongodb
-
-- sudo apt install -y mongodb
-- sudo systemctl enable mongodb.service
-- sudo systemctl status mongodb
-- sudo service mongodb start( if mongod not work )
-- sudo ufw allow 27017 (add mongodb port to ufw)
-- sudo vim /etc/mongod.conf bind_ip = 127.0.0.1, ip_our_server
-- sudo systemctl restart mongodb
 
 #Commands
 
