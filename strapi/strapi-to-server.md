@@ -24,7 +24,35 @@ strapi(/* {...} */).start();
 npm install
 
 #Start Your Strapi Server:
-NODE_ENV=production pm2 start server.js --name api
+NODE_ENV=production pm2 start server.js --name strapi
+
+#apache2
+sudo a2enmod proxy_http
+sudo systemctl restart apache2
+
+#Переходим в папку с виртуальными хостами Apache2 командой:
+cd /etc/apache2/sites-available
+
+# и дублируем дефолтный файл конфигурации виртуального хоста Apache2:
+cp 000-default.conf ваш_домен.conf
+
+<VirtualHost *:80>
+ServerName strapi.burdujasergiu.com
+ServerAlias www.strapi.burdujasergiu.com
+ServerAdmin webmaster@localhost
+DocumentRoot /var/www/strapi.burdujasergiu.com/
+
+ProxyPreserveHost On
+ProxyPass / http://127.0.0.1:1337/
+ProxyPassReverse / http://127.0.0.1:1337/
+
+ErrorLog ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+#Теперь можно включить виртуальный хост и перезагрузить веб-сервер*:
+sudo a2ensite ваш_домен
+sudo systemctl reload apache2
 
 #To view the processes, you can use
 pm2 list
