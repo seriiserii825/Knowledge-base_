@@ -1,3 +1,6 @@
+Install vscodium
+Install neovim
+
 <leader><leader> s <char>	Search character
 <leader><leader> f <char>	Find character forwards
 <leader><leader> F <char>	Find character backwards

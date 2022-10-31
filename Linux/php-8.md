@@ -29,3 +29,8 @@ sudo a2enconf php8.0-fpm
 #Чтобы активировать изменения, перезапустите Apache:
 
 systemctl restart apache2
+
+# Php without server
+sudo apt install php8.0-common
+sudo apt install php8.0-{curl,intl,mysql,readline,xml,mbstring}
+sudo apt install php8.0-cli
