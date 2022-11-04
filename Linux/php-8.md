@@ -9,7 +9,7 @@ sudo add-apt-repository ppa:ondrej/php
 ## Если вы используете Apache в качестве веб-сервера, вы можете запускать PHP как модуль Apache или PHP-FPM.
 
 sudo apt update
-sudo apt install php8.0 libapache2-mod-php8.0 php-zip php-mysql
+sudo apt install php8.0 libapache2-mod-php8.0 php-zip php8.0-curl php8.0-mysql
 
 #После установки пакетов перезапустите Apache, чтобы модуль PHP загрузился:
 
