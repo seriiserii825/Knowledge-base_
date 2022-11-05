@@ -9,3 +9,4 @@ npm uninstall -g gulp
 #notify
 sudo apt-get --reinstall install libnotify-bin notify-osd
 npm rebuild node-sass
+

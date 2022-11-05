@@ -9,7 +9,7 @@ sudo add-apt-repository ppa:ondrej/php
 ## Если вы используете Apache в качестве веб-сервера, вы можете запускать PHP как модуль Apache или PHP-FPM.
 
 sudo apt update
-sudo apt install php8.0 libapache2-mod-php8.0
+sudo apt install php8.0 libapache2-mod-php8.0 php-zip php8.0-curl php8.0-mysql
 
 #После установки пакетов перезапустите Apache, чтобы модуль PHP загрузился:
 
@@ -19,7 +19,7 @@ sudo systemctl restart apache2
 # Php-FPM — это менеджер процессов FastCGI для PHP. Выполните следующую команду, чтобы установить необходимые пакеты:
 
 sudo apt update
-sudo apt install php8.0-fpm libapache2-mod-fcgid
+sudo apt install php8.0-fpm libapache2-mod-fcgid php8.0-mysql
 
 #По умолчанию PHP-FPM не включен в Apache. Чтобы включить его, запустите:
 

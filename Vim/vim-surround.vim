@@ -1,6 +1,16 @@
 "rename tag to h2
 cstth2 
 
+#add
+ys<motion>"
+ysw" - add "word"
+
+# delete
+ds" - delete "
+
+#change
+cs"' - change " to '
+
 To add a
 <h1>
 around this line: yss<h1>
