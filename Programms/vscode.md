@@ -1,3 +1,13 @@
+# shortcuts
+ctrl+shift+w - close all tabs
+ctrl+alt+. - close others
+ctrl+\ - split
+ctrl+h - first window
+ctrl+l - second window
+ctrl+shift+o - view all variables in file
+ctrk+k,ctrl+i - view code on hover
+
+
 #sftp
 https://stackoverflow.com/questions/67506693/error-no-such-file-sftp-liximomo-extension
 /home/serii/.vscode/extensions/liximomo.sftp-1.12.9
@@ -30,7 +40,6 @@ code --list-extensions > vscode-extensions.list
 
 On the new machine:
 cat vscode.list | xargs -L 1 code --install-extension
-
 
 #extensions
 alefragnani.project-manager
