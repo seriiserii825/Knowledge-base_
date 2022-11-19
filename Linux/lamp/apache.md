@@ -50,6 +50,8 @@ ServerAdmin webmaster@localhost
 DocumentRoot /var/www/test.site/public_html
 ErrorLog ${APACHE_LOG_DIR}/error.log
 CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+
 </VirtualHost>
 
 Вот что значат некоторые строки:
