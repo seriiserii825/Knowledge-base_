@@ -1,3 +1,5 @@
+npm install pm2 -g
+
 touch ecosystem.config.js
 
 module.exports = {
