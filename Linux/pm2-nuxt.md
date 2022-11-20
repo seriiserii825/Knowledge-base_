@@ -11,5 +11,5 @@ module.exports = {
     }
   ]
 }
-
+pm2 start npm --name "nuxt" -- start
 pm2 start
