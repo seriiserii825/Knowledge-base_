@@ -47,3 +47,9 @@ $ sudo rm -rf /var/lib/containerd/
 $ sudo rm -rf /var/lib/docker/
 $ sudo apt-get purge -y docker-ce docker-ce-cli docker.io containerd.io
 $ sudo apt-get install docker.io
+
+# rebuild container
+docker-compose stop nginx # stop if running
+docker-compose rm -f nginx # remove without confirmation
+docker-compose build nginx # build
+docker-compose up -d nginx # create and start in background
