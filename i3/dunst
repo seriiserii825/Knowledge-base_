@@ -1,6 +1,6 @@
 killall dunst;notify-send foo
 
-sudo apt-get install dunst libnotify-bin
+sudo apt install dunst libnotify-bin
 
 Of course the default look doesn’t look like that. It needs to be configured first. Here is my configurations. 
 It’s placed in ~./config/dunst/dunstrc
