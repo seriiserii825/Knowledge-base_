@@ -1,0 +1,39 @@
+<script charset="utf-8">
+  const menu_links = document.querySelectorAll(
+    "#js-main-menu li.menu-item-has-children > a"
+  );
+  const sub_menus = document.querySelectorAll("#js-main-menu ul.sub-menu");
+
+  menu_links.forEach((link) => {
+    console.log(link.href, "link.href");
+    console.log(link.textContent, "link.textContent");
+    link.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      closeSubMenus();
+      const sub_menu = link.nextElementSibling;
+      sub_menu.classList.toggle("active");
+    });
+  });
+
+  function closeSubMenus() {
+    sub_menus.forEach((sub_menu) => {
+      sub_menu.classList.remove("active");
+    });
+  }
+</script>
+<style type="text/css" media="screen">
+  &.menu-item-has-children {
+    position: relative;
+    &.active,
+    &:hover,
+    &:active {
+      .sub-menu {
+        opacity: 1;
+        pointer-events: all;
+        @media screen and (max-width: 1080px) {
+          display: block;
+        }
+      }
+    }
+  }
+</style>
