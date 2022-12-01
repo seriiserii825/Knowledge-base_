@@ -12,3 +12,7 @@ sudo mv nvim /usr/local/bin
 
 which nvim
 nvim --version
+
+# python
+
+sudo apt install python3-neovim
