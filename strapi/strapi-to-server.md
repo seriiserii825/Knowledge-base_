@@ -23,6 +23,8 @@ strapi(/* {...} */).start();
 
 npm install
 
+cp .env.example .env
+
 #Start Your Strapi Server:
 NODE_ENV=production pm2 start server.js --name strapi
 
