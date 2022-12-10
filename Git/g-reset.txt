@@ -1,3 +1,0 @@
-git reset HEAD - последние изменения, не коммит
-git reset --hard HEAD^ - последний коммит
-git reset --hard commit - указанный коммит
