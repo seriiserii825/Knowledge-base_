@@ -443,3 +443,237 @@ nvimtree.setup({
 And connect to init.lua
 
 ---
+
+### Bufferline
+
+Plugin `use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })`
+
+File /plugins/bufferline.lua connect in to init.lua
+
+```
+require("bufferline").setup({
+  options = {
+    mode = "buffers", -- set to "tabs" to only show tabpages instead
+    numbers = "none",
+    close_command = "bdelete! %d", -- can be a string | function, see "Mouse actions"
+    right_mouse_command = "bdelete! %d", -- can be a string | function, see "Mouse actions"
+    left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
+    middle_mouse_command = nil, -- can be a string | function, see "Mouse actions"
+    -- NOTE: this plugin is designed with this icon in mind,
+    -- and so changing this is NOT recommended, this is intended
+    -- as an escape hatch for people who cannot bear it for whatever reason
+    -- indicator.style = 'icon',
+    buffer_close_icon = "",
+    modified_icon = "●",
+    close_icon = "",
+    left_trunc_marker = "",
+    right_trunc_marker = "",
+    --- name_formatter can be used to change the buffer's label in the bufferline.
+    --- Please note some names can/will break the
+    --- bufferline so use this at your discretion knowing that it has
+    --- some limitations that will *NOT* be fixed.
+    name_formatter = function(buf) -- buf contains a "name", "path" and "bufnr"
+      -- remove extension from markdown files for example
+      if buf.name:match("%.md") then
+        return vim.fn.fnamemodify(buf.name, ":t:r")
+      end
+    end,
+    max_name_length = 18,
+    max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
+    tab_size = 18,
+    diagnostics = "nvim_lsp",
+    diagnostics_update_in_insert = false,
+    diagnostics_indicator = function(count, level, diagnostics_dict, context)
+      return "(" .. count .. ")"
+    end,
+    -- NOTE: this will be called a lot so don't do any heavy processing here
+    custom_filter = function(buf_number, buf_numbers)
+      -- filter out filetypes you don't want to see
+      if vim.bo[buf_number].filetype ~= "<i-dont-want-to-see-this>" then
+        return true
+      end
+      -- filter out by buffer name
+      if vim.fn.bufname(buf_number) ~= "<buffer-name-I-dont-want>" then
+        return true
+      end
+      -- filter out based on arbitrary rules
+      -- e.g. filter out vim wiki buffer from tabline in your work repo
+      if vim.fn.getcwd() == "<work-repo>" and vim.bo[buf_number].filetype ~= "wiki" then
+        return true
+      end
+      -- filter out by it's index number in list (don't show first buffer)
+      if buf_numbers[1] ~= buf_number then
+        return true
+      end
+    end,
+    color_icons = true, -- whether or not to add the filetype icon highlights
+    show_buffer_icons = true, -- disable filetype icons for buffers
+    show_buffer_close_icons = false,
+    show_buffer_default_icon = true, -- whether or not an unrecognised filetype should show a default icon
+    show_close_icon = false,
+    show_tab_indicators = true,
+    persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
+    -- can also be a table containing 2 custom separators
+    -- [focused and unfocused]. eg: { '|', '|' }
+    separator_style = "slant",
+    always_show_bufferline = true,
+    sort_by = "insert_after_current",
+    function(buffer_a, buffer_b)
+      return buffer_a.modified > buffer_b.modified
+    end,
+  },
+})
+```
+
+---
+
+### Telescope
+Plugin
+```
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.0',
+  -- or                            , branch = '0.1.x',
+    requires = { {'nvim-lua/plenary.nvim'} }
+  }
+```
+
+Connect file /plugins/telescope.lua to init.lua
+```
+-- import telescope plugin safely
+local telescope_setup, telescope = pcall(require, "telescope")
+if not telescope_setup then
+  return
+end
+
+-- import telescope actions safely
+local actions_setup, actions = pcall(require, "telescope.actions")
+if not actions_setup then
+  return
+end
+
+-- configure telescope
+telescope.setup({
+  -- configure custom mappings
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-k>"] = actions.move_selection_previous, -- move to prev result
+        ["<C-j>"] = actions.move_selection_next, -- move to next result
+        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist, -- send selected to quickfixlist
+      },
+    },
+  },
+})
+```
+
+Add hotkeys to /core/keymaps.lua
+```
+-- telescope
+keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
+keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>") -- find string in current working directory as you type
+keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>") -- find string under cursor in current working directory
+keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers in current neovim instance
+keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available help tags
+
+-- telescope git commands (not on youtube nvim video)
+keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>") -- list all git commits (use <cr> to checkout) ["gc" for git commits]
+keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>") -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
+keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>") -- list git branches (use <cr> to checkout) ["gb" for git branch]
+keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>") -- list current changes per file with diff preview ["gs" for git status]
+```
+
+---
+
+### Lualine
+Plugin
+```
+  -- statusline
+  use("nvim-lualine/lualine.nvim")
+```
+
+Connect /plugins/lualine.lua to init.lua
+```
+-- import lualine plugin safely
+local status, lualine = pcall(require, "lualine")
+if not status then
+  return
+end
+
+-- get lualine nightfly theme
+local lualine_nightfly = require("lualine.themes.nightfly")
+
+-- new colors for theme
+local new_colors = {
+  blue = "#65D1FF",
+  green = "#3EFFDC",
+  violet = "#FF61EF",
+  yellow = "#FFDA7B",
+  black = "#000000",
+}
+
+-- change nightlfy theme colors
+lualine_nightfly.normal.a.bg = new_colors.blue
+lualine_nightfly.insert.a.bg = new_colors.green
+lualine_nightfly.visual.a.bg = new_colors.violet
+lualine_nightfly.command = {
+  a = {
+    gui = "bold",
+    bg = new_colors.yellow,
+    fg = new_colors.black, -- black
+  },
+}
+
+-- configure lualine with modified theme
+lualine.setup({
+  options = {
+    theme = lualine_nightfly,
+  },
+})
+```
+
+---
+
+### Toggleterm
+Plugin
+```
+  use("akinsho/toggleterm.nvim")
+```
+
+Connect /plugins/toggleterm.lua to  init.lua
+
+```
+local status_ok, toggleterm = pcall(require, "toggleterm")
+if not status_ok then
+  return
+end
+
+toggleterm.setup({
+  size = 20,
+  open_mapping = [[<leader>l]],
+  hide_numbers = true, -- hide the number column in toggleterm buffers
+  shade_filetypes = {},
+  shade_terminals = true,
+  shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+  start_in_insert = true,
+  insert_mappings = true, -- whether or not the open mapping applies in insert mode
+  terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+  persist_size = true,
+  direction = "float",
+  close_on_exit = true, -- close the terminal window when the process exits
+  shell = vim.o.shell, -- change the default shell
+  -- This field is only relevant if direction is set to 'float'
+  float_opts = {
+    border = "shadow",
+    -- width = <value>,
+    -- height = <value>,
+    winblend = 3,
+  },
+})
+```
+
+---
+
+### Tree-sitter
+```
+npm install tree-sitter-cli -g
+```
