@@ -26,8 +26,7 @@ https://leaflet-extras.github.io/leaflet-providers/preview/
 ## Change privacy policy page (table with cookies);
 <table>
 <tbody>
-<tr>
-<th>Nome</th>
+<tr> <th>Nome</th>
 <th>Scopo</th>
 <th>Scadenza</th>
 <th>Tipo</th>
