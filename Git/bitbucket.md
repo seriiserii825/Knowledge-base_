@@ -1,22 +1,28 @@
-# For the second account:
+# Два акаунта на bitbucket
 
-## Create a new ssh key:
-ssh-keygen -f ~/.ssh/sites-bludelego -C "bludelego@gmail.com"
+## Создание ключей
 
-## Add the ssh key:
-ssh-add ~/.ssh/sites-bludelego 
+`ssh-keygen -f ~/.ssh/sites-bludelego -C "bludelego@gmail.com"`
 
-## Copy pub key to bitbucket ssh
-xclip -sel clip < ~/.ssh/sites-bludelego.pub
+## Добавление ssh
 
-## Add the following to your ~/.ssh/config file. The first sets the default key for bitbucket.org. The second sets your second key to an alias sites-bludelego for bitbucket.org:
+`ssh-add ~/.ssh/sites-bludelego`
 
+## Копирование публичного ключа
+
+`xclip -sel clip < ~/.ssh/sites-bludelego.pub`
+
+## Добавление кода в  ~/.ssh/config file.
+
+```javascript
 Host bitbucket.org
-  Hostname bitbucket.org
-  IdentityFile ~/.ssh/id_rsa
+Hostname bitbucket.org
+IdentityFile ~/.ssh/id_rsa
+```
 
+```javascript
 Host bitbucket.org-b
-  Hostname bitbucket.org
-  PreferredAuthentications publickey
-  IdentityFile ~/.ssh/sites-bludelego
-
+Hostname bitbucket.org
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/sites-bludelego
+```
