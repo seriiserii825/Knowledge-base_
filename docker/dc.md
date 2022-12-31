@@ -10,6 +10,17 @@ sudo apt install docker-ce
 sudo systemctl status docker
 ```
 
+## Установка docker-compose
+
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+sudo apt install php-xml
+sudo apt-get install php-mbstring
+```
+
 ## Добавить пользователя в группу docker
 
 ```javascript
@@ -26,6 +37,18 @@ sudo chmod 666 /var/run/docker.sock
 sudo usermod -aG docker serii
 sudo chmod 666 /var/run/docker.sock
 newgrp docker
+```
+
+## Запуск или установка
+
+```
+docker-compose up -d(d - in background)
+```
+
+## Посмотреть контейнеры
+
+```
+docker-compose ps
 ```
 
 ## Удалить контейнеры
