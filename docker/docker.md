@@ -12,7 +12,7 @@ sudo systemctl status docker
 
 ## Установка docker-compose
 
-```
+```javascript
 sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
@@ -41,13 +41,13 @@ newgrp docker
 
 ## Запуск или установка
 
-```
+```javascript
 docker-compose up -d(d - in background)
 ```
 
 ## Посмотреть контейнеры
 
-```
+```javascript
 docker-compose ps
 ```
 
