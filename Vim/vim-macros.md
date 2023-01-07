@@ -243,6 +243,8 @@ V - Входим в режим выделения
 
 ```javascript
 :10,20 normal @a
+// On the lines containing the pattern vim:
+:g/vim/ normal @a
 ```
 
 Или весть файл
