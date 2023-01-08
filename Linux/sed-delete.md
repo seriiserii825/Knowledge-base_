@@ -77,4 +77,19 @@ sed '/the/{N;d;}' dummy.txt
 sed '/fox/,$d' dummy.txt
 ```
 
+## delete special char
+```
+sed ‘s/\#//g’ ch.txt
+```
+
+## delete few special char
+```
+sed ‘s/[#$%*@]//g’ file.txt
+```
+
+## from line 2 and 3
+```
+sed ‘2s/[#@]//g; 3s/[%*]//g’ newfile.txt
+```
+
 
