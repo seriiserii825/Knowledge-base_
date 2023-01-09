@@ -1,6 +1,6 @@
 ## install
 
-sudo apt install fzf ripgrep universal-ctags silversearcher-ag fd-find
+Install fzf ripgrep universal-ctags silversearcher-ag fd-find
 
 ## plugins
 
