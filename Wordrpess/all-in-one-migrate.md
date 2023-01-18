@@ -1,3 +1,6 @@
+localwp
+config/php version/ ini/ maxfilesize
+
 # Import
 For import go to config file and set maxfilesize
 wp-content/plugins/all-in-one-wp-migration/
