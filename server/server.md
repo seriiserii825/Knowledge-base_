@@ -1,5 +1,5 @@
 # User
-sudo useradd -m -d /home/username -s /bin/bash username
+sudo useradd -m -d /home/serii -s /bin/bash serii
 passwd username
 
 ## Теперь для того, чтобы предоставить пользователю sudo-привилегии, его нужно добавить в группу sudo. Это делается командой: 
@@ -8,13 +8,13 @@ usermod -aG sudo username
 ## Копировать содержимое публичного ключа в .ssh/authorized_keys
  
 # Установим username владельцем этого каталога (также будет создана группа с тем же именем):
-chown -R username:username /home/username/.ssh
-chmod 700 /home/username/.ssh
-chmod 600 /home/username/.ssh/authorized_keys
+sudo chown -R serii:serii /home/serii/.ssh
+sudo chmod 700 /home/serii/.ssh
+sudo chmod 600 /home/serii/.ssh/authorized_keys
 
 # Теперь можно залогиниться на сервер под новым пользователем без использования пароля:
 
-ssh username@your_server_ip
+ssh serii@your_server_ip
 
 #Если нужно запустить команду с правами администратора, введите sudo перед ней, например:
 
@@ -116,39 +116,13 @@ node -v
 - pm2 start
 - pm2 startup ubuntu - start pm2 when server restart
 
+pm2 start "yarn preview" --name "medik"
 
-#Commands
+## cloudflare
+Cloudflare Nameservers
+Copy to namecheap in to section 
+NAMESERVERS
+Custom dns
 
-- df -h --total - view empty space
+In cloudlare add A read for new sites.
 
-Lets encrypt
-sudo apt install certbot python3-certbot-nginx # Отвечаем 'y'
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
-certbot renew --dry-run(certificat will be to 90 days)
-
-When certificat will finish need to tipy in terminal
-certbot renew
-
-All you need to add to your universal Nuxt app for serving it though PM2 is a file called ecosystem.config.js.
-Create a new file with that name in your root project directory and add the following content:
-
-module.exports = {
-apps: [
-{
-name: 'NuxtAppName',
-exec_mode: 'cluster',
-instances: 'max', // Or a number of instances
-script: './node_modules/nuxt/bin/nuxt.js',
-args: 'start'
-}
-]
-}
-
-Build and serve the app
-Now build your app with npm run build.
-
-And serve it with pm2 start.
-
-Check the status pm2 ls.
-
-Your Nuxt application is now serving!
