@@ -21,3 +21,16 @@ color: green;
 li:nth-last-child(2) {
     color: green;
 }
+
+## select each 3 start with 1, 2, 3
+    &:first-of-type,
+    &:nth-of-type(3n+1) {
+      width: 40%;
+      background: green;
+    }
+    &:nth-of-type(3n+2) {
+      width: 20%;
+    }
+    &:nth-of-type(3n+3) {
+      width: 20%;
+    }
