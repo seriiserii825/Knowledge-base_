@@ -12,3 +12,9 @@ console.log(
   range({from: 1, to: 5, step: 2}), // [1, 3]
   range({from: 1, to: 6, step: 2}), // [1, 3, 5]
 )
+
+
+const rangeOfObjects = ({from = 0, to, step = 1, length = Math.ceil((to - from) / step)}) =>
+    Array.from({length}, (_, i) => {
+      return {[from + i * step]: from + i * step};
+    });
