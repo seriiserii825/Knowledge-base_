@@ -21,3 +21,9 @@ To move a block of lines, use the same command but visually select the lines bef
 :5,7m $	move lines 5, 6 and 7 to after last line
 :.,.+4m 21	move 5 lines starting at current line to after line 21
 :,+4m14	same (. for current line is assumed)
+
+Visual
+:normal 10GV20G
+
+Paste from buffer
+:normal 14Gp
