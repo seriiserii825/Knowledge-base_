@@ -23,4 +23,9 @@ To move a block of lines, use the same command but visually select the lines bef
 :,+4m14	same (. for current line is assumed)
 
 #yank
-:34yank
+Visual
+:normal 10GV20G
+
+Paste from buffer
+:normal 14Gp
+:12pu
