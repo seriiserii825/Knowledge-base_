@@ -1,25 +1,3 @@
-document.querySelectorAll('.price').forEach(item => {
-  item.textContent = new Intl.NumberFormat('ru-Ru', {
-    currency: 'rub',
-    style: 'currency'
-  }).format(item.textContent);
-});
-
-//vue
-formatted_price() {
-  let price = this.add.price;
-  price = price.replace(/\.00$/g, '');
-  price = price.replace(/[^0-9]/g, '');
-  let nf = new Intl.NumberFormat('it-IT', {
-    currency: 'EUR',
-    style: 'currency',
-    trailingZeroDisplay: 'stripIfInteger',
-  });
-  price = nf.format(price);
-  this.current_price = price;
-}
-
-
 export const clearPrice = (price) => {
    /**
     * Number.prototype.format(n, x, s, c)
@@ -43,3 +21,8 @@ export const clearPrice = (price) => {
 
    return myString.format(-3, 3, ".", ","); // "12.345.678,90"
 };
+
+
+this.current_price = this.price.replace(/\.00$/g, '');
+this.current_price = clearPrice(this.current_price);
+this.current_price = `${this.current_price},00`
