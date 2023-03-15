@@ -42,7 +42,6 @@ export const useFormatDate = (date) => {
 }
 
 formatDate(date) {
-  console.log(date, "date");
   let options = {
     year: "numeric",
     month: "long",
