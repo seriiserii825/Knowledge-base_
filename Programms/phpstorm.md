@@ -48,3 +48,6 @@ ctrl+alt+n - select in sidebar
 
 ### reset to default settings
 remove /home/serii/.config/JetBrains
+
+### downgrade
+https://www.jetbrains.com/phpstorm/download/other.html
