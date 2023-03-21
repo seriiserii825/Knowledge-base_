@@ -35,6 +35,8 @@ sudo tar -xzf PhpStorm\*.tar.gz -C /opt
 cd /opt/PhpStorm-212.4746.100/bin and type sudo ./phpstorm.sh
 in phpstorm -> tools -> create desktop launcher
 
+sudo ln -s /opt/PhpStorm-203.7717.64/bin/phpstorm.sh /usr/bin/phpstorm
+
 ### autoprefixer
 
 disable.
