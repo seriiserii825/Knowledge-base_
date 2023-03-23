@@ -11,6 +11,8 @@ alt+enter inject html
 #carret at the end of selection
 alt+shift+g
 
+## vim 
+:actionlist
 
 ### Буфер обмена
 
