@@ -16,21 +16,22 @@ export const useFormatDate = (date) => {
         '12': 'Dicembre',
     };
     const gsDayNames = [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday'
+        'Domenica',
+        'Lunedì',
+        'Martedì',
+        'Mercoledì',
+        'Giovedì',
+        'Venerdì',
+        'Sabato',
     ];
-    const date_str = date_arr[0] + ' ' + months[date_arr[1]] + ' ' + date_arr[2];
     const time = sections[1];
     const date_number = date_arr[0];
-    const week_word = gsDayNames[new Date(date_str).getDay()];
     const month_number = date_arr[1];
     const month_word = months[date_arr[1]];
     const year = date_arr[2];
+    const date_default = new Date(date);
+    const week_word = gsDayNames[date_default.getDay()];
+    debugger;
     return {
         date_number,
         week_word,
