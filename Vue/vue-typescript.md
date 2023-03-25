@@ -40,3 +40,9 @@ At last, run
 npm run dev
 If there is no error message, you can create your component file by .ts
 Good luck!
+
+## cmputed
+const quiz_result = computed(() => {
+  return [];
+}) as ComputedRef<IQuizQuestion[]>;
+
