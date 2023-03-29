@@ -32,3 +32,15 @@ $(window).on("load resize orientationchange", function () {
     }
   }
 });
+
+// No need to add "slidesToShow: 3.5 option"
+
+// Just call slick:-
+
+// $('.Your-container').slick({
+//     arrows: false,
+// });
+// and add following CSS:
+
+// .slick-list{padding:0 20% 0 0 !important;}
+// Either you can give a fixed padding to the right or percentage.
