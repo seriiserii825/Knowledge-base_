@@ -39,3 +39,5 @@ server {
         }
 }
 
+/etc/ssl/certs/ssl-cert-snakeoil.pem
+/etc/ssl/private/ssl-cert-snakeoil.key
