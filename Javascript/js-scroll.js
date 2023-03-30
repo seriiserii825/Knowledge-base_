@@ -10,29 +10,24 @@ export default function scrollToBlock() {
     });
 }
 
-// In to view
-function isInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-
-    );
-}
-
-
-const box = document.querySelector('.box');
-const message = document.querySelector('#message');
-
 document.addEventListener('scroll', function () {
-    const messageText = isInViewport(box) ?
-        'The box is visible in the viewport' :
-        'The box is not visible in the viewport';
-
-    message.textContent = messageText;
-
+    const scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+    menu_links.forEach(link => {
+        const href = link.getAttribute('href');
+        const element = document.querySelector(href);
+        if (scrollPosition >= element.offsetTop - 100 && scrollPosition < element.offsetTop + element.offsetHeight - 100) {
+            clearActive();
+            if (!link.classList.contains('active')) {
+                link.classList.add('active');
+            }
+        }
+    });
 }, {
     passive: true
 });
+function clearActive() {
+    menu_links.forEach(link => {
+        link.classList.remove('active');
+    });
+}
+
