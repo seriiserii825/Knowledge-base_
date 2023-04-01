@@ -97,3 +97,11 @@ d[n delete back to the previous conflict marker
 nnoremap <C-D> Yp
 " duplicate line in insert mode:
 inoremap <C-D> <Esc> Ypi
+
+========== Calculator
+3+3= 
+
+yank text
+c+r= - go to regular expresion
+c+r" - paste yanked expresion
+enter - view result
