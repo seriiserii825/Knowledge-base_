@@ -55,3 +55,12 @@ remove /home/serii/.config/JetBrains
 
 ### downgrade
 https://www.jetbrains.com/phpstorm/download/other.html
+
+### github sync settings
+Далее в IDE (PhpStorm, PyCharm, RubyMine) настройками которой нужно поделиться с другими экземплярами заходим в File → Settings Repository и добавляем url созданного выше репозитория.
+
+Нас попросит ввести token. Для того чтобы его создать идем на Гитхаб в настройки аккаунта, далее выбираем Developer settings -> Personal access tokens, ставим галочку у repo и нажимаем Generate new token.
+
+Автоматическую синхронизацию можно отключить и выполнять ее вручную с помощью меню VCS → Sync Settings. Для этого нужно перейти в Settings → Tools → Settings Repository и убрать галочку Auto Sync.
+
+

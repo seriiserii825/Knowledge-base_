@@ -32,3 +32,41 @@ $(window).on("load resize orientationchange", function () {
     }
   }
 });
+
+// No need to add "slidesToShow: 3.5 option"
+
+// Just call slick:-
+
+// $('.Your-container').slick({
+//     arrows: false,
+// });
+// and add following CSS:
+
+// .slick-list{padding:0 20% 0 0 !important;}
+// Either you can give a fixed padding to the right or percentage.
+
+//equal height
+
+slider.slick({
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    dots: false,
+    arrows: false,
+    responsive: [
+        {
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 2,
+            }
+        },
+        {
+            breakpoint: 576,
+            settings: {
+                slidesToShow: 1,
+            }
+        }
+    ]
+}).on('setPosition', function (event, slick) {
+    slick.$slides.css('height', slick.$slideTrack.height() + 'px');
+});
+
