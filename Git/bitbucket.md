@@ -5,6 +5,8 @@
 `ssh-keygen -f ~/.ssh/sites-bludelego -C "bludelego@gmail.com"`
 
 ## Добавление ssh
+### start ssh agent
+eval `ssh-agent -s`
 
 `ssh-add ~/.ssh/sites-bludelego`
 
