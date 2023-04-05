@@ -6,7 +6,7 @@
 
 ## Добавление ssh
 
-`ssh-add ~/.ssh/sites-bludelego`
+ssh-add ~/.ssh/sites-bludelego
 
 ## Копирование публичного ключа
 
