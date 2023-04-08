@@ -105,3 +105,6 @@ yank text
 c+r= - go to regular expresion
 c+r" - paste yanked expresion
 enter - view result
+
+========== format
+:%!column -t
