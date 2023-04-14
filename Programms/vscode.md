@@ -1,3 +1,7 @@
+#suggestion with tab
+- keybindings suggestWidgetVisible remove Enter and add Tab
+- settings: acceptSugesstionOnEnter - off
+
 # shortcuts
 ctrl+shift+w - close all tabs
 ctrl+alt+. - close others
