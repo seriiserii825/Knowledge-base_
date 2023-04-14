@@ -2,14 +2,14 @@
 - keybindings suggestWidgetVisible remove Enter and add Tab
 - settings: acceptSugesstionOnEnter - off
 
+#expand snippet in html attribute
+- ctrl+space
+
 # shortcuts
 ctrl+shift+w - close all tabs
 ctrl+alt+. - close others
 ctrl+\ - split
-ctrl+h - first window
-ctrl+l - second window
 ctrl+shift+o - view all variables in file
-ctrk+k,ctrl+i - view code on hover
 
 
 #sftp
