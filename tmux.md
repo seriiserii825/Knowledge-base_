@@ -13,5 +13,6 @@ prefix C - create session
 prefix $ - rename session
 prefix g - switch session
 prefix , - rename tab
-
-
+## kill session
+prefix s - session list
+: kill-session
