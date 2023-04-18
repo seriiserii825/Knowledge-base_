@@ -1,11 +1,18 @@
+#suggestion with tab
+As Rajesh and Malte said, go in Key Binding preferences (Preferences > Keyboard Shortcuts) and remove the key binding on "ENTER" key related to "suggestWidgetVisible" solved the problem.
+- keybindings suggestWidgetVisible remove Enter and add Tab
+
+Settings > Text editor > Suggestions > Accept suggestion on Enter > off
+- settings: acceptSugesstionOnEnter - off
+
+#expand snippet in html attribute
+- ctrl+space
+
 # shortcuts
 ctrl+shift+w - close all tabs
 ctrl+alt+. - close others
 ctrl+\ - split
-ctrl+h - first window
-ctrl+l - second window
 ctrl+shift+o - view all variables in file
-ctrk+k,ctrl+i - view code on hover
 
 
 #sftp

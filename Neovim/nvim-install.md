@@ -16,3 +16,5 @@ nvim --version
 # python
 
 sudo apt install python3-neovim
+
+css-lsp cssls emmet-ls emmet_ls html-lsp html intelephense lua-language-server lua_ls typescript-language-server tsserver
