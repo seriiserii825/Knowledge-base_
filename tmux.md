@@ -1,6 +1,9 @@
 ## install
 Install tmux
 
+## install tmp
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 ## reload conf
 tmux source ~/.tmux.conf
 
