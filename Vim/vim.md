@@ -1,4 +1,13 @@
 #======================= Command line
+
+## dot
+
+x, dd, >G
+
+## substitute
+
+& - repeate substitute
+
 #copy
 :281t. – Copy line 281 and paste it below the current line
 :-10t. – Copy the line 10 lines above the current line and paste it below the current line
@@ -7,17 +16,17 @@
 :t20 – Copy the current line and paste it below line 20
 
 #move
-:m 12	move current line to after line 12
-:m 0	move current line to before first line
-:m $	move current line to after last line
-:m 'a	move current line to after line with mark a (see using marks)
-:m 'a-1	move current line to before line with mark a
-:m '}-1	move current line to the end of the current paragraph
-:5,7m 21	move lines 5, 6 and 7 to after line 21
-:5,7m 0	move lines 5, 6 and 7 to before first line
-:5,7m $	move lines 5, 6 and 7 to after last line
-:.,.+4m 21	move 5 lines starting at current line to after line 21
-:,+4m14	same (. for current line is assumed)
+:m 12 move current line to after line 12
+:m 0 move current line to before first line
+:m $ move current line to after last line
+:m 'a move current line to after line with mark a (see using marks)
+:m 'a-1 move current line to before line with mark a
+:m '}-1 move current line to the end of the current paragraph
+:5,7m 21 move lines 5, 6 and 7 to after line 21
+:5,7m 0 move lines 5, 6 and 7 to before first line
+:5,7m $ move lines 5, 6 and 7 to after last line
+:.,.+4m 21 move 5 lines starting at current line to after line 21
+:,+4m14 same (. for current line is assumed)
 
 #yank
 Visual
@@ -36,7 +45,6 @@ gv Reselect the last visual selection
 `< Jump to beginning of last visual selection
 `> Jump to end of last visual selection
 
-
 #============== Toggle Case
 gUw Uppercase until end of word (u for lower, ~ to toggle)
 gUiw Uppercase entire word (u for lower, ~ to toggle)
@@ -49,19 +57,17 @@ g, Jump back forward through the change list
 <C-o> - jump back
 <C-i> - jump forward
 
-
-
 #========= Scroll screen
 <ctrl-f> – Move viewport forward one full screen (mnemonic: “Forward”)
 <ctrl-b> – Move viewport backwards one full screen (mnemonic: “Backward”)
 <ctrl-d> – Move viewport down one half screen (mnemonic: “Down”)
 <ctrl-u> – Move viewport up one half screen (mnemonic: “Up”)
 
-#========== Undo 
+#========== Undo
 <C-u> - in insert mode
 
 #========== Argdo
-:args path/to/file/glob/*.js
+:args path/to/file/glob/\*.js
 
 Next, you perform the substitution across those files:
 :argdo %s/pattern/replacement/g
@@ -99,7 +105,7 @@ nnoremap <C-D> Yp
 inoremap <C-D> <Esc> Ypi
 
 ========== Calculator
-3+3= 
+3+3=
 
 yank text
 c+r= - go to regular expresion
