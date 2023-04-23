@@ -1,3 +1,12 @@
+# >G
+
+some string
+some string
+some string
+some string
+some string
+some string
+
 # A;
 
 var foo = 1
