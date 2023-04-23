@@ -1,5 +1,0 @@
-The `. command will bring you to your last change.
-The ` goes to a mark, and . is a "special" mark which is automatically set to the position where the last change was made. See :help `. for some more information.
-There is also `` which will bring you back to where the cursor was before you made your last jump. See :help `` for more information.
-Another useful mark is `^; this is the position where the cursor was the last time when insert mode was stopped. See :help `^.
-
