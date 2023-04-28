@@ -43,3 +43,13 @@ var foo = "method("+argument1+","+argument2+")";
 ...We’re waiting for copy before the site can go live...
 ...If you are content with this, let’s go ahead with it...
 ...We’ll launch as soon as we have the copy...
+
+# delete a word and repeat . daw .
+
+The end is nigh
+
+# C-a C-x
+
+.blog, .news { background-image: url(/sprite.png); }
+.blog { background-position: 0px 0px }
+.blog { background-position: 180px 25px }
