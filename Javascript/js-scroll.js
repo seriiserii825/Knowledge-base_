@@ -9,6 +9,7 @@ export default function menuScroll() {
             const href = e.currentTarget.getAttribute("href");
             if (is_home) {
                 const element = document.querySelector(href);
+                console.log(element, "element");
                 clearActive();
                 element.classList.add("active");
                 const element_top = element.offsetTop;
@@ -22,34 +23,38 @@ export default function menuScroll() {
             }
         });
     });
-    document.addEventListener(
-        "scroll",
-        function() {
-            const scrollPosition =
-                document.documentElement.scrollTop || document.body.scrollTop;
-            menu_links.forEach((link) => {
-                const href = link.getAttribute("href");
-                const element = document.querySelector(href);
-                if (
-                    scrollPosition >= element.offsetTop - 100 &&
-                    scrollPosition < element.offsetTop + element.offsetHeight - 100
-                ) {
-                    clearActive();
-                    if (!link.classList.contains("active")) {
-                        link.classList.add("active");
+    if (is_home) {
+        document.addEventListener(
+            "scroll",
+            function() {
+                const scrollPosition =
+                    document.documentElement.scrollTop || document.body.scrollTop;
+                menu_links.forEach((link) => {
+                    const href = link.getAttribute("href");
+                    const element = document.querySelector(href);
+                    if (
+                        scrollPosition >= element.offsetTop - 100 &&
+                        scrollPosition < element.offsetTop + element.offsetHeight - 100
+                    ) {
+                        clearActive();
+                        if (!link.classList.contains("active")) {
+                            link.classList.add("active");
+                        }
                     }
-                }
-            });
-        },
-        {
-            passive: true,
-        }
-    );
+                });
+            },
+            {
+                passive: true,
+            }
+        );
+    }
+
     function clearActive() {
         menu_links.forEach((link) => {
             link.classList.remove("active");
         });
     }
+
     function menuClose() {
         const menu = document.querySelector(".main-header__menu");
         const iconMenu = document.querySelector(".icon-menu");
