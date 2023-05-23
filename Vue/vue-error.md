@@ -1,3 +1,69 @@
+# axios-instance
+
+```js
+import axios from "axios";
+
+const axiosInstance = axios.create({
+  baseURL: "https://localhost:8088/api",
+  headers: {
+    "Content-type": "application/json",
+  },
+});
+
+const addResponseHandler = (success, error) => {
+  axiosInstance.interceptors.response.use(success, error);
+};
+
+export { axiosInstance, addResponseHandler };
+```
+
+## App.vue
+
+```js
+addResponseHandler(
+  function (response) {
+    if ("error_alert" in response.config) {
+      response.data = { res: true, data: response.data };
+    }
+    return response;
+  },
+  function (error) {
+    // check if has error_alert in config from api files
+    if ("error_alert" in error.response.config) {
+      alert_store.addMessages({
+        type: "error",
+        text: `${error.response.config.error_alert}: ${error.message}`,
+      });
+      return { data: { res: false } };
+    }
+    return Promise.reject(error);
+  }
+);
+```
+
+## category api
+
+```js
+export async function categoryAllApi() {
+  return await axiosInstance.get("/categories", {
+    error_alert: "categoryAllApi",
+  });
+}
+```
+
+## category-store
+
+```js
+const storeCategoryAll = async () => {
+  const {
+    data: { data, res },
+  } = await categoryAllApi();
+  if (res) {
+    category_all.value = data.data;
+  }
+};
+```
+
 Show DevTools in Chrome (F12)
 Load the page that causes "the client-side rendered virtual DOM tree..." warning.
 Scroll to the warning in DevTools console.
