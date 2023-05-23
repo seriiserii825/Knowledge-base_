@@ -4,4 +4,5 @@ serii-astrovim -> user
 
 # install plugins
 
-MasonInstall intelephense prettier
+LspInstall intelephense tsserver html cssls
+MasonInstall prettier
