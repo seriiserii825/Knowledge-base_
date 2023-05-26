@@ -75,3 +75,9 @@ docker-compose rm -f nginx # remove without confirmation
 docker-compose build nginx # build
 docker-compose up -d nginx # create and start in background
 ```
+
+## exec script in container
+
+$ docker exec -it container /bin/bash
+cd /home/client
+npm install
