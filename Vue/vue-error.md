@@ -1,4 +1,4 @@
-# axios-instance
+### axios-instance
 
 ```js
 import axios from "axios";
@@ -17,7 +17,7 @@ const addResponseHandler = (success, error) => {
 export { axiosInstance, addResponseHandler };
 ```
 
-## App.vue
+### App.vue
 
 ```js
 addResponseHandler(
@@ -41,7 +41,7 @@ addResponseHandler(
 );
 ```
 
-## category api
+### category api
 
 ```js
 export async function categoryAllApi() {
@@ -51,7 +51,7 @@ export async function categoryAllApi() {
 }
 ```
 
-## category-store
+### category-store
 
 ```js
 const storeCategoryAll = async () => {
