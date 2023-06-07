@@ -1,3 +1,18 @@
+prevent redirect
+add_action('add_to_cart_redirect', 'cipher_add_to_cart_redirect');
+ 
+function cipher_add_to_cart_redirect($url = false) {
+ 
+     // If another plugin beats us to the punch, let them have their way with the URL
+     if(!empty($url)) { return $url; }
+ 
+     // Redirect back to the original page, without the 'add-to-cart' parameter.
+     // We add the `get_bloginfo` part so it saves a redirect on https:// sites.
+     return get_bloginfo('wpurl').add_query_arg(array(), remove_query_arg('add-to-cart'));
+ 
+}
+
+
 URL: Add One Simple Product to Cart
 href=”https://yourdomain.com/?add-to-cart=25&quantity=1“
 
