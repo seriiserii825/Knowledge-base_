@@ -14,6 +14,11 @@ alt+shift+g
 ## vim 
 :actionlist
 
+## remove .idea from git
+git rm -r --cached .idea
+.gitignore 
+.idea/ 
+
 ### Буфер обмена
 
 touch ~/.ideavimrc
