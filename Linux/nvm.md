@@ -1,11 +1,4 @@
-#clone this repo in the root of your user profile
-cd ~/ from anywhere then
-#clone
-git clone https://github.com/nvm-sh/nvm.git .nvm
-
-#source
-cd ~/.nvm and check out the latest version with git checkout v0.39.1
-activate nvm by sourcing it from your shell: . ./nvm.sh
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash 
 
 #install
 nvm ls-remote | grep -i "latest lts"
