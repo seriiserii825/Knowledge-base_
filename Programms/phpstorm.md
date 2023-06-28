@@ -1,3 +1,6 @@
+#install in arch
+yay -S phpstorm-jre
+
 #if
 alt+enter = simplify
 
