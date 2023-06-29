@@ -1,1 +1,0 @@
-https://vuejsexamples.com/a-vue-js-2-component-to-make-pagination/

@@ -1,3 +1,4 @@
+# manjaro
 xf86-input-libinput 
 sudo libinput list-devices
 xinput disable "ETPS/2 Elantech Touchpad"
