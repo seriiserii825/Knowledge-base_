@@ -3,6 +3,8 @@
 // add_action("publish_post", "eg_create_sitemap");
 // add_action("publish_page", "eg_create_sitemap");
 // add_action("save_post", "eg_create_sitemap");
+//
+// disable sitemap in rank-math general settings
 add_action("init", "eg_create_sitemap");
 function eg_create_sitemap()
 {
