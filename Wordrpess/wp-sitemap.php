@@ -14,7 +14,6 @@ function eg_create_sitemap()
   ));
 
   $adsForSitemap = getPropertiesId();
-  $date = new DateTime();
 
   $sitemap = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="' . get_template_directory_uri() . '/helpers/sitemap.css"?>';
   $sitemap .= "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
@@ -42,6 +41,7 @@ function eg_create_sitemap()
 }
 
 
+// bludelego
 function getPropertiesId()
 {
 
@@ -55,6 +55,23 @@ function getPropertiesId()
   // }
 
   return $result;
+}
+
+// agim online
+function getPropertiesId()
+{
+  $api_result = callAPI('all_properties', 'https://api.agimonline.com/v1/properties/list/');
+  $list_json = json_decode($api_result);
+  $pages = $list_json->response->pages;
+  $properties = [];
+
+  for ($i = 1; $i <= $pages; $i++) {
+    $api_result = callAPI('all_properties', 'https://api.agimonline.com/v1/properties/list/', 'page=' . $i . '&order_by=date_insert_desc&auction=0');
+    $list_json = json_decode($api_result);
+    $properties = array_merge($properties, $list_json->properties);
+  }
+
+  return $properties;
 } ?>
 
 //sitemap.css
