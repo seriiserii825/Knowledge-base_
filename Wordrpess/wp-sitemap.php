@@ -74,7 +74,40 @@ function getPropertiesId()
   }
 
   return $properties;
-} ?>
+}
+
+
+//agim online class
+public function getPropertiesId()
+{
+    $api_result = $this->getPropertiesList();
+    $list_json = json_decode($api_result);
+    $pages = $list_json->response->pages;
+    $properties = [];
+
+    for ($i = 1; $i <= $pages; $i++) {
+        $parameters = [];
+        $parameters['page'] = $i;
+        $api_result = $this->getPropertiesList($parameters);
+        $list_json = json_decode($api_result);
+        $properties = array_merge($properties, $list_json->properties);
+    }
+
+    return $properties;
+}
+//
+foreach ($adsForSitemap as $item) {
+    setup_postdata($item);
+    $local_title = $item->typology->type . " " . $item->location->city;
+    $cleared_title = createUrl($local_title);
+    $url = '/immobile/' . $item->id . '-abitare-' . $cleared_title;
+    $sitemap .= "\t" . '<url>' . "\n" .
+        "\t\t" . '<loc>https://abitareggioemilia.it' . $url . '</loc>' .
+        "\n\t\t" . '<lastmod>' . $date . '</lastmod>' .
+        "\n\t\t" . '<changefreq>monthly</changefreq>' .
+        "\n\t" . '</url>' . "\n";
+}
+?>
 
 //sitemap.css
 <style>
