@@ -59,7 +59,37 @@ function getPropertiesId()
   return $result;
 }
 
-// agim online
+// bludelego with foreach =========================================
+function getPropertiesId()
+{
+    $api_result = callAPI('https://api.bludelego.it/api/realestate/v1/immobili', 'post');
+    $list_json = json_decode($api_result);
+    $properties = [];
+    $pages = $list_json->data->pages;
+
+    for ($i = 1; $i <= $pages; $i++) {
+        $api_result = callAPI('https://api.bludelego.it/api/realestate/v1/immobili', 'post', 'page=' . $i . '&order_by=date_insert_desc&auction=0');
+        $list_json = json_decode($api_result);
+        $properties = array_merge($properties, $list_json->data->immobili_list);
+    }
+
+    return $properties;
+}
+
+foreach ($adsForSitemap as $item) {
+    setup_postdata($item);
+    $id = $item->id;
+    $titolo = $item->titolo;
+    $localita = $item->localita;
+    $sitemap .= "\t" . '<url>' . "\n" .
+        "\t\t" . '<loc>https://camoglicase.it/annunci-immobiliari/'.$id.'-'.$titolo.'-'.$localita.'</loc>' .
+        "\n\t\t" . '<lastmod>' . $date . '</lastmod>' .
+        "\n\t\t" . '<changefreq>monthly</changefreq>' .
+        "\n\t" . '</url>' . "\n";
+}
+
+
+// agim online ========================================================
 function getPropertiesId()
 {
   $api_result = callAPI('all_properties', 'https://api.agimonline.com/v1/properties/list/');
