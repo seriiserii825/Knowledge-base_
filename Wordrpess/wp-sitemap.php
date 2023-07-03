@@ -125,7 +125,10 @@ public function getPropertiesId()
 
     return $properties;
 }
+
 //
+$agim = new AgimAPIClient([]);
+$adsForSitemap = $agim->getPropertiesId();
 foreach ($adsForSitemap as $item) {
     setup_postdata($item);
     $local_title = $item->typology->type . " " . $item->location->city;
