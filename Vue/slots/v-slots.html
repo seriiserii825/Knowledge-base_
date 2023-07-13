@@ -1,0 +1,62 @@
+#================================ App.js
+  <div id="app">
+    <div>
+      <the-header></the-header>
+      <badge-list></badge-list>
+      <user-info
+          :full-name="activeUser.name"
+          :info-text="activeUser.description"
+          :role="activeUser.role"
+      ></user-info>
+      <course-goals>
+        <template #default="slotProps">
+          <h2>{{ slotProps.item }}</h2>
+          <p>{{ slotProps['another-prop'] }}</p>
+        </template>
+      </course-goals>
+    </div>
+  </div>
+</template>
+
+#================================= Course Goal
+<template>
+  <ul>
+    <li v-for="goal in goals" :key="goal">
+      <slot :item="goal" another-prop="text"></slot>
+    </li>
+  </ul>
+</template>
+
+<script>
+export default {
+  data(){
+    return {
+      goals: ['Finish the course', 'Learn Vue']
+    }
+  }
+}
+</script>
+
+#================================ UserInfo
+<template>
+    <badge-card>
+        <template v-slot:header>
+            <h3>{{ fullName }}</h3>
+            <base-badge :type="role" :caption="role.toUpperCase()"/>
+        </template>
+        <template v-slot:default>
+            <p>{{ infoText }}</p>
+        </template>
+    </badge-card>
+</template>
+
+#================================= BadgeCard
+<template>
+    <div class="badge-card">
+        <header>
+            <slot name="header"></slot>
+        </header>
+        <slot></slot>
+    </div>
+</template>
+

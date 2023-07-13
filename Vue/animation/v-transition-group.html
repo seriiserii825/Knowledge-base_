@@ -1,0 +1,38 @@
+!!!! just for vue 2 !!!
+<div id="app">
+            <template v-else-if="filtered.length > 0" :key="2">
+                <transition-group appear name="list" tag="ul" class="page-portfolio__posts">
+                    <li class="list-item portfolio-post page-portfolio__posts-item" v-for="item in filtered" :key="item.img">
+                        <div class="portfolio-post__img">
+                            <img :src="item.img" alt="">
+                        </div>
+                        <header class="portfolio-post__header">
+                            <ul>
+                                <li>{{ item.parent_term }}</li>
+                                <li>{{ item.term_name }}</li>
+                            </ul>
+                        </header>
+                        <footer class="portfolio-post__footer">
+                            <h2 class="portfolio-post__title">{{ item.title }}</h2>
+                            <a :href="item.url" target="_blank" class="btn">Vai al sito</a>
+                        </footer>
+                    </li>
+                </transition-group>
+            </template>
+</div>
+<style>
+.list-item {
+	transition: all 1s;
+}
+.list-enter,
+.list-leave-to {
+	opacity: 0;
+	transform: scale(0.6);
+}
+
+.list-leave,
+.list-enter-to {
+	opacity: 1;
+	transform: scale(1);
+}
+</style>
