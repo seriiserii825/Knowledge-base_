@@ -32,6 +32,8 @@ prefix U - uninstall
 ## prefix s
 : new -s session_name
 
+## check if tmux session is running
+tmux display-message -p '#S'
 
 ## session
 prefix s - session list
