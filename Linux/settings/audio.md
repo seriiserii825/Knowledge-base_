@@ -4,9 +4,14 @@
 
 Все нужно сделать с правами суперпользователя
 
-* .Нужно создать файл */etc/modprobe.d/hda-jack-retask.conf*
-* .Прописать в нем options snd-hda-intel patch=hda-jack-retask.fw
-* .Создать файл *`/lib/firmware/hda-jack-retask.fw`* 
+* .Нужно создать файл 
+/etc/modprobe.d/hda-jack-retask.conf
+* .Прописать в нем 
+options snd-hda-intel patch=hda-jack-retask.fw
+
+* .Создать файл 
+/lib/firmware/hda-jack-retask.fw
+
 * .Прописать в нем
 
 ```
