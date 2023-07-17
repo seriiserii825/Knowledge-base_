@@ -1,7 +1,0 @@
-### файл страницы категории
-taxonomy-product_cat.php
-
-## sort categories
-$terms = get_terms( 'product_cat', [ 'orderby' => 'name', 'order' => 'ASC', 'hide_empty' => true ] ); ?>
-
-

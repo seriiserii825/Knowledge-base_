@@ -1,3 +1,0 @@
-LspInstallInfo
-i -install
-X - delete

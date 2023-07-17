@@ -1,6 +1,0 @@
-"ay - copy to buffer a
-"ap - past from buffer a
-
-gg"+yG – copy the entire buffer into + (normal mode)
-"*dd – cut the current line into * (normal mode)
-"+p – paste from + after the cursor (works in both normal and visual modes)

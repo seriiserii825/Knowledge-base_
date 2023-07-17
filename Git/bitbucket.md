@@ -2,7 +2,7 @@
 
 ## Создание ключей
 
-`ssh-keygen -f ~/.ssh/sites-bludelego -C "bludelego@gmail.com"`
+ssh-keygen -f ~/.ssh/sites-bludelego -C "bludelego@gmail.com"
 
 ## Добавление ssh
 ### start ssh agent

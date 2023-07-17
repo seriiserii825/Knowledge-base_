@@ -1,1 +1,0 @@
-/^\d+$/.test(params.id)

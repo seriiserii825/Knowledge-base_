@@ -1,64 +1,37 @@
-<div class="search_form">
-	<form action="<?php esc_url(home_url('/')); ?>" method="POST">
-		<input type="text" name="s" value="<?php get_search_query(); ?>" placeholder="Search...">
-		<input type="submit" value="Send">
-	</form>
-	<div class="search-result"></div>
-</div>
-
 <?php
-add_action('wp_ajax_myaction', 'esp_search_ajax_action_callback');
-add_action('wp_ajax_nopriv_myaction', 'esp_search_ajax_action_callback');
-function esp_search_ajax_action_callback()
+//funct.php
+add_filter('woocommerce_product_data_store_cpt_get_products_query', 'handle_custom_query_var', 10, 2);
+function handle_custom_query_var($query, $query_vars)
 {
-	/**
-	 * Проверяем нонсе из массива пости и из wp_localize script
-	 */
-	if (!wp_verify_nonce($_POST['nonce'], 'search-nonce')) {
-		wp_die('Данные пришли с левого адреса');
-	}
-	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-	$args = [
-		'post_type' => ['post', 'product'],
-		'post_status' => 'public',
-		's' => $_POST['s'],
-	];
+  if (isset($query_vars['like_name']) && !empty($query_vars['like_name'])) {
+    $query['s'] = esc_attr($query_vars['like_name']);
+  }
 
-	$query_ajax = new WP_Query($args);
-?>
-	<?php if ($query_ajax->have_posts()) : ?>
-		<?php while ($query_ajax->have_posts()) : ?>
-			<?php $query_ajax->the_post(); ?>
-			<h3 class="title-search"><?php the_title(); ?></h3>
-		<?php endwhile; ?>
-		<?php wp_reset_postdata(); ?>
-	<?php endif; ?>
-
-<?php
-	wp_die();
+  return $query;
 }
-?>
-<script>
-	$('.search_form input[name="s"]').on('keyup', function() {
-		let value = $(this).val();
-		if (value.length < 2) {
-			return false;
-		}
-		let data = {
-			s: value,
-			action: 'myaction',
-			nonce: search_form.nonce
 
-		};
-		jQuery.ajax({
-			type: 'POST',
-			url: search_form.url,
-			data: data,
-			dataType: 'html',
-			success: function(data) {
-				$('.search_form .search-result').html(data);
-			}
-		});
+//api file
+$products_posts = wc_get_products([
+  'like_name' => $title,
+]);
 
-	});
-</script>
+// posts
+
+function title_filter($where, $wp_query)
+{
+  global $wpdb;
+  if ($search_term = $wp_query->get('title_filter')) :
+    $search_term = $wpdb->esc_like($search_term);
+    $search_term = ' \'%' . $search_term . '%\'';
+    $title_filter_relation = (strtoupper($wp_query->get('title_filter_relation')) == 'OR' ? 'OR' : 'AND');
+    $where .= ' ' . $title_filter_relation . ' ' . $wpdb->posts . '.post_title LIKE ' . $search_term;
+  endif;
+  return $where;
+}
+add_filter('posts_where', 'title_filter', 10, 2);
+
+$posts_items = new WP_Query([
+  'post_type' => 'post',
+  'posts_per_page' => -1,
+  'title_filter' => $title,
+]);

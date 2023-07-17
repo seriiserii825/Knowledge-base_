@@ -1,1 +1,0 @@
-ALTER TABLE lesson MODIFY teacher_id INTEGER NULL;

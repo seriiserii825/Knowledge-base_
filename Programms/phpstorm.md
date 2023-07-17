@@ -1,3 +1,6 @@
+#install in arch
+yay -S phpstorm-jre
+
 #if
 alt+enter = simplify
 
@@ -13,6 +16,11 @@ alt+shift+g
 
 ## vim 
 :actionlist
+
+## remove .idea from git
+git rm -r --cached .idea
+.gitignore 
+.idea/ 
 
 ### Буфер обмена
 

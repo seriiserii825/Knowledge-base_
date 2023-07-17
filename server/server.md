@@ -114,7 +114,8 @@ node -v
 - npm install pm2@latest -g
 - pm2 start server.js
 - pm2 start
-- pm2 startup ubuntu - start pm2 when server restart
+# start pm2 when server restart
+- pm2 startup ubuntu
 
 pm2 start "yarn preview" --name "medik"
 
@@ -125,4 +126,5 @@ NAMESERVERS
 Custom dns
 
 In cloudlare add A read for new sites.
+
 

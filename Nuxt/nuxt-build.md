@@ -1,1 +1,0 @@
-npx nuxt build -a
