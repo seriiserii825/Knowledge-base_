@@ -1,52 +1,23 @@
-<template>
-  <transition name="popup">
-    <VueAgentsPopup
-                    :site-url="siteUrl"
-                    v-if="is_popup_visible"
-                    :item="agent"
-                    @close-popup="closePopup" />
-  </transition>
-</template>
-<style type="text/css" media="screen">
-/* // when popup start or end */
-.popup-enter-active,
-.popup-leave-active {
-  transition: all 0.5s;
+<style>
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
 }
 
-/* // when popup work */
-.popup-enter,
-.popup-leave-to {
-  opacity: 0;
-  transform: scale(1.1);
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
 }
 
-.item-enter-active {
-  animation: fadeIn 0.5s;
-}
-
-.item-leave-active {
-  animation: fadeOut 0.5s;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
   }
 
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
+  50% {
+    transform: scale(1.25);
   }
 
-  to {
-    opacity: 0;
+  100% {
+    transform: scale(1);
   }
 }
 </style>
-
