@@ -20,4 +20,21 @@
     transform: scale(1);
   }
 }
+
+.popup-enter-active {
+  transition: opacity 0.5s ease;
+}
+
+.popup-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.popup-enter-from {
+  opacity: 0;
+}
+
+.popup-leave-to {
+  opacity: 0;
+}
 </style>
+
