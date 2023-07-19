@@ -55,3 +55,26 @@ formatDate(date) {
 
   return new Intl.DateTimeFormat("ro", options).format(new Date(date));
 }
+
+function fmt(date, format = 'YYYY-MM-DDThh:mm:ss') {
+  const pad2 = (n) => n.toString().padStart(2, '0');
+
+  const map = {
+    YYYY: date.getFullYear(),
+    MM: pad2(date.getMonth() + 1),
+    DD: pad2(date.getDate()),
+    hh: pad2(date.getHours()),
+    mm: pad2(date.getMinutes()),
+    ss: pad2(date.getSeconds()),
+  };
+
+  return Object.entries(map).reduce((prev, entry) => prev.replace(...entry), format);
+}
+
+// Usage
+console.log(
+  fmt(new Date(), 'YYYY-MM-DDThh:mm:ss') // '2023-03-04T10:30:24'
+);
+console.log(
+  fmt(new Date(), 'MM/DD/YYYY, hh:mm:ss') // '03/04/2023, 10:30:24'
+);
