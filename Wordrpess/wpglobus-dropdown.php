@@ -1,3 +1,4 @@
+// dropdown with flags
 <div class="language">
   <?php if (!dynamic_sidebar('sidebar-1')) : ?>
     <h3>add language widget</h3>
