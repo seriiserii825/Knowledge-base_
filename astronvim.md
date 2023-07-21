@@ -10,3 +10,7 @@ go to
 and run
 make clean
 make
+
+# luarocks to format lua
+
+Install luarocks
