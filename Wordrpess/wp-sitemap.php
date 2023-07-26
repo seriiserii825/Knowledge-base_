@@ -1,17 +1,13 @@
 <?php
 // generate sitemap just for get request
-function add_query_vars_filter( $vars ){
-       $vars[] = "sitemap111";
-       return $vars;
-  }
-  add_filter( 'query_vars', 'add_query_vars_filter' );
-$sitemap111 =  $_GET['sitemap111'];
 
-
-if($sitemap111 == 'true'){
-   require _DIR_ . '/helpers/sitemap.php';
-
+if(isset($_GET['sitemap111'])){
+ $sitemap111 =  $_GET['sitemap111'];
+ if($sitemap111 == 'true'){
+   require __DIR__ . '/../helpers/sitemap.php';
+ }	
 }
+
 /* function to create sitemap.xml file in root directory of site  */
 // add_action("publish_post", "eg_create_sitemap");
 // add_action("publish_page", "eg_create_sitemap");
@@ -72,6 +68,23 @@ function getPropertiesId()
   return $result;
 }
 
+// bludelego foreach properties
+function getPropertiesId()
+{
+    $api_result = callAPI('https://api.bludelego.it/api/realestate/v1/immobili', 'post');
+    $list_json = json_decode($api_result);
+    $properties = [];
+    $pages = $list_json->data->pages;
+
+    for ($i = 1; $i <= $pages; $i++) {
+        $api_result = callAPI('https://api.bludelego.it/api/realestate/v1/immobili', 'post', 'page=' . $i . '&order_by=date_insert_desc&auction=0');
+        $list_json = json_decode($api_result);
+        $properties = array_merge($properties, $list_json->data->immobili_list);
+    }
+
+    return $properties;
+}
+
 // bludelego with foreach =========================================
 function getPropertiesId()
 {
@@ -90,15 +103,22 @@ function getPropertiesId()
 }
 
 foreach ($adsForSitemap as $item) {
-    setup_postdata($item);
-    $id = $item->id;
-    $titolo = $item->titolo;
-    $localita = $item->localita;
-    $sitemap .= "\t" . '<url>' . "\n" .
-        "\t\t" . '<loc>https://camoglicase.it/annunci-immobiliari/'.$id.'-'.$titolo.'-'.$localita.'</loc>' .
-        "\n\t\t" . '<lastmod>' . $date . '</lastmod>' .
-        "\n\t\t" . '<changefreq>monthly</changefreq>' .
-        "\n\t" . '</url>' . "\n";
+        $id = $item->id;
+        $url = '';
+        $titolo = $item->titolo;
+        $titolo = strtolower($titolo);
+        $localita = $item->localita;
+        $localita = strtolower($localita);
+        $url = $id . '-' . $titolo . '-' . $localita;
+        $url = str_replace(' ', '-', $url);
+        $url = str_replace('(', '', $url);
+        $url = str_replace(')', '', $url);
+        $date = date("Y-m-d");
+        $sitemap .= "\t" . '<url>' . "\n" .
+            "\t\t" . '<loc>'.get_home_url().'/annunci-immobiliari/'.$url.'</loc>' .
+            "\n\t\t" . '<lastmod>' . $date . '</lastmod>' .
+            "\n\t\t" . '<changefreq>monthly</changefreq>' .
+            "\n\t" . '</url>' . "\n";
 }
 
 
@@ -144,6 +164,7 @@ $agim = new AgimAPIClient([]);
 $adsForSitemap = $agim->getPropertiesId();
 foreach ($adsForSitemap as $item) {
     setup_postdata($item);
+    $date = date('Y-m-d');
     $local_title = $item->typology->type . " " . $item->location->city;
     $cleared_title = createUrl($local_title);
     $url = '/immobile/' . $item->id . '-abitare-' . $cleared_title;
