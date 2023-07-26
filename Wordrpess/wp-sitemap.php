@@ -1,4 +1,17 @@
 <?php
+// generate sitemap just for get request
+function add_query_vars_filter( $vars ){
+       $vars[] = "sitemap111";
+       return $vars;
+  }
+  add_filter( 'query_vars', 'add_query_vars_filter' );
+$sitemap111 =  $_GET['sitemap111'];
+
+
+if($sitemap111 == 'true'){
+   require _DIR_ . '/helpers/sitemap.php';
+
+}
 /* function to create sitemap.xml file in root directory of site  */
 // add_action("publish_post", "eg_create_sitemap");
 // add_action("publish_page", "eg_create_sitemap");
