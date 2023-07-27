@@ -1,7 +1,7 @@
 // in flex container
 // For me adding overflow: hidden; to the slider element (which gets the slick-initialized slick-slider classes) fixed the problem.
 //
-/
+
 custom_slider.on(
   "beforeChange",
   function (event, slick, currentSlide, nextSlide) {
