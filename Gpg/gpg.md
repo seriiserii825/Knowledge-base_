@@ -1,26 +1,32 @@
-#Install pass
-sudo apt install pass
+## Install pass
 
+```
+sudo apt install pass
 pass init serii
 sudo apt install gnupg
+```
 
-#Generate key
+## Generate key
+
+При генерации потребуется вводить пароль от ключа
+
+```
 gpg --full-gen-key
+```
 
-#Проверяем список публичных ключей:
+## Проверяем список публичных ключей:
+
+
 gpg --list-keys
+gpg -k
 
-#И своих приватных:
+
+## И своих приватных:
 gpg --list-secret-keys
+gpg -K
 
-/home/setevoy/.gnupg/pubring.kbx
---------------------------------
-sec   rsa2048 2019-04-25 [SC]
-DEB0D4AD41CC2612B1944D448D22D6610B2F6067
-uid           [ultimate] setevoy (my main) <reg@domain.kiev.ua>
-ssb   rsa2048 2019-04-25 [E]
+## Удаление ключа
 
-#Удаление ключа
 Что бы удалить ключ — надо удалить его приватную часть, после чего можно удалить публичную.
 
 Удаляем приватный ключ:
@@ -29,33 +35,36 @@ gpg --delete-secret-key E130BB49AAA234F2BE2A7F96714F9CBFDA191430
 
 gpg --export-secret-keys > ~/Dropbox/Backups/gpg-setevoy-arch-work-secret-backup.gpg
 
-#При экспорте будет запрошен пароль от вашего секретного ключа/ей:
+# При экспорте будет запрошен пароль от вашего секретного ключа/ей:
+
 А восстановить его можно с помощью --import.
 
-#Удалим имеющийся ключ:
+# Удалим имеющийся ключ:
 
 gpg --delete-secret-key setevoy
 
-#И восстановим его из бекапа:
+# И восстановим его из бекапа:
 
 gpg --import ~/Dropbox/Backups/gpg-setevoy-arch-work-secret-backup.gpg
 gpg: key 8D22D6610B2F6067: "setevoy (my main) <reg@domain.kiev.ua>" not changed
 gpg: key 8D22D6610B2F6067: secret key imported
 gpg: Total number processed: 1
-gpg:              unchanged: 1
-gpg:       secret keys read: 1
-gpg:   secret keys imported: 1
+gpg: unchanged: 1
+gpg: secret keys read: 1
+gpg: secret keys imported: 1
 
 Проверяем:
 gpg --list-secret-keys
 /home/setevoy/.gnupg/pubring.kbx
---------------------------------
-sec   rsa2048 2019-04-25 [SC]
-DEB0D4AD41CC2612B1944D448D22D6610B2F6067
-uid           [ultimate] setevoy (my main) <reg@domain.kiev.ua>
-ssb   rsa2048 2019-04-25 [E]
 
-Чтобы иметь возможность сохранять измененные файлы с помощью импортированного приватного ключа, нужно задать права. 
+---
+
+sec rsa2048 2019-04-25 [SC]
+DEB0D4AD41CC2612B1944D448D22D6610B2F6067
+uid [ultimate] setevoy (my main) <reg@domain.kiev.ua>
+ssb rsa2048 2019-04-25 [E]
+
+Чтобы иметь возможность сохранять измененные файлы с помощью импортированного приватного ключа, нужно задать права.
 
 gpg --edit-key <KEY_ID>
 gpg> trust
