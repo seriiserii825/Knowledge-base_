@@ -1,4 +1,4 @@
-## Install pass
+### Install pass
 
 ```
 sudo apt install pass
@@ -6,92 +6,155 @@ pass init serii
 sudo apt install gnupg
 ```
 
-## Generate key
+### Generate key
 
-При генерации потребуется вводить пароль от ключа
+Will need to add password for key
 
 ```
 gpg --full-gen-key
 ```
 
-## Проверяем список публичных ключей:
+Keys is stored in
 
+```
+$/.gnupg
+```
 
+```
+$ gpg -k
+/home/serii/.gnupg/pubring.kbx
+------------------------------
+pub   rsa2048 2020-06-17 [SC]
+      17816E352FDDF047A999EB44B4319A3D90FA2450
+uid           [ultimate] serii burduja (some) <seriiburduja@gmail.com>
+sub   rsa2048 2020-06-17 [E]
+
+```
+
+pub - main key
+sub - sub key
+E - encrypt
+C - create
+
+### Check public key
+
+```
 gpg --list-keys
 gpg -k
+```
 
+### Check private key
 
-## И своих приватных:
+```
 gpg --list-secret-keys
 gpg -K
+```
 
-## Удаление ключа
+### Delete key
 
-Что бы удалить ключ — надо удалить его приватную часть, после чего можно удалить публичную.
+You need to delete first private and after public key
 
-Удаляем приватный ключ:
-
+```
 gpg --delete-secret-key E130BB49AAA234F2BE2A7F96714F9CBFDA191430
-
 gpg --export-secret-keys > ~/Dropbox/Backups/gpg-setevoy-arch-work-secret-backup.gpg
+```
 
-# При экспорте будет запрошен пароль от вашего секретного ключа/ей:
+### Import key
 
-А восстановить его можно с помощью --import.
-
-# Удалим имеющийся ключ:
-
-gpg --delete-secret-key setevoy
-
-# И восстановим его из бекапа:
-
+```
 gpg --import ~/Dropbox/Backups/gpg-setevoy-arch-work-secret-backup.gpg
-gpg: key 8D22D6610B2F6067: "setevoy (my main) <reg@domain.kiev.ua>" not changed
-gpg: key 8D22D6610B2F6067: secret key imported
-gpg: Total number processed: 1
-gpg: unchanged: 1
-gpg: secret keys read: 1
-gpg: secret keys imported: 1
+```
 
-Проверяем:
-gpg --list-secret-keys
-/home/setevoy/.gnupg/pubring.kbx
+### Edit key
 
----
-
-sec rsa2048 2019-04-25 [SC]
-DEB0D4AD41CC2612B1944D448D22D6610B2F6067
-uid [ultimate] setevoy (my main) <reg@domain.kiev.ua>
-ssb rsa2048 2019-04-25 [E]
-
-Чтобы иметь возможность сохранять измененные файлы с помощью импортированного приватного ключа, нужно задать права.
-
+```
 gpg --edit-key <KEY_ID>
 gpg> trust
-Вам будет предложено выбрать уровень доверия из следующего:
+```
 
+Need to add trust 5
+
+```
 1 = I don't know or won't say
 2 = I do NOT trust
 3 = I trust marginally
 4 = I trust fully
 5 = I trust ultimately
 m = back to the main menu
-Я выбрал 5, так как я создал ключ, поэтому, конечно, я доверяю ему в конечном счете:). Он попросит вас подтвердить свое решение:
+```
 
-Your decision? 5
-Do you really want to set this key to ultimate trust? (y/N) y
-После подтверждения, вы должны иметь возможность шифровать с помощью этого ключа.
+Как я уже говорил, мы можем выбрать любой из вариантов. RSA Lab нам рекомендует `2048`. Лично я выберу `4096`, если ваш компьютер мощный, то я и вам его рекомендую.
 
-Кроме стандартного хранилища — pass может создать его в виде git-репозитория, и вести историю всех изменений.
+Так, теперь мы можем опять выполнить команды `gpg -k` и `gpg -K`
 
-Если глобальные настройки Git-пользователя ещё не сделаны — выполняем:
+И теперь мы видим, что у нас есть наш ключ.
 
-git config --global user.email reg@domain.kiev.ua
-git config --global user.name "setevoy"
+Давайте теперь я кратко расскажу о том, как это читается.
 
-Создаём git-репозиторий для уже созданного хранилища:
-Создаем хранилище
+```
+sec  2048R/920B1221 2013-12-01 [expires: 2014-12-01]
+```
 
-pass init serii
+- `sec` – это primary private часть нашего ключа
+- `4096R` – это собственно алгоритм и количество бит
+- `920B1221` – это айди ключа, ну вернее последняя его часть, на самом деле он немного длиннее.
+- `2013-12-01` – дата создания ключа
+- `[expires: 2014-12-01]` – когда истекает ключ
 
-pass git init
+uid
+
+- `uid` – это что-то вроде идентификатора
+- `Dmitriy Kovalev` – Это имя, которое мы задавали
+- `123` – Это наш комментарий
+- \`\` – имейл
+
+```
+ssb  2048R/2AB141A0 2013-12-01
+```
+
+- `ssb` – Это наш сабкей в приватной части нашего ключа
+- `2048R` – его алгоритм
+- `2AB141A0` – его айди
+- `2013-12-01` – его дата создания
+
+Когда мы создаем наш ключ, то это вообще все сохраняется в директории `~/.gnupg`
+
+- `~/.gnupg/gpg.conf` - файл конфиругации
+- `~/.gnupg/secring.gpg` - тут секретная часть ключей
+- `~/.gnupg/pubring.gpg` - тут приватная часть ключей
+
+## Sign
+
+Теперь смотрите, мы можем взять какой-нибудь файл и подписать его с помощью команды
+
+```
+gpg --clearsign 1.txt
+```
+
+Давайте теперь откроем файл и посмотрим на него.
+
+![img](https://i.imgur.com/shZxJph.png)
+
+## Encrypt
+
+Теперь давайте попробуем зашифровать какой-нибудь файл.
+
+```
+gpg -r johenews --armor --encrypt 1.txt
+```
+
+Теперь откроем его.
+
+![img](https://i.imgur.com/1cPCev1.png)
+
+Видим, что файл зашифрован.
+
+А теперь расшифруем его.
+
+```
+gpg -d 1.txt.asc
+```
+
+![img](https://i.imgur.com/ANCAz4n.png)
+
+Ну, вот как-то так.
