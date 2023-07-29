@@ -30,6 +30,7 @@ if [[ "$age" -gt 10  -a  "$age" -lt 20 ]]
 then
     echo "correct"
 if
+
 ```
 
 Or operator
