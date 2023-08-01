@@ -1,11 +1,13 @@
 ### while
 
 ```
-number=1
-while [ $number -lt 10 ]
+myvar=1
+
+while [ $myvar -le 10 ]
 do
-    echo "$number"
-    number=$(( number+1 ))
+  echo $myvar
+  myvar=$[ $myvar + 1 ]
+  sleep 0.5
 done
 
 ```
@@ -36,4 +38,3 @@ do
 done
 
 ```
-
