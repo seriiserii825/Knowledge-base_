@@ -156,6 +156,7 @@ two.txt
 three.txt
 
 ```php
+:argadd file1 file2
 :args `grep -lr 'import.*= require' app`
 :args # Huge list of files
 :argdo norm @q

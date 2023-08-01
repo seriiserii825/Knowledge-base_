@@ -1,7 +1,16 @@
 ### declare
 ```
-declare myvar='some'
-declare -p -- view variables
+myvar='some'
 
-delcare -r some='some' -- readonly
+```
+
+### command in to var
+```
+files=$(ls)
+echo $files
+```
+
+### see stystem variables
+```
+env
 ```
