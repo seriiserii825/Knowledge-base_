@@ -15,4 +15,5 @@ echo $(( n1 % n2 ))
 n1=20.5
 n2=4
 echo "$n1+$n2" | bc
+echo "scale=2;$n1+$n2" | bc -- scale 0 after dots
 ```
