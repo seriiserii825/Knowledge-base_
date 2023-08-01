@@ -25,6 +25,9 @@ echo "Your name is $name"
 ```
 read -p "Username: " user_var
 echo "Username: $user_var"
+
+echo -e "Enter file name: \c"
+read file_name
 ```
 
 ### hide password

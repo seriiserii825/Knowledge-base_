@@ -17,10 +17,7 @@
 
 ```
 [ n1 -eq n2 ] (true if n1 same as n2, else false)
-[ n1 -ge n2 ] (true if n1greater then or equal to n2, else false)
-[ n1 -le n2 ] (true if n1 less then or equal to n2, else false)
-[ n1 -ne n2 ] (true if n1 is not same as n2, else false)
-[ n1 -gt n2 ] (true if n1 greater then n2, else false)
+[ n1 -ge n2 ] (true if n1greater then or equal to n2, else false) [ n1 -le n2 ] (true if n1 less then or equal to n2, else false) [ n1 -ne n2 ] (true if n1 is not same as n2, else false) [ n1 -gt n2 ] (true if n1 greater then n2, else false)
 [ n1 -lt n2 ] (true if n1 less then n2, else false)
 ```
 
@@ -43,4 +40,16 @@
 [ s1 ] (true if s1 is not empty, else false)
 [ -n s1 ] (true if s1 has a length greater then 0, else false)
 [ -z s2 ] (true if s2 has a length of 0, otherwise false)
+```
+
+### check for files
+```
+-s file is empty
+-e exists file or dir
+-f exists file
+-d exists dir
+-b exists block file
+-c exists text file
+-r read permision
+-w write permision
 ```
