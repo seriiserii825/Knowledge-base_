@@ -50,19 +50,25 @@ gpg --list-secret-keys
 gpg -K
 ```
 
+### export keys
+```
+gpg --export -a john > public.key
+gpg --export-secret-key -a john > private.key
+```
+
 ### Delete key
 
 You need to delete first private and after public key
 
 ```
 gpg --delete-secret-key E130BB49AAA234F2BE2A7F96714F9CBFDA191430
-gpg --export-secret-keys > ~/Dropbox/Backups/gpg-setevoy-arch-work-secret-backup.gpg
 ```
 
 ### Import key
 
 ```
-gpg --import ~/Dropbox/Backups/gpg-setevoy-arch-work-secret-backup.gpg
+gpg --import private.key
+gpg --import public.key
 ```
 
 ### Edit key
@@ -81,15 +87,10 @@ Need to add trust 5
 4 = I trust fully
 5 = I trust ultimately
 m = back to the main menu
+
 ```
 
-Как я уже говорил, мы можем выбрать любой из вариантов. RSA Lab нам рекомендует `2048`. Лично я выберу `4096`, если ваш компьютер мощный, то я и вам его рекомендую.
-
-Так, теперь мы можем опять выполнить команды `gpg -k` и `gpg -K`
-
-И теперь мы видим, что у нас есть наш ключ.
-
-Давайте теперь я кратко расскажу о том, как это читается.
+to exit type save
 
 ```
 sec  2048R/920B1221 2013-12-01 [expires: 2014-12-01]
