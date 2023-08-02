@@ -1,3 +1,12 @@
+### check if have args
+
+```
+if [ ! $# -gt 0 ]; then
+    echo "Insert one or * image name"
+    exit 1
+fi
+```
+
 ### Number Comparisons:
 
 ```
@@ -43,6 +52,7 @@
 ```
 
 ### check for files
+
 ```
 -s file is empty
 -e exists file or dir
