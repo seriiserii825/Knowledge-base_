@@ -1,28 +1,24 @@
 ### case
 
 ```
-echo -n "Enter the name of a country: "
-read COUNTRY
+if [ ! $# -gt 0 ]; then
+    echo "Insert argument"
+    exit 1
+fi
 
-echo -n "The official language of $COUNTRY is "
+vehicle=$1
 
-case $COUNTRY in
-
-  Russia)
-    echo -n "Russian"
-    ;;
-
-  Romania | Moldova)
-    echo -n "Romanian"
-    ;;
-
-  Italy | "San Marino" | Switzerland | "Vatican City")
-    echo -n "Italian"
-    ;;
-
-  *)
-    echo "unknown"
-    ;;
+case $vehicle in
+    "car" )
+        echo "Rent of $vehicle is 100 dollar" ;;
+    "van" )
+        echo "Rent of $vehicle is 80 dollar" ;;
+    "bicycle" )
+        echo "Rent of $vehicle is 5 dollar" ;;
+    "truck" )
+        echo "Rent of $vehicle is 150 dollar" ;;
+    * )
+        echo "Unknown vehicle" ;;
 esac
 
 ```
