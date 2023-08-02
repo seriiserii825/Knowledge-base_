@@ -8,17 +8,19 @@ fi
 
 vehicle=$1
 
+# if capital don't wor, change LANG to C, LANG=C
+# for special char set "?" in terminal
 case $vehicle in
-    "car" )
-        echo "Rent of $vehicle is 100 dollar" ;;
-    "van" )
-        echo "Rent of $vehicle is 80 dollar" ;;
-    "bicycle" )
-        echo "Rent of $vehicle is 5 dollar" ;;
-    "truck" )
-        echo "Rent of $vehicle is 150 dollar" ;;
+    [a-z] )
+        echo "Lower case" ;;
+    [A-Z] )
+        echo "Uppercase" ;;
+    [0-9] )
+        echo "Number" ;;
+    ? )
+        echo "One special char" ;;
     * )
-        echo "Unknown vehicle" ;;
+        echo "More special chars" ;;
 esac
 
 ```
