@@ -27,3 +27,22 @@ echo $string
 string=$(sed "s/bash/shell/g" <<< "$string")
 echo $string
 ```
+
+## get element from path
+
+```
+$ cat filelist.txt
+./first/example1/path
+./second/example1/path
+./third/example2/path
+
+$ cut -d/ -f2 filelist.txt
+first
+second
+third
+
+$ cut -d/ -f3 filelist.txt
+example1
+example1
+example2
+```
