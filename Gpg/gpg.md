@@ -149,7 +149,6 @@ gpg -r johenews --armor --encrypt 1.txt
 ![img](https://i.imgur.com/1cPCev1.png)
 
 Видим, что файл зашифрован.
-
 А теперь расшифруем его.
 
 ```
