@@ -171,6 +171,19 @@ three.txt
 1+1+2+8
 ```
 
+## exp
+
+```
+C - copy all to the end of line
+insert mode
+<C-r>=@" (@") - what you copied in unnamed buffer
+
+:let i=4
+<C-r>=i - add variable
+to calcualte
+<C-r>=<C-r> and some expresion with variables
+```
+
 ```
 Y - copy line
 A - go to end
