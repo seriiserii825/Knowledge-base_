@@ -1,47 +1,43 @@
-https://programmerall.com/article/23312513312/
-yarn add leaflet
-<script setup lang="ts">
-import {onMounted} from "vue";
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
+yarn add @vue-leaflet/vue-leaflet leaflet
 
-const marker_url = 'bs-remax-collection';
-let myIcon = L.icon({
-  iconUrl: '/wp-content/themes/' + marker_url + '/assets/i/static/map-icon.png',
-  iconSize: [38, 38],
-  iconAnchor: [38, 38],
-  shadowSize: [68, 95],
-  shadowAnchor: [22, 94]
+<script lang="ts" setup>
+import "leaflet/dist/leaflet.css";
+import {LIcon, LMap, LMarker, LTileLayer} from "@vue-leaflet/vue-leaflet";
+import {PropType, ref} from "vue";
+import {IMapPopup} from "../../interfaces/map/IMapPopup";
+
+const props = defineProps({
+  items: {
+    type: Array as PropType<IMapPopup[]>,
+    required: true,
+  },
 });
 
-function init(){
-  const map = L.map('map').setView([41.92374874523605, 12.500281577355913], 6)
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap'
-  }).addTo(map)
-  
-  const marker = L.marker([41.92374874523605, 12.500281577355913], {icon: myIcon}).addTo(map)
+const center = [41.64108812736914, 13.334761026100429];
 
-  marker.bindPopup("<b>Hello world!</b><br>I am a popup.")
-  var popup = L.popup()
-      .setLatLng([41.92374874523605, 12.500281577355913])
-      .setContent("I am a standalone popup.")
-      .openOn(map);
-}
-
-onMounted(() => {
-  init();
-});
+const zoom = ref(6);
+const iconUrl = ref("/wp-content/themes/bs-remax-collection/assets/i/static/map-icon.svg");
+const iconSize = ref([25, 41]);
 </script>
 
 <template>
-    <div id="map"></div>
+  <div class="leaflet-map">
+    <div style="height:940px; width:100%">
+      <l-map v-model:zoom="zoom" :center="center">
+        <l-tile-layer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            layer-type="base"
+            name="OpenStreetMap"
+        ></l-tile-layer>
+        <l-marker
+            v-for="item in items"
+            :lat-lng="[item.lat, item.long]">
+          <l-icon :icon-url="iconUrl" :icon-size="iconSize"/>
+        </l-marker>
+      </l-map>
+    </div>
+  </div>
 </template>
 
-<style scoped>
-    #map  { 
-        width: 100%;
-        height: 92rem;
-    }
-</style>
+
+
