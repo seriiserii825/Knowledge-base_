@@ -1,6 +1,12 @@
 ## install
 Install qutebrowser
 
+## scroll bugs
+:bind h scroll-px -25 0
+:bind j scroll-px 0 25
+:bind k scroll-px 0 -25
+:bind l scroll-px 25 0
+
 ##  navigate
 Shift+j -	Go to next tab (to the right), looping around to first tab if at the end
 Shift+k	Go to previous tab (to the left), looping around to last tab if at the beginning
