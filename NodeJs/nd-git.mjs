@@ -14,7 +14,7 @@ import { exec, spawn } from "child_process";
           console.log(`stderr: ${stderr}`);
           return;
         }
-        console.log(`stdout: ${stdout}`);
+        console.log(`${stdout}`);
       });
     }
   } catch (err) {
