@@ -1,3 +1,14 @@
+### download
+```
+zip -r folder.zip folder
+
+download file
+scp -r  webmaster@37.187.90.56:/home/webmaster/web/silcompaback.altuofianco.com/public_html.zip .
+
+download folder
+scp -r  webmaster@37.187.90.56:/home/webmaster/web/silcompaback.altuofianco.com/public_html .
+```
+
 # User
 sudo useradd -m -d /home/serii -s /bin/bash serii
 passwd username
