@@ -32,14 +32,15 @@
             font-family: Eina04, sans-serif;
             font-weight: normal;
         }
+        body {
+            background-image:url({{  url('img/riepelogo/pdfback.jpg') }});
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+        }
         .epilogue__header {
-            position: absolute;
-            top: 0;
-            left: 0;
             padding: 0 32px 0;
             width: 100%;
-            height: 115px;
-            background-image: url({{  url('img/riepelogo/header.jpg') }});
         }
         .epilogue__header img {
             margin-right: 32px;
@@ -59,13 +60,7 @@
         }
         .epilogue__body {
             position: relative;
-            padding: 115px 32px 32px;
-            background-image: url({{  url('img/riepelogo/epilogue__footer.jpg') }});
-            background-position: bottom center;
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-        .epilogue__content {
+            padding: 115px 32px 0;
         }
         .epilogue__info {
             padding-top: 31px;
@@ -323,6 +318,7 @@
 </div>
 </body>
 </html>
+
 
 
 
