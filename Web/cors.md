@@ -1,3 +1,7 @@
+### httaccess
+
+```
+
 <IfModule mod_rewrite.c>
 	Header set Access-Control-Allow-Origin "*"
 	Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, PATCH"
@@ -5,3 +9,12 @@
     RewriteEngine On
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
+```
+
+### enable headers
+
+```
+
+sudo a2enmode headers
+sudo systemctl restart apache2
+```

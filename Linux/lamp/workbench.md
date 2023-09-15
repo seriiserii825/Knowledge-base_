@@ -1,2 +1,3 @@
-sudo apt update
-sudo apt install mysql-workbench-community
+https://dev.mysql.com/downloads/workbench/
+
+

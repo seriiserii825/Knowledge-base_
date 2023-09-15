@@ -4,8 +4,8 @@ sudo mkdir -p /var/www/oop.local/html
 sudo chown -R $USER:$USER /var/www/oop.local/
 sudo chmod -R 755 /var/www
 
-- sudo apt install nginx
-- sudo systemctl status nginx (active running)
+sudo apt install nginx
+sudo systemctl status nginx (active running)
 
 #remove apache2
 sudo apt-get purge apache2 apache2-utils apache2-bin apache2.2-common
