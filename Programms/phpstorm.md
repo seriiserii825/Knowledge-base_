@@ -1,26 +1,24 @@
-#install in arch
-yay -S phpstorm-jre
+## git blame
+left side pane - annotate with git blame
 
-#if
+# if
 alt+enter = simplify
 
-#posfix
-autocompletions
-
-#surround with template
-##surround with emmet 
+## surround with emmet
 alt+enter inject html
 
-#carret at the end of selection
+# carret at the end of selection
 alt+shift+g
 
-## vim 
+## vim
+
 :actionlist
 
 ## remove .idea from git
+
 git rm -r --cached .idea
-.gitignore 
-.idea/ 
+.gitignore
+.idea/
 
 ### Буфер обмена
 
@@ -53,22 +51,24 @@ disable.
 file > settings > editor > emmet > css > "auto insert css vendor prefixes"
 
 ### hotkeys
+
 ctrl+up - navigation bar
 ctrl+n - new file
 ctrl+up - delete - delete file
 ctrl+alt+n - select in sidebar
 
 ### reset to default settings
+
 remove /home/serii/.config/JetBrains
 
 ### downgrade
+
 https://www.jetbrains.com/phpstorm/download/other.html
 
 ### github sync settings
+
 Далее в IDE (PhpStorm, PyCharm, RubyMine) настройками которой нужно поделиться с другими экземплярами заходим в File → Settings Repository и добавляем url созданного выше репозитория.
 
 Нас попросит ввести token. Для того чтобы его создать идем на Гитхаб в настройки аккаунта, далее выбираем Developer settings -> Personal access tokens, ставим галочку у repo и нажимаем Generate new token.
 
 Автоматическую синхронизацию можно отключить и выполнять ее вручную с помощью меню VCS → Sync Settings. Для этого нужно перейти в Settings → Tools → Settings Repository и убрать галочку Auto Sync.
-
-
