@@ -17,7 +17,9 @@ const addResponseHandler = (success, error) => {
 export { axiosInstance, addResponseHandler };
 ```
 
-## App.vue
+## main.ts
+
+#### *Call in main.ts*
 
 ```js
 addResponseHandler(
