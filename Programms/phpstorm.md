@@ -4,6 +4,11 @@ left side pane - annotate with git blame
 # if
 alt+enter = simplify
 
+### optimize import
+```
+ctrl+alt+o
+```
+
 ## surround with emmet
 alt+enter inject html
 
