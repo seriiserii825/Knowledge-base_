@@ -1,3 +1,17 @@
+If you want to remove the 2 (two) last commits, there is an easy command to do that:
+
+```
+git reset --hard HEAD~2
+```
+
+You can change the `2` for any number of last commits you want to remove.
+
+And to push this change to remote, you need to do a `git push` with the _force_ (`-f`) parameter:
+
+```
+git push -f
+```
+
 ### Удалить последний коммит полностью
 
 ```
@@ -14,6 +28,7 @@ git clean -nd show files
 git clean -fd remove fles
 
 # pull all
+
 git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
 git fetch --all
 git pull --all
