@@ -16,7 +16,9 @@ sudo make BIN=browserpass-XXXX install   # Install the app
 # install app
 go to
 /usr/local/lib/browserpass/ 
+/usr/lib/browserpass
 make hosts-chrome-user
+make hosts-vivaldi-user
 
 # install browser extenstion
 browserpass
