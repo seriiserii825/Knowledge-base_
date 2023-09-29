@@ -8,6 +8,13 @@ pm.test("Should have jwt token", function () {
     pm.expect(jsonData.jwt).to.not.empty;
 });
 
+pm.test("Should have jwt token", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.authorisation.token).to.not.empty;
+
+    pm.globals.set("jwt-token", jsonData.authorisation.token);
+});
+
 - at the bottom use Tests tab and submit Send
 - you will have Test result
 
