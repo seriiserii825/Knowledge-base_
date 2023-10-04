@@ -34,3 +34,8 @@ git fetch --all
 git pull --all
 
 and after made and checkout to branch
+
+## gitignore
+after add to gitignore rm
+
+git rm --cached filenam
