@@ -1,4 +1,11 @@
+### youtube-dl
+
+```
+python3 -m pip install -U yt-dlp
+```
+
 ### yewtube
+
 https://github.com/mps-youtube/yewtube
 
 ### [Using pipx (Recommended)](https://github.com/mps-youtube/yewtube#using-pipx-recommended)
@@ -8,6 +15,7 @@ https://github.com/mps-youtube/yewtube
 3. Now, type `yt` That's it.
 
 ### help
+
 ```
  All yewtube commands can be entered from the command line.  For example;
 
