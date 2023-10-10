@@ -1,3 +1,9 @@
+### vlc
+```
+locate youtube.luac
+sudo cp ~/Downloads/youtube.luac /usr/lib/x86_64-linux-gnu/vlc/lua/playlist/youtube.luac
+```
+
 ### youtube-dl
 
 ```
