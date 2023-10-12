@@ -74,3 +74,23 @@ slider.slick({
     slick.$slides.css('height', slick.$slideTrack.height() + 'px');
 });
 
+// show 3 slides and crop for right and left
+
+$(document).ready(function(){
+    $('.carousel').slick({
+        slidesToShow: 3, // Number of slides to show at once
+        centerMode: true, // Enable center mode
+        centerPadding: '20%', // Adjust the padding for the left and right sides
+        focusOnSelect: true, // Set the clicked slide as the center slide
+        variableWidth: true, // Variable width to allow for cropping
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1, // Show 1 slide on smaller screens
+                    centerPadding: '0', // Remove cropping on smaller screens
+                }
+            }
+        ]
+    });
+});
