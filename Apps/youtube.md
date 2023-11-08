@@ -7,6 +7,9 @@ sudo cp ~/Downloads/youtube.luac /usr/lib/x86_64-linux-gnu/vlc/lua/playlist/yout
 ### youtube-dl
 
 ```
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.8
 python3 -m pip install -U yt-dlp
 ```
 
