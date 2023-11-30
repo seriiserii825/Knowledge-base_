@@ -3,10 +3,8 @@
 v16.19.0
 ```
 
-### add to .zshrc before nvm initialization
+### create a file zsh_nvim
 ```
-
-# place this after nvm initialization!
 autoload -U add-zsh-hook
 load-nvmrc() {
   local node_version="$(nvm version)"
@@ -28,5 +26,18 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 ```
+### source zsh_nvim in .zshrc after nvm initialization
+```
 
-### go to project with node_version
+export NVM_DIR="/home/serii/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+source ~/xubuntu/zsh/zsh_nvm
+```
+
+### go to project with node_version and see result
+
