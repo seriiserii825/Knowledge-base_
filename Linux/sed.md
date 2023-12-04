@@ -1,393 +1,205 @@
-# Find and replace
+To modify sed commands’ behavior, add the following command-line options:
 
-## Find and replace any match anywhere in the file
+- **–help** – prints command usage information.
+- **–debug** – enables Terminal to annotate program execution and input.
+- **\-i** – overwrites the original file.
+- **\-n** – disables automatic printing unless the user uses the **p** command.
+- **\-u** – minimizes output.
+- **–posix** – disables POSIX sed extensions to simplify writing portable scripts.
+- **\-e** – specifies multiple commands to run sequentially.
+- **\-b** – opens input files in binary mode.
+- **\-l** – sets the desired line-wrap length for the **l** command.
 
-```
-find_and_replace(){
-sed 's/'$find'/'$replace'/g' $@
-}
-```
+The **script** contains the subcommand, search pattern, replacement string, and flag. These elements are encapsulated in apostrophes and separated using a delimiter, like a slash (**/**), backslash (**\\**), or pipe (**|**).
 
-## Find and replace on lines containing pattern
-
-```
-find_and_replace_on_lines() {
-sed '/'$pattern'/'$find'/'$replace'/g' $@
-}
-```
+Their order may differ depending on the subcommand. For example, the **s** or **substitute** command replaces a [regular expression](https://www.regular-expressions.info/) pattern with another string. Here’s the syntax:
 
-## Find and replace the first match
+'s/regex_pattern/new_pattern/flags'
 
-```
-find_and_replace_first_match(){
-sed 's/'$find'/'$replace'/' $@
-}
-```
+To alter the pattern substitution, use the following flags:
 
-## Find and replace only on the last match
+- **g** – applies global replacement, not just the first occurrence.
+- **Number** – specifies which line numbers to modify.
+- **p** – prints the new line after a successful pattern replacement.
+- **i** – makes the substitution case sensitive.
 
-```
-find_and_replace_last_match() {
-sed 's/\(.*\)'$find'/'$replace'/' $@
-}
-```
+### Using sed to Replace the nth Occurrence of a Pattern in a Line
 
-## Find and replace inside a range of lines
+If a pattern in a line occurs multiple times, enter the following command syntax to replace a specific one:
 
-```
-find_and_replace_inside_range() {
-sed '$range s/'$find'/'$replace'/g' $@
-} 
 ```
 
-## Find and replace outside a range of lines
-
-```
-find_and_replace_outside_range(){
-sed '$range !s/'$find'/'$replace'/g' $@
-}
+sed 's/old\_string/new\_string/#' samplefile.txt
 ```
 
-## Find and replace the nth instance in a line
+Substitute the hash (#) symbol with the pattern’s sequence number. For example, this command replaces the first occurrence of the word **“music”** with **“song”** in a line inside the **playlist.txt** file:
 
 ```
-find_and_replace_nth_instance(){
-sed 's/'$find'/'$replace'/'$nth_instance'' $@
-}
-```
 
-## Find and replace if within matching $start and $end pattern
-
-```
-find_and_replace_within_start_end(){
-sed -e '/'$start'/,/^'$end'/s/'$find'/'$replace'/g' $@
-}
+sed 's/music/song/1' playlist.txt
 ```
 
-# Printing lines based on pattern
+### Using sed to Replace an Occurrence From nth to All Occurrences in a Line
 
-## Print the line matching a pattern
+Instead of replacing all patterns within the same line, combine the number and **g** flag to replace occurrences starting from a specific one. Here’s the sed script:
 
 ```
-print_line_matching_pattern(){
-sed '/'$pattern'/!d' $@
-}
-```
-
-## Print the line immediately before pattern
 
+sed 's/old\_string/new\_string/#g' samplefile.txt
 ```
-print_line_preceeding_pattern() {
-sed -n '/'$pattern'/{g;1!p;};h' $@ 
-}
-```
 
-## Print the line immediately after pattern
+For example, the command below replaces the word **“pisces”** with **“aquarius”** from the second occurrence until the last one in the **astrology.txt** file.
 
 ```
-print_line_suceeding_pattern(){
-sed -n '/'$pattern'/{n;p;}' 
-}
-```
-
-## Print the line matching pattern and all subsequent lines
 
+sed 's/pisces/aquarius/2g' astrology.txt
 ```
-print_line_matching_pattern_and_all_subsequent(){
-sed '/'$pattern'/,$!d' $@
-}
-```
-
-## Print lines matching a pattern and give context and position
 
-```
-print_line_matching_pattern_with_context(){
-sed -n -e '/'$pattern'/{=;x;1!p;g;$!N;p;D;}'
-}
-```
+### Using sed to Replace the String on a Specific Line Number
 
-## Print lines matching multiple patterns in any order
+To replace the string on an nth line, add its sequence number before **s** like this syntax:
 
-```
-print_lines_matching_patterns_in_any_order(){
-sed '/'$pattern3'/!d; /'$pattern1'/!d; /'$pattern2'/!d' $@
-}
 ```
 
-## Print lines matching multiple patterns in a specific order
-
-```
-print_lines_matching_patterns_in_specific_order(){
-sed '/'$pattern1'.*'$pattern2'.*'$pattern3'/!d' $@
-}
+sed '#s/old\_string/new\_string/' samplefile.txt
 ```
 
-## Print lines matching a minimum number characters
+For example, enter the following to substitute the word **“cake”** with **“bread”** in the second line of **foods.txt**:
 
 ```
-print_lines_min_nchars(){
-sed -n '/^.\{$nchars\}/p' $@
-}
-```
 
-## Print lines matching a maximum number characters
-
-```
-print_lines_max_nchars(){
-sed -n '/^.\{$nchars\}/!p' $@ 
-}
+sed '2s/cake/bread/' foods.txt
 ```
 
-## Print the remainder of line after matching pattern
+### Using sed to Duplicate the Replaced Line With the /p Flag
 
+To print lines that your sed command modified as an additional output, use the **p** or **print** flag. Here’s the general syntax:
+
 ```
-print_substring_after_matching_pattern(){
-sed -n -e 's/^.*'$pattern' //p' $@
-}
+
+sed 's/old\_string/new\_string/p' samplefile.txt
 ```
 
-## Print the word after matching pattern
+For example, run the following to replace **“phones”** with **“tablets”** in the **gadgets.txt** file and print the results:
 
 ```
-print_word_after_matching_pattern(){
-sed -n -e 's/^.*'$pattern' //p' $@
-}
+
+sed 's/phones/tablets/p' gadgets.txt
 ```
 
-# Translation/Refactoring
+### Using sed to Replace the String of a Range of Lines
 
-## Comment all lines
+The sed command lets you modify only the line numbers specified in the script by adding the range. Here’s the syntax:
 
 ```
-comment_all_lines(){
-sed '/s/^/#/g' $@
-}
-```
-
-## Comment lines from $start to $end
 
+sed '#,# s/old\_string/new\_string/' samplefile.txt
 ```
-comment_lines_from_start_to_end(){
-sed "$start,$end {s/^/#/}"  $@
-}
-```
 
-## Uncomment lines from $start to $end
+For example, the command below replaces **“germany”** located in the third, fourth, and fifth line on the **countries.txt** file with **“france”**:
 
-```
-uncomment_lines_from_start_to_end(){
-sed "$start,$end {s/'^#'//}"  $@
-}
 ```
 
-## Uncomment lines matching pattern
-
+sed '3,5 s/germany/france/' countries.txt
 ```
-uncomment_lines_matching_pattern(){
-sed '/'$pattern'/s/^/#/g' $@
-}
-```
-
-## Uncomment all lines
 
-```
-uncomment_all_lines(){
-sed 's/^#//g'  $@
-}
-```
+### Using sed to Print Only the Replaced Lines
 
-## Change word to uppercase if matching pattern
+By default, the stream editor prints the entire file content. To simplify the output, combine the **\-n** option with the **p** command to show only the matching lines. Here’s the general syntax:
 
 ```
-change_word_matching_pattern_to_uppercase(){
-sed -r "s/\<'$pattern'[a-z]+/\U&/g" $@   
-}
-```
 
-## Join two lines if the first ends in a backslash
-
-```
-join_two_lines_backslash(){
-sed ':a; /\$/N; s/\\n//; ta'  $@
-}
+sed -n 's/old\_string/new\_string/p' samplefile.txt
 ```
 
-## Remove characters in set from lines
+For example, to replace the third instance of **“green”** with **“blue**“ in a line inside the **colors.txt** file and print the modified lines on the terminal window, enter:
 
 ```
-set="[0-9]"
-sed 's/'$set'//g' 
-```
-
-## Insert strings $before and $after to lines matching pattern
 
+sed -n 's/green/blue/3p' colors.txt
 ```
-sed '/'$pattern'/s@^.*$@'$before'&'$after'@g'
-```
 
-# Paragraphing
+### Using sed to Delete Lines From a Particular File
 
-## Sort paragraphs alphabetically
+The **d** or **delete** command lets you remove lines from a file without a text editor. For example, use the following syntax to remove a particular line number:
 
 ```
-sort_paragraphs_alphabetically(){
-(sed '/./{H;d;};x;s/\n/={NL}=/g'| sort | sed '1s/={NL}=//;s/={NL}=/\n/g')
-}
-```
-
-## Print paragraphs only if they contain pattern
 
+sed '#d' samplefile.txt
 ```
-print_paragraph_containing_pattern(){
-sed '/./{H;$!d;};x;/'$pattern'/!d' $@
-}
-```
 
-## Insert blank line below lines that match pattern
+Replace the hash (#) symbol with the line number you want to delete. For example, run this command to remove the first line from the **cities.txt** file:
 
-```
-insert_linebreak_below_matching_lines(){
-sed '/'$pattern'/G' $@
-}
 ```
 
-## Insert blank line above lines that match pattern
-
+sed '1d' cities.txt
 ```
-insert_linebreak_above_matching_lines(){
-sed '/'$pattern'/{x;p;x;}' $@
-}
-```
 
-## Insert blank line above and below matching lines
+In addition, you can delete all the lines within a specific range using the sed command:
 
-```
-insert_linebreak_between_matching_lines(){
-sed '/'$pattern'/{x;p;x;G;}' $@
-}
 ```
 
-## Delete the last line of each paragraph
-
-```
-delete_last_line_of_each_paragraph(){
-sed -n '/^$/{p;h;};/./{x;/./p;}' $@
-}
+sed '#,#d' samplefile.txt
 ```
 
-## Print every nth line starting with x
+Replace the hash (#) symbols with the starting and ending line numbers. For example, enter the following to delete the first to the third line in the **cars.txt** file:
 
 ```
-print_every_nthline_starting_with_linex(){
-sed -n '$nthline~$linexp' $@
-}
-```
-
-# Deleting lines
-
-## Delete lines matching pattern
 
+sed '1,3d' cars.txt
 ```
-delete_lines_matching_pattern(){
-sed '/'$pattern'/d' $@
-}
-```
 
-## Delete all blank lines
+You can also delete the last line in a file by combining the **d** subcommand and a dollar sign ($), like the following.
 
-```
-delete_all_blank_lines(){
-sed '/./!d' $@
-}
 ```
 
-## Delete all blank/whitespace lines
-
+sed '$d' samplefile.txt
 ```
-delete_all_blank_whitespace_lines(){
-sed "/^\s*$/d" $@
-}
-```
 
-## Delete all consecutive blank lines except for end
+To delete a specific line number starting from the last one, use the following syntax:
 
-```
-delete_all_consecutive_blank_lines_except_end(){
-sed '/./,/^$/!d' $@
-}
 ```
 
-## Delete all consecutive blank lines except start
-
-```
-delete_all_consecutive_blank_lines_except_start(){
-sed '/^$/N;/\n$/D' $@
-}
+sed '#,$d' samplefile.txt
 ```
 
-## Delete all consecutive blank lines except for the first two
+For example, this command will remove the second to last line in the **books.txt** file:
 
 ```
-sed '/^$/N;/\n$/N;//D' 
-```
 
-## Delete all trailing blank lines
-
-```
-sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba' 
+sed '2,$d' books.txt
 ```
 
-## Delete every nth line after $start
+In addition to deleting lines, use this command to remove a particular occurrence in a file. To do so, specify the regex pattern in your script, like the following syntax:
 
 ```
-sed '"$start"~"$nth"d' 
-```
-
-## Delete all leading blank lines
 
+sed '/pattern/d' samplefile.txt
 ```
-sed '/./,$!d' 
-```
 
-# Miscellaneous
+For example, run this to remove the **“oabo”** pattern from the **filestrings.txt** file:
 
-## Read lines from bottom-to-top (tac)
-
 ```
-read_lines_bottom_to_top(){
-sed '1!G;h;$!d' $@
-}
+
+sed '/oabo/d' filestrings.txt
 ```
 
-## Read lines from right to left (rev)
+### Use sed for Batch Processing of Files
 
-```
-read_lines_right_to_left(){
-sed '/\n/!G;s/\(.\)\(.*\n\)/&/;//D;s/.//' $@
-}
-```
+Generally, there are two ways to edit files in bulk using the sed command.
 
-## Number lines - delimiting with tab
+First, specify the files individually. With this method, you will list all the input files you want to replace at the end of your command, separated using spaces. Here’s the syntax:
 
 ```
-number_lines_tab_delimited(){
-sed = $@ | sed 'N;s/\n/\t/' $@
+
+sed 's/old_string/new_string/g' filename1.txt filename2.txt
 ```
 
-}
+The command will simultaneously find and replace all old_string occurrences in the two text files.
 
-## Remove HTML tags
+Second, scan them using the find command. This method automatically searches for files containing the specified pattern in a directory. Here’s the syntax:
 
 ```
-remove_html_tags(){
-sed -e :a -e 's/<[^>]*>//g;/</N;//ba' $@
-}
-```
 
-## Join a relative and absolute path
-
-```
-join_pathAbsolute_with_pathRelative(){
-sed 's@'$pathAbsolute'@&'/$pathRelative'@g' $@
-}
+find /directory/path/file -type f -exec sed -i 's/old_string/new_string/g' {} \;
 ```
