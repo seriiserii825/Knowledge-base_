@@ -1,20 +1,21 @@
+import gsap from 'gsap';
 import ScrollTrigger from "gsap/ScrollTrigger";
-export default function SingleProductSticky() {
-  gsap.registerPlugin(ScrollTrigger);
-  const productSection = document.querySelectorAll(".single-product__wrap");
-  console.log(productSection, "productSection");
 
-  if (window.innerWidth > 850) {
-    productSection.forEach((section) => {
-      const img = section.querySelector(".single-product__img");
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top +=80",
-        end: "bottom center",
+export default function singleProductImageFixed() {
+    gsap.registerPlugin(ScrollTrigger);
+    const wrap = document.querySelector('.single-product__wrap');
+    const img = document.querySelector('.single-product__gallery');
+    const content_height = document.querySelector(".single-product__content").offsetHeight;
+    const img_height = img.offsetHeight;
+    const total_height = content_height - img_height;
+    ScrollTrigger.create({
+        trigger: wrap,
+        start: "top 0",
+        // end: "bottom 90%",
+        end: () => `+=${total_height}`,
         pin: img,
         pinSpacing: false,
-        // markers: true,
-      });
+        markers: true,
     });
-  }
 }
+
