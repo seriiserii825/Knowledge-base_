@@ -13,3 +13,12 @@ const uniqueAgents = filteredAgents.filter(function (a) {
         return true;
     }
 }, Object.create(null));
+
+
+export function useUniqueArrayOfObjects(array: any, key: string) {
+    return array.filter((item: any, index: number, self: any) =>
+            index === self.findIndex((t: any) => (
+                t[key] === item[key]
+            ))
+    );
+}
