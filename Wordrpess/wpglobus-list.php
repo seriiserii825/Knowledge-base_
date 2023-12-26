@@ -15,6 +15,7 @@
      </svg>
 
    </div>
+</div>
 
    <style lang="scss">
      .language {
