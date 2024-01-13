@@ -1,3 +1,6 @@
+### backups
+https://gist.github.com/Niq1982/7b02c735d55d20395c655637d0491e74
+
 localwp
 config/php version/ ini/ maxfilesize
 
