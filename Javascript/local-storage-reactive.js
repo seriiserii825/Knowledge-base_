@@ -1,5 +1,18 @@
-window.dispatchEvent(new CustomEvent("ar-localstorage-update"));
+localStorage.setItem('foo-key', 'data to store')
 
-window.addEventListener("ar-localstorage-update", () => {
-  is_authenticated.value = getUsername() ? true : false;
-});
+window.dispatchEvent(new CustomEvent('foo-key-localstorage-changed', {
+  detail: {
+    storage: localStorage.getItem('foo-key')
+  }
+}));
+
+mounted() {
+  window.addEventListener('foo-key-localstorage-changed', (event) => {
+    this.data = event.detail.storage;
+  });
+},
+data() {
+  return {
+    data: null,
+  }
+}
