@@ -183,6 +183,15 @@ insert mode
 to calcualte
 <C-r>=<C-r> and some expresion with variables
 ```
+# use regular expresion
+```
+
+C
+<CTRL-R> =
+<CTRL-R> "
++2.1
+<ENTER>
+```
 
 ```
 Y - copy line
