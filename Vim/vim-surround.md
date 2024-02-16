@@ -25,6 +25,9 @@ cstth2
 ```
 ys<motion>"
 ysw" - add "word"
+
+<h4>Teaching language:<h4>
+yst<" surround from language to <
 ```
 
 ### Delete
