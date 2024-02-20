@@ -1,0 +1,58 @@
+# delete
+dG - удаление всех строк от текущей до последней
+d$ - удаление конца строки от текущей позиции
+d^ - удаление начала строки до текущей позиции.
+
+# yank
+уG - копирование строк от текущей до конца файла
+y$ - копирование части строки от курсора до конца строки
+y^ - копирование части строки от курсора до начала строки
+
+# change
+#cw -изменение текущего слова
+#cc - всей текущей строки
+cG - всех строк файла от текущей до последней
+cS -части строки от курсора до конца строки
+с^ - части строки от курсора до начала строки.
+g; Jump to the last change you made
+g, Jump back forward through the change list
+& Repeat last substitution on current line
+g& Repeat last substitution on all lines
+
+# visual 
+`< Jump to beginning of last visual selection
+`> Jump to end of last visual selection
+
+# swap
+xp Swap character forward
+Xp Swap character backward
+
+# spelling
+z= Show spelling corrections
+zg Add to spelling dictionary
+zw Remove from spelling dictionary
+
+# case 
+~ Toggle case of current character
+gUw Uppercase until end of word (u for lower, ~ to toggle)
+gUiw Uppercase entire word (u for lower, ~ to toggle)
+gUU Uppercase entire line
+gu$ Lowercase until the end of the line
+
+
+# file
+:e! - отмена всех изменений в буфере с перезагрузкой в него файла с диска
+:e файл - загрузка файла в буфер с замещением старого содержимого
+:r файл - добавление содержимого файла после текущего положения курсора
+
+# history
+q: - command mode history
+q/ - search history
+q? - search history backward
+q@ - repeat last macro
+
+# indent
+gg=G Reindent the whole file
+
+# remove blank lines
+:g/^$/d
