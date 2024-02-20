@@ -19,4 +19,3 @@ run macros/ex/normal commands at cursors
 align cursors
 transpose selections
 add patterns with regex, or from visual mode
-And more... of course, you can enter insert mode and autocomplete will work.
