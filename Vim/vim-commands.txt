@@ -1,13 +1,27 @@
+# revert
+zz -save and quit
+
+# jumps(by search with /)
+'' - jump back to the last position
+` - jump back to the last cursor position
+ctrl+o - jump back to the last cursor position
+ctrl+i - jump forward to the last cursor position
+
 # go
 ^ - start of line
 0 - start of line (first character)
 ( - start of sentence (separated by . or ! or ?)
 { - start of paragraph (separated by blank lines)
+ctrl+f - forward one page
+ctrl+b - backward one page
+ctrl+u - up half page
+ctrl+d - down half page
 
 # delete
 dG - удаление всех строк от текущей до последней
 d$ - удаление конца строки от текущей позиции
 d^ - удаление начала строки до текущей позиции.
+de - удаление до конца слова
 
 # yank
 уG - копирование строк от текущей до конца файла
