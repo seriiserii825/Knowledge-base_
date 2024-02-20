@@ -1,3 +1,9 @@
+# go
+^ - start of line
+0 - start of line (first character)
+( - start of sentence (separated by . or ! or ?)
+{ - start of paragraph (separated by blank lines)
+
 # delete
 dG - удаление всех строк от текущей до последней
 d$ - удаление конца строки от текущей позиции
