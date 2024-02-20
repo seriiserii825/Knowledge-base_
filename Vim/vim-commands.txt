@@ -6,6 +6,7 @@ zz -save and quit
 ` - jump back to the last cursor position
 ctrl+o - jump back to the last cursor position
 ctrl+i - jump forward to the last cursor position
+80% - jump to 80% of the file
 
 # go
 ^ - start of line
@@ -17,11 +18,18 @@ ctrl+b - backward one page
 ctrl+u - up half page
 ctrl+d - down half page
 
+# insert
+gi - start insert mode at last position
+
 # delete
 dG - удаление всех строк от текущей до последней
 d$ - удаление конца строки от текущей позиции
 d^ - удаление начала строки до текущей позиции.
 de - удаление до конца слова
+insert mode
+c-w - delete word
+c-u - delete line
+c-h - delete character
 
 # yank
 уG - копирование строк от текущей до конца файла
@@ -42,6 +50,10 @@ g& Repeat last substitution on all lines
 # visual 
 `< Jump to beginning of last visual selection
 `> Jump to end of last visual selection
+va" - select with quotes
+vi" - select inside quotes"
+vis - select inside sentence
+vip - select inside paragraph
 
 # swap
 xp Swap character forward
