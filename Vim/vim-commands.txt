@@ -88,3 +88,6 @@ gg=G Reindent the whole file
 
 # remove blank lines
 :g/^$/d
+
+# remove epty spaces
+:%s/\s\{2,}/ /g
