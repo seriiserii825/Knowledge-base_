@@ -31,7 +31,7 @@ sudo apt-get install php-mbstring
 sudo usermod -aG docker ${USER}
 su - ${USER}
 id -nG
-sudo usermod -aG docker username
+sudo usermod -aG docker serii
 ```
 
 ## На случай ошибки выполнить следующие команды
