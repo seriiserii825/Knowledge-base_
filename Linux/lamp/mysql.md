@@ -20,5 +20,5 @@ And then updating the password using:
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new-password';
 Once this is done stop and start the MySQL server.
 
-sud service mysql stop
+sudo service mysql stop
 sudo service mysql start
