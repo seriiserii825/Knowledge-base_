@@ -72,6 +72,10 @@ docker rm -vf $(docker ps -a -q)
 ```javascript
 docker images
 ```
+## remove unused images
+```javascript
+docker image prune -a
+```
 
 ## Удалить образ
 ```
