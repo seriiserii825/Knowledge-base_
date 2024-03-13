@@ -49,6 +49,12 @@ newgrp docker
 docker-compose up -d(d - in background)
 ```
 
+## Очистка
+Ever wanted to get rid of unnecessary things with Docker? If you want to delete a Docker object, that's often the case. In that case, the command Docker prune is effective. The prune command allows you to delete unused Docker objects (containers, images, networks, volumes) all at once. The following is an example.
+```javascript
+docker system prune
+```
+
 ## Посмотреть контейнеры
 
 ```javascript
@@ -59,6 +65,17 @@ docker-compose ps
 
 ```javascript
 docker rm -vf $(docker ps -a -q)
+```
+
+## Посмотреть образы
+
+```javascript
+docker images
+```
+
+## Удалить образ
+```
+docker rmi hash
 ```
 
 ## Удалить образы
