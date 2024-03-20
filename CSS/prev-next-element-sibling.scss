@@ -1,0 +1,15 @@
+.slick-slide {
+
+  // next element
+  &.slick-center {
+    &+.slick-slide {
+      transform: scale(0.8);
+    }
+  }
+
+  // prev element
+
+  &.slick-slide:has(+ .slick-center) {
+    transform: scale(0.8);
+  }
+}
