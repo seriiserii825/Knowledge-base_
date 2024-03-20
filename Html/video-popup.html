@@ -1,0 +1,91 @@
+<?php
+$about = get_field('about');
+$youtube = $about['youtube'];
+?>
+<div class="video-popup">
+  <span class="hidden"><?php echo $youtube; ?></span>
+  <div class="video-popup__close">
+    <?php get_template_part('template-parts/icons/icon-close'); ?>
+  </div>
+  <div class="video-popup__body">
+  </div>
+</div>
+<script charset="utf-8">
+export default function videoPopup() {
+  const video_popup = document.querySelector('.video-popup');
+  const popup_close = document.querySelector('.video-popup__close');
+  const about_play = document.querySelector('.about__play');
+  const video_src = video_popup?.querySelector('span.hidden')?.textContent;
+  const video_body = video_popup?.querySelector('.video-popup__body');
+
+
+  about_play?.addEventListener('click', function () {
+    if (video_src) {
+      const id_start = video_src.indexOf('v=');
+      const str_after_start = video_src.substring(id_start + 2);
+      const id_end = str_after_start.indexOf('&');
+      const id = str_after_start.substring(0, id_end);
+      const video_url = `https://www.youtube.com/embed/${id}?autoplay=1&enable_js=1`;
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute('src', video_url);
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'autoplay; encrypted-media');
+      iframe.setAttribute('allowfullscreen', '');
+      video_body?.appendChild(iframe);
+    }
+    video_popup?.classList.add('active');
+  });
+  popup_close?.addEventListener('click', function () {
+    video_popup?.classList.remove('active');
+    video_popup?.querySelector('iframe')?.remove();
+  });
+}
+</script>
+<style type="text/css" media="screen">
+.video-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 100000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  &__close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: 10000;
+    cursor: pointer;
+    svg {
+      width: 4rem;
+      fill: white;
+    }
+  }
+
+  &__body {
+    position: relative;
+    width: 90%;
+    height: 90%;
+    background: black;
+  }
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+</style>
