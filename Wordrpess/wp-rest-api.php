@@ -1,97 +1,203 @@
-!!!! Warning !!!!
-After create new url, need to save permalinks
-//rest-api.php
 <?php
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
-function blog_register_search()
+function eventsApi()
 {
-    register_rest_route('blog/v1', 'search', [
+    register_rest_route('events/v1', 'page', [
         'methods' => WP_REST_SERVER::READABLE,
-        'callback' => 'blogSearchResults',
+        'callback' => 'eventsApiFunc',
     ]);
 }
 
-add_action('rest_api_init', 'blog_register_search');
-function blogSearchResults($data)
+add_action('rest_api_init', 'eventsApi');
+function eventsApiFunc()
 {
-    $tipo = $data['tipo'];
-    $per_page = $data['per_page'];
-
-    $blog_result = [];
-
-    function getTax($value, $slug, $value_type = 'id')
-    {
-        return [
-            'taxonomy' => $slug,
-            'field' => $value_type,
-            'terms' => $value,
-        ];
-    }
-
-    $tax_query = ['relation' => 'AND'];
-
-    if (!empty($tipo)) {
-        $tax_query[] = getTax($tipo, 'type', 'id');
-    }
-
-    $blog = new WP_Query([
-        'post_type' => 'blog',
-        'posts_per_page' => $per_page,
-        'tax_query' => [
-            $tax_query
-        ],
+    $page_intro = get_field('page_intro', 42);
+    $events_filter = get_field('events_filter', 42);
+    $events_terms = get_terms([
+        'taxonomy' => 'events_category',
+        'hide_empty' => true,
     ]);
-
-    while ($blog->have_posts()) {
-        $blog->the_post();
-        $slug = basename(get_permalink(get_the_ID()));
-
-        $blog_result[] = [
-            'id' => get_the_ID(),
-            'title' => html_entity_decode(get_the_title()),
-            'url' => get_the_permalink(),
-            'img' => get_the_post_thumbnail_url(get_the_ID(), 'full'),
-            'type' => get_the_terms(get_the_ID(), 'type')[0]->name,
-            'text' => get_the_content(),
-            'slug' => $slug
+    $events_terms = array_map(function ($term) {
+        $id = $term->term_id;
+        $name = $term->name;
+        $title_ro = get_field('title_ro', $term);
+        $slug = $term->slug;
+        return [
+            'id' => $id,
+            'name' => $name,
+            'title_ro' => $title_ro,
+            'slug' => $slug,
         ];
-    }
-
+    }, $events_terms);
+    $events = get_field('events', 2);
+    $button_text = $events['button_text'];
+    $featured_button_left_text = $events['featured_button_left_text'];
+    $featured_button_right_text = $events['featured_button_right_text'];
+    $post_events = new WP_Query(array(
+        'post_type' => 'events',
+        'order' => 'ASC',
+        'posts_per_page' => 3,
+    ));
+    $events_array = $post_events->get_posts();
+    $events_array = array_map(function ($event) {
+        $id = $event->ID;
+        $title = get_the_title($id);
+        $term = get_the_terms($id, 'events_category')[0];
+        $location = get_field('short_title' . get_lang(), $term) ?? $term->name;
+        $loop = get_field('loop', $id);
+        $event_date = $loop['event_date'];
+        $short_description = $loop['short_description'];
+        $image = get_the_post_thumbnail_url($id);
+        return [
+            'id' => $id,
+            'title' => $title,
+            'location' => $location,
+            'event_date' => $event_date,
+            'short_description' => $short_description,
+            'image' => $image,
+        ];
+    }, $events_array);
     return [
-        "blogs" => $blog_result,
-        "tipo" => $tipo,
-        "total" => $blog->found_posts
+        'page_intro' => $page_intro,
+        'events_terms' => $events_terms,
+        'events_props' => [
+            'button_text' => $button_text,
+            'featured_button_left_text' => $featured_button_left_text,
+            'featured_button_right_text' => $featured_button_right_text
+        ],
+        'events' => $events_array,
+        'events_filter' => $events_filter,
     ];
 }
 
-// v-search.php ==================================
-<?php $search = get_field( 'search' ); ?>
-<div class="search" id="search">
-	<img src="<?php echo $search['image']; ?>" class="search__bg" alt="">
-	<div class="search__content">
-		<input type="text" v-model="input" @input="searchProducts" placeholder="<?php echo $search['placeholder']; ?>">
-		<button>
-			<svg width="43"
-			     height="43"
-			     viewBox="0 0 43 43"
-			     fill="none"
-			     xmlns="http://www.w3.org/2000/svg">
-				<path d="M42.2245 38.4771L32.3364 28.5878C37.5 21.5858 36.8938 11.5381 30.6063 5.25108C27.2189 1.86503 22.7164 0 17.9278 0C13.1388 0 8.6367 1.86503 5.25153 5.25108C1.86503 8.63803 0 13.1396 0 17.9278C0 22.7164 1.86503 27.2184 5.25153 30.6058C8.63714 33.9923 13.1392 35.8574 17.9287 35.8574C21.8046 35.8574 25.5192 34.6206 28.5914 32.3395L38.4771 42.2236C38.9777 42.7245 39.6431 43 40.3506 43C41.0602 43 41.727 42.7228 42.2218 42.2258C42.7232 41.7257 42.9996 41.0602 43 40.3519C43.0004 39.6436 42.725 38.9777 42.2245 38.4771ZM17.9278 5.29928C21.3006 5.29928 24.4718 6.61294 26.8576 8.99883C29.2387 11.3794 30.5501 14.5506 30.5501 17.9278C30.5501 21.305 29.2387 24.4766 26.8572 26.8576C24.4722 29.2431 21.301 30.5568 17.9278 30.5568C14.555 30.5568 11.3838 29.2431 8.99794 26.8576C6.61249 24.4731 5.29884 21.3019 5.29884 17.9278C5.29884 14.555 6.61249 11.3838 8.99794 8.99883C11.3843 6.61338 14.5554 5.29928 17.9278 5.29928Z"
-				      fill="#1D1D1B"/>
-			</svg>
-		</button>
-        <transition-group tag="ul" class="search__list" name="item">
-            <li v-for="({url, title, img}) in filtered" :key="url">
-                <a :href="url">
-                    <img :src="img" alt="">
-                    <h3>{{ title }}</h3>
-                </a>
-            </li>
-        </transition-group>
-	</div>
-</div>
+function eventsApiPosts()
+{
+    register_rest_route('events/v1', 'posts', [
+        'methods' => WP_REST_SERVER::READABLE,
+        'callback' => 'eventsApiPostsFunc',
+    ]);
+}
+
+add_action('rest_api_init', 'eventsApiPosts');
+function eventsApiPostsFunc($data)
+{
+    $term_slug = $data['term_slug'];
+    $date = $data['date'];
+    $now = date('Y-m-d');
+    $current_page = $data['current_page'];
+
+    if ($date) {
+        if ($date === 'coming-soon') {
+            $meta_query = array(
+                array(
+                    'key' => 'loop_event_date',
+                    'value' => $now,
+                    'compare' => '>',
+                    'type' => 'DATE'
+                )
+            );
+        } else if ($date === 'past-events') {
+            $meta_query = array(
+                array(
+                    'key' => 'loop_event_date',
+                    'value' => $now,
+                    'compare' => '<',
+                    'type' => 'DATE'
+                )
+            );
+        } else {
+            $meta_query = array(
+                array(
+                    'key' => 'loop_event_date',
+                    'value' => $date,
+                    'compare' => 'LIKE'
+                )
+            );
+        }
+    }
+
+    $post_type = 'events';
+    $order = 'ASC';
+    $posts_per_page = 3;
+    $offset = ($current_page * $posts_per_page) - $posts_per_page;
+
+    if ($term_slug && $date) {
+        $post_events = new WP_Query(array(
+            'post_type' => $post_type,
+            'order' => $order,
+            'posts_per_page' => $posts_per_page,
+            'offset' => $offset,
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'events_category',
+                    'field' => 'slug',
+                    'terms' => $term_slug,
+                )
+            ),
+            'meta_query' => $meta_query
+        ));
+    } else if($term_slug) {
+        $post_events = new WP_Query(array(
+            'post_type' => $post_type,
+            'order' => $order,
+            'posts_per_page' => $posts_per_page,
+            'offset' => $offset,
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'events_category',
+                    'field' => 'slug',
+                    'terms' => $term_slug,
+                )
+            ),
+        ));
+    } else if($date) {
+        $post_events = new WP_Query(array(
+            'post_type' => $post_type,
+            'order' => $order,
+            'posts_per_page' => $posts_per_page,
+            'offset' => $offset,
+            'meta_query' => $meta_query
+        ));
+    } else {
+        $post_events = new WP_Query(array(
+            'post_type' => $post_type,
+            'order' => $order,
+            'posts_per_page' => $posts_per_page,
+            'offset' => $offset,
+        ));
+    }
+    $events_array = $post_events->get_posts();
+    $events_array = array_map(function ($event) {
+        $id = $event->ID;
+        $title = get_the_title($id);
+        $term = get_the_terms($id, 'events_category')[0];
+        $location = get_field('short_title' . get_lang(), $term) ?? $term->name;
+        $loop = get_field('loop', $id);
+        $event_date = $loop['event_date'];
+        $short_description = $loop['short_description'];
+        $image = get_the_post_thumbnail_url($id);
+        return [
+            'id' => $id,
+            'title' => $title,
+            'location' => $location,
+            'event_date' => $event_date,
+            'short_description' => $short_description,
+            'image' => $image,
+        ];
+    }, $events_array);
+    $total_posts = $post_events->found_posts;
+    $count = count($events_array);
+    $pages = $post_events->max_num_pages;
+    return [
+        'total' => $total_posts,
+        'count' => $count,
+        'pages' => $pages,
+        'current_page' => $current_page,
+        'events' => $events_array,
+    ];
+}?>
 
 // v-search.php ==================================
 <script>
@@ -120,16 +226,3 @@ const appSearch = new Vue({
 });
 
 </script>
-
-//search.css ==============
-<style>
-.item-enter-active,
-.item-leave-active {
-  transition: opacity .4s;
-}
-
-.item-enter,
-.item-leave-to {
-  opacity: 0;
-}
-</style>
