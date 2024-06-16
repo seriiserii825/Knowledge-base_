@@ -1,0 +1,16 @@
+- create repository
+- go to settings - secrets (add name from .env.local)
+- npm i gh-pages -D
+- packages.json add new script
+-- "deploy": "gh-pages -d build"(buld - dirname where is files)
+-- "predeploy": "npm run build" (all commands with 'pre' automatic start before deploy)
+-- "homepage" (in root) add link "https://seriiserii825.github.io/rep_name"
+	"homepage": "https://seriiserii825.github.io/rc-movies/",
+  push changes
+-- npm run deploy
+-- on repository will be create new branch gh-pages
+-- after public, need to wait some time.
+-- switch to gh-pages in branch
+-- go to settings -> pages and view details
+-- if will have problem with http, need to switch http/https in project to resolve the problem
+

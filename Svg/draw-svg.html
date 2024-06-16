@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css" media="screen">
+      .icon-home-intro {
+        #icon-home-intro-top-1 {
+          stroke-dashoffset: 638;
+          stroke-dasharray: 638;
+          animation: draw 3s linear forwards;
+          animation-delay: 0.3s;
+        }
+        #icon-home-intro-top-2 {
+          stroke-dashoffset: 65;
+          stroke-dasharray: 65;
+          animation: draw2 2s linear forwards;
+        }
+        #icon-home-intro-top-3 {
+          stroke-dashoffset: 25;
+          stroke-dasharray: 25;
+          animation: draw3 2s linear forwards;
+          animation-delay: 1.4s;
+        }
+        @keyframes draw {
+          0% {
+            stroke-dashoffset: 638;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
+        @keyframes draw2 {
+          0% {
+            stroke-dashoffset: 65;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
+        @keyframes draw3 {
+          0% {
+            stroke-dashoffset: 25;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg
+      class="icon-home-intro"
+      width="592"
+      height="70"
+      viewBox="0 0 592 70"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        id="icon-home-intro-top-1"
+        d="M0 69H144V39L164 19H386L404 1H592"
+        stroke="white"
+        stroke-opacity="0.4"
+      />
+      <path
+        id="icon-home-intro-top-2"
+        d="M145 40L164 18H199"
+        stroke="white"
+        stroke-opacity="0.7"
+        stroke-width="2"
+      />
+      <path
+        id="icon-home-intro-top-3"
+        d="M567 1H591.5"
+        stroke="white"
+        stroke-opacity="0.7"
+        stroke-width="2"
+      />
+    </svg>
+    <script charset="utf-8">
+      const path = document.getElementById("icon-home-intro-top-3");
+      const length = path.getTotalLength();
+      console.log(length); // Log the length to the console
+    </script>
+  </body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+<style type="text/css" media="screen">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: linear-gradient(45deg, #190f2c, #200b30);
+  padding: 15px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+/* Main CSS */
+.grid-wrapper>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-wrapper>div>img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.grid-wrapper {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 200px;
+  grid-auto-flow: dense;
+}
+
+.grid-wrapper .wide {
+  grid-column: span 2;
+}
+
+.grid-wrapper .tall {
+  grid-row: span 2;
+}
+
+.grid-wrapper .big {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+</style>
+</head>
+
+</body>
+<div class="grid-wrapper">
+  <div>
+    <img
+      src="img/001.jpg"
+      alt="" />
+  </div>
+  <div>
+    <img
+      src="img/002.jpg" 
+      alt="" /> 
+  </div>
+  <div class="tall">
+    <img
+      src="img/003.jpg" 
+      alt=""> 
+  </div>
+  <div class="wide">
+    <img
+      src="img/004.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src=" img/005.jpg" 
+      alt="" /> 
+  </div>
+  <div class="tall">
+    <img
+      src="img/006.jpg" 
+      alt="" /> 
+  </div>
+  <div class="big">
+    <img
+      src="img/007.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/008.jpg" 
+      alt="" /> 
+  </div>
+  <div class="wide">
+    <img
+      src="img/009.jpg" 
+      alt="" /> 
+  </div>
+  <div class="big">
+    <img
+      src="img/010.jpg" 
+      alt="" /> 
+  </div>
+  <div class="tall">
+    <img
+      src="img/011.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/012.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/013.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/014.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/015.jpg" 
+      alt="" /> 
+  </div>
+  <div class="wide">
+    <img
+      src="img/016.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/017.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/018.jpg" 
+      alt="" /> 
+  </div>
+  <div class="wide">
+    <img
+      src="img/019.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/020.jpg" 
+      alt="" /> 
+  </div>
+  <div class="wide">
+    <img
+      src="img/021.jpg" 
+      alt="" /> 
+  </div>
+  <div class="big">
+    <img
+      src="img/022.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/023.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/024.jpg" 
+      alt="" /> 
+  </div>
+  <div class="big">
+    <img
+      src="img/025.jpg" 
+      alt="" /> 
+  </div>
+  <div class="tall">
+    <img
+      src="img/002.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/002.jpg" 
+      alt="" /> 
+  </div>
+  <div>
+    <img
+      src="img/002.jpg" 
+      alt="" /> 
+  </div>
+  <div class="wide">
+    <img
+      src="img/002.jpg" 
+      alt="" /> 
+  </div>
+</div>
+</body>
+</html>

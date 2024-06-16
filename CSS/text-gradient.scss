@@ -1,0 +1,25 @@
+@mixin text_gradient() {
+  background: linear-gradient(to right, #bc912f 0%, #ffde7f 50%, #e1b855 100%);
+  background-image: linear-gradient(
+    to right,
+    #bc912f 0%,
+    #ffde7f 50%,
+    #e1b855 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gradient {
+  border-image: linear-gradient(
+      #ffbf00 0%,
+      #ffcf40 19.27%,
+      #d6c593 37.5%,
+      #bf9b30 54.17%,
+      #ffdc73 69.79%,
+      #a67c00 97.4%
+    )
+    1;
+  border-width: 1px;
+  border-style: solid;
+}

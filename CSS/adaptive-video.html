@@ -1,0 +1,49 @@
+<video controls poster="https://html5book.ru/wp-content/themes/papercuts/video/martynko.png" preload="none">
+<source src="https://html5book.ru/wp-content/themes/papercuts/video/martynko.mp4" type="video/mp4">
+</video>
+
+// autoplay and muted(need to delete audio from video)
+<video id="js-home-intro-video" src="<?php echo get_template_directory_uri(); ?>/video/video.mp4?>" autoplay="true" loop muted="muted"></video>
+
+<style>
+video {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+</style>
+
+<div class="thumb-wrap">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/Y421bWMelqE" frameborder="0" allowfullscreen></iframe>
+</div>
+<style>
+.thumb-wrap {
+  position: relative;
+  padding-bottom: 56.25%; /* задаёт высоту контейнера для 16:9 (если 4:3 — поставьте 75%) */
+  height: 0;
+  overflow: hidden;
+}
+.thumb-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-width: 0;
+  outline-width: 0;
+}
+</style>
+
+https://img.youtube.com/vi/<insert-youtube-video-id-here>/default.jpg
+For the high quality version of the thumbnail use a URL similar to this:
+
+https://img.youtube.com/vi/<insert-youtube-video-id-here>/hqdefault.jpg
+There is also a medium quality version of the thumbnail, using a URL similar to the HQ:
+
+https://img.youtube.com/vi/<insert-youtube-video-id-here>/mqdefault.jpg
+For the standard definition version of the thumbnail, use a URL similar to this:
+
+https://img.youtube.com/vi/<insert-youtube-video-id-here>/sddefault.jpg
+For the maximum resolution version of the thumbnail use a URL similar to this:
+
+https://img.youtube.com/vi/<insert-youtube-video-id-here>/maxresdefault.jpg

@@ -1,0 +1,61 @@
+<svg preserveAspectRatio="xMidYMax meet" viewBox="0 0 1920 10449" fill="none">
+  <g filter="url(#filter0_i_89_9562)">
+    <path d="M1004.76 0L1563.5 838.5L718 1407L2140 2399.92L774.21 2232.06L433.638 2606.24L976.753 3768.76L702.5 4844.5L1091 5392.5H1250L1342.5 5155L1391.5 5297.34L1437 5202L1513.5 5392.5H1921L-197.5 6598.5L190.5 6920L1145 9520L960 10058V10448" stroke="#F2F2F2" stroke-opacity="0.39" stroke-width="2" stroke-linecap="round"/>
+    <path id="js-yellow-line" d="M1004.76 0L1563.5 838.5L718 1407L2140 2399.92L774.21 2232.06L433.638 2606.24L976.753 3768.76L702.5 4844.5L1091 5392.5H1250L1342.5 5155L1391.5 5297.34L1437 5202L1513.5 5392.5H1921L-197.5 6598.5L190.5 6920L1145 9520L960 10058V10448" stroke="#FFF06A" stroke-opacity="0.39" stroke-width="2" stroke-linecap="round"/>
+    <path d="M1004.76 0L1563.5 838.5L718 1407L2140 2399.92L774.21 2232.06L433.638 2606.24L976.753 3768.76L702.5 4844.5L1091 5392.5H1250L1342.5 5155L1391.5 5297.34L1437 5202L1513.5 5392.5H1921L-197.5 6598.5L190.5 6920L1145 9520L960 10058V10448" stroke="url(#paint0_linear_89_9562)" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <defs>
+    <filter id="filter0_i_89_9562" x="-199.252" y="-1" width="2339.82" height="10454" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="8.5"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"/>
+      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_89_9562"/>
+    </filter>
+    <linearGradient id="paint0_linear_89_9562" x1="1191.5" y1="223.5" x2="1179" y2="201.497" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF06A" stop-opacity="0"/>
+      <stop offset="1" stop-color="#FFF06A"/>
+    </linearGradient>
+  </defs>
+</svg>
+<script charset="utf-8">
+  function drawBlueLine() {
+    const path: any = document.querySelector("#js-blue-line");
+    const path_length = path.getTotalLength();
+
+    path.style.strokeDasharray = path_length + " " + path_length;
+    path.style.strokeDashoffset = path_length;
+
+    window.addEventListener("scroll", function () {
+      let scroll = window.scrollY;
+      let height = document.body.clientHeight;
+      let percent = scroll / height;
+      let quantifier = 1.2;
+      const full_percent = percent * 100;
+      console.log(full_percent, "full_percent");
+      if (full_percent > 0 && full_percent < 5) {
+        quantifier = 2.8;
+      } else if (full_percent > 5 && full_percent < 30) {
+        quantifier = 1.2;
+      } else if (full_percent > 30 && full_percent < 40) {
+        quantifier = 1.3;
+      } else if (full_percent > 40 && full_percent < 60) {
+        quantifier = 1.2;
+      } else if (full_percent > 60 && full_percent < 62) {
+        quantifier = 1.2;
+      } else if (full_percent > 60 && full_percent < 80) {
+        quantifier = 1.16;
+      } else {
+        quantifier = 1.18;
+      }
+      let draw = path_length * percent * quantifier;
+      path.style.strokeDashoffset = path_length - draw;
+    });
+  }
+  drawBlueLine();
+</script>
+
+

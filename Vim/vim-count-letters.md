@@ -1,0 +1,3 @@
+- copy word to clipboard
+- :let @+ = len(@+)
+- :replace('a', @+)

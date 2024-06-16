@@ -1,0 +1,3 @@
+<?php 
+woocommerce_breadcrumb();
+

@@ -1,0 +1,100 @@
+7d0516d  2023-09-25 (6 months ago)	 serii: upd: phpstorm optimize imports
+445fc0b  2023-09-26 (6 months ago)	 serii: upd: vim blank lines
+1fa740a  2023-09-27 (6 months ago)	 serii: upd: commit
+ea4f0e1  2023-09-28 (6 months ago)	 serii: upd: browserpass
+805fb57  2023-09-29 (6 months ago)	 serii: upd: postman test
+700cafe  2023-09-30 (6 months ago)	 serii: feat: onefetch.md
+bb1e396  2023-10-02 (6 months ago)	 serii: upd: onefetch.md
+1971e32  2023-10-04 (6 months ago)	 serii: upd: git commit gigignore
+df98f65  2023-10-04 (6 months ago)	 serii: mgitstatus
+2a837cb  2023-10-04 (6 months ago)	 serii: feat: prettier
+759732b  2023-10-09 (6 months ago)	 serii: youtube md
+af1543d  2023-10-09 (6 months ago)	 serii: upd: youtube-dl
+22f1870  2023-10-09 (6 months ago)	 serii: text-border-outline
+519706b  2023-10-10 (6 months ago)	 serii: upd: youtube lua
+d1c5015  2023-10-12 (6 months ago)	 serii: upd: slick
+07328f8  2023-10-18 (5 months ago)	 serii: feat: vue-null
+b2246ad  2023-10-19 (5 months ago)	 serii: vue-debounce
+01dd990  2023-10-20 (5 months ago)	 serii: vue3-slider
+a551526  2023-10-20 (5 months ago)	 serii: google map link
+ca5cf3f  2023-10-23 (5 months ago)	 serii: tmux
+e21f09c  2023-10-23 (5 months ago)	 serii: feat: vue lazy load slider
+1e35019  2023-10-23 (5 months ago)	 serii: feat: vue lazy load images
+ac833fd  2023-10-27 (5 months ago)	 serii: feat: vue-blob
+982785a  2023-10-31 (5 months ago)	 serii: upd: wc_get_products
+34e4d7c  2023-11-02 (5 months ago)	 serii: feat: add to cart wc ajax
+a8b337b  2023-11-02 (5 months ago)	 serii: feat: add-to-cart ajax
+1aea544  2023-11-03 (5 months ago)	 serii: feat: vim format and compton
+7c2cdcf  2023-11-08 (5 months ago)	 serii: feat: vue-leaflet-3
+b30d813  2023-11-08 (5 months ago)	 serii: feat: fontawesome i
+0ee5d1c  2023-11-09 (5 months ago)	 serii: feat: font woff ttf
+d79fb97  2023-11-09 (5 months ago)	 serii: feat: tr.md
+e636e6e  2023-11-10 (5 months ago)	 serii: feat: chrome extension
+0dfb276  2023-11-11 (5 months ago)	 serii: feat: imgclip
+bdfdbc1  2023-11-14 (5 months ago)	 serii: feat: chrome extension
+6e54a13  2023-11-15 (5 months ago)	 serii: feat: chrome extension
+aa55fe1  2023-11-15 (5 months ago)	 serii: feat: chrome extension reload
+986a5f3  2023-11-27 (4 months ago)	 serii: feat: wp-redirect-error
+e46679c  2023-11-30 (4 months ago)	 serii: feat: zsh-nvm
+b99d581  2023-11-30 (4 months ago)	 serii: upd: zsh_nvm
+1025ef9  2023-11-30 (4 months ago)	 serii: feat: gsap-sticky
+5b67e92  2023-12-01 (4 months ago)	 serii: updated by script at 2023-12-01 09:07:20
+2d5e414  2023-12-01 (4 months ago)	 serii: updated by script at 2023-12-01 18:49:42
+63c4bb3  2023-12-02 (4 months ago)	 serii: updated by script at 2023-12-02 12:24:32
+b450467  2023-12-04 (4 months ago)	 serii: feat: sed
+934dd4c  2023-12-07 (4 months ago)	 serii: upd: stikcy
+2112d57  2023-12-07 (4 months ago)	 serii: upd: sticky dqs
+c3138f8  2023-12-12 (4 months ago)	 serii: updated by script at 2023-12-12 14:04:50
+d0c4fe8  2023-12-14 (4 months ago)	 serii: updated by script at 2023-12-14 18:59:32
+c4b81a9  2023-12-19 (3 months ago)	 serii: updated by script at 2023-12-19 13:58:37
+08c30d1  2023-12-20 (3 months ago)	 serii: feat: Javascript/unique-by.js
+cf76bfd  2023-12-20 (3 months ago)	 serii: feat: php query param
+05afb38  2023-12-26 (3 months ago)	 serii: updated by script at 2023-12-26 10:18:22
+d28b0bb  2023-12-29 (3 months ago)	 serii: feat: wp
+9d02e75  2024-01-09 (3 months ago)	 serii: feat: click -outside
+2b28aed  2024-01-11 (3 months ago)	 serii: updated by script at 2024-01-11 13:41:46
+dc973b1  2024-01-12 (3 months ago)	 serii: feat: all -in one migrate article
+0ccf97c  2024-01-13 (3 months ago)	 serii: updated by script at 2024-01-13 16:16:16
+0eda480  2024-01-13 (3 months ago)	 serii: Merge branch 'main' of github.com:seriiserii825/Knowledge-base_
+5c6acd9  2024-01-16 (2 months ago)	 serii: feat: py-install pip
+5a84fa8  2024-01-18 (2 months ago)	 serii: feat: local reactive
+affb0b3  2024-01-18 (2 months ago)	 serii: feat: axios
+9a6d43d  2024-01-19 (2 months ago)	 serii: feat: youtube-video-url
+fb0ac5d  2024-01-19 (2 months ago)	 serii: feat: remove-html-tags
+3a7621b  2024-01-30 (8 weeks ago)	 serii: feat: vim-macros
+e817ee2  2024-01-31 (8 weeks ago)	 serii: feat: gsap animation
+6e95dab  2024-02-06 (7 weeks ago)	 serii: feat: cookie-notice-translate.ts
+2fd02dc  2024-02-07 (7 weeks ago)	 serii: feat: gsap calc
+83780c5  2024-02-08 (7 weeks ago)	 serii: feat: vim
+9b3819a  2024-02-15 (6 weeks ago)	 serii: updated by script at 2024-02-15 16:20:08
+6228653  2024-02-16 (6 weeks ago)	 serii: updated by script at 2024-02-16 18:23:48
+e2742e1  2024-02-20 (5 weeks ago)	 serii: feat: refactor vim
+0f8310f  2024-02-20 (5 weeks ago)	 serii: updated by script at 2024-02-20 14:00:13
+1e642f7  2024-02-20 (5 weeks ago)	 serii: feat: vim-commands
+5f67742  2024-02-20 (5 weeks ago)	 serii: feat: vim-multiple cursor
+6f82075  2024-02-20 (5 weeks ago)	 serii: feat: merge
+47a7c9f  2024-02-20 (5 weeks ago)	 serii: feat: vim-commands gg
+380def6  2024-02-20 (5 weeks ago)	 serii: feat: go
+d6ad7d8  2024-02-20 (5 weeks ago)	 serii: feat: insert mode
+4b7217e  2024-02-22 (5 weeks ago)	 serii: feat: vim empty spaces
+70a6d06  2024-02-26 (5 weeks ago)	 serii: feat: masonry
+eca5aa2  2024-03-11 (3 weeks ago)	 serii: feat: docker
+977cefa  2024-03-12 (2 weeks ago)	 serii: feat: mysql
+9b4069e  2024-03-13 (2 weeks ago)	 serii: feat: docker
+b784ae7  2024-03-13 (2 weeks ago)	 serii: feat: debug action
+30db766  2024-03-14 (2 weeks ago)	 serii: feat: array chunk
+6b592f9  2024-03-14 (2 weeks ago)	 serii: feat: wpglobus dropdown
+11436b9  2024-03-15 (2 weeks ago)	 serii: updated by script at 2024-03-15 13:58:57
+777661a  2024-03-19 (10 days ago)	 serii: feat: i3 mods
+a8d1460  2024-03-20 (9 days ago)	 serii: feat: video-popup
+8f8eecc  2024-03-20 (9 days ago)	 serii: feat: video-popup
+23587c0  2024-03-20 (9 days ago)	 serii: feat: slick custom navigation
+a282eff  2024-03-20 (9 days ago)	 serii: feat: clipnotify
+6116eab  2024-03-20 (9 days ago)	 serii: feat: prev next element sibling
+4a3236c  2024-03-22 (7 days ago)	 serii: updated by script at 2024-03-22 18:41:28
+c4d1036  2024-03-26 (3 days ago)	 serii: feat: date
+47b2e9d  2024-03-26 (3 days ago)	 serii: feat: rest-api
+31c4646  2024-03-29 (9 hours ago)	 serii: feat: register
+46ceff6  2024-03-29 (8 hours ago)	 serii: feat: gsap sticky
+d7a3467  2024-03-29 (5 hours ago)	 serii: feat: copy to clipboard
+4f0f4cf  2024-03-29 (31 seconds ago)	 serii: feat(app): skype file small change
