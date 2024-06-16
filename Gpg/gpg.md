@@ -74,6 +74,7 @@ gpg --import public.key
 ### Edit key
 
 ```
+gpg --list-secret-keys
 gpg --edit-key <KEY_ID>
 gpg> trust
 ```
