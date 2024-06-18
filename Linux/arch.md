@@ -18,6 +18,12 @@ index 635a4ad..8cdddeb 100644
    yes "y" | make -j1 lnp EXTRAAUTHENTICATORS=gss PASSWDTYPE=pam SPECIALAUTHENTICATORS=ssl SSLTYPE=unix EXTRACFLAGS="${CFLAGS} -fPIC -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lpam" EXTRALDFLAGS="${LDFLAGS}"
 ```
 
+## install php83
+```
+sudo pacman -S php83
+yay -S php83-mysql
+```
+
 Женя, [6/15/24 3:18 PM]
 в файле locale.gen
 
