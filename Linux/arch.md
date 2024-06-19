@@ -19,12 +19,14 @@ index 635a4ad..8cdddeb 100644
 ```
 
 ## install php83
+
 ```
 sudo pacman -S php83
 yay -S php83-mysql
 ```
 
 ## speed up aur
+
 ## Edit /etc/makepkg.conf
 
 [](https://gist.github.com/beci/c737c89685a667053fe02f986d59ca44#edit-etcmakepkgconf)
@@ -95,3 +97,49 @@ LANG=en_US.UTF-8
 
 Женя, [6/15/24 3:31 PM]
 localectl status или locale чтобы посмотреть
+
+## sound
+
+Here are my personal notes that might help
+
+Mine showed 'dummy output' in the sound settings for the speaker when I moved from from notebook speakers to HDMI.
+
+My notes below might help you.
+
+\# Make sure you have alsa-utils installed
+pacman -Qi alsa-utils
+
+# if you don't ...
+
+pacman -S alsa-utils
+
+To restore sound if it doesn't work
+
+alsactl restore
+
+Or this might work better
+
+pulseaudio --kill
+
+pulseaudio --start
+
+If you have to go further or want to setup defaults, list the devices
+
+aplay -lL
+
+speaker-test is the go-to check for sound
+
+speaker-test
+
+Set default sound and mic devices to here
+
+~/.asoundrc
+
+The below configuration is for sending sound through to HDMI (for my listing of aplay -lL)
+
+\# This should work for making sure the sound always defaults to HDMI vs. the SPIDF (on my setup)
+pcm.!default {
+type hw
+card 0
+device 3
+}
