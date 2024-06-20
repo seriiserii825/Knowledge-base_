@@ -1,6 +1,6 @@
 killall dunst;notify-send foo
 
-sudo apt install dunst libnotify-bin
+sudo apt install dunst libnotify-bin lxpolkit
 
 Of course the default look doesn’t look like that. It needs to be configured first. Here is my configurations. 
 It’s placed in ~./config/dunst/dunstrc

@@ -7,7 +7,7 @@ Install python3-pip
 
 ## error pip
 Open Terminal
-Run sudo vim /etc/pip.conf
+sudo nvim /etc/pip.conf
 Add following line:
 [global]
 break-system-packages = true
