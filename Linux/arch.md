@@ -1,16 +1,5 @@
 # c-client for php
 
-## install with wifi
-```
-iwctl
-device list
-station wlan0 scan
-station wlan0 get-networks
-station wlan0 connect 0-day
-station wlan0 show
-
-```
-
 For c-client add -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types to CFLAGS:
 ```
 git clone https://aur.archlinux.org/c-client.git ~/c-client
