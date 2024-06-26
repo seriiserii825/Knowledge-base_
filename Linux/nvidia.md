@@ -11,6 +11,7 @@ reboot
 nvidia-smi
 
 #================== arch
+https://www.archlinuxuser.com/2013/01/installing-nvidia-driver-on-archlinux.html
 
 # Installing Nvidia Driver on Archlinux
 
