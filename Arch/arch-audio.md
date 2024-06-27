@@ -1,1 +1,1 @@
-sudo pacman -S pipewire-pulse
+sudo pacman -S alsa-lib alsa-utils pulseaudio 
