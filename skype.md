@@ -8,3 +8,4 @@ settings -> calling -> Show call window when skype is in the background
 https://www.skype.com/ru/insider/
 
 # if error
+
