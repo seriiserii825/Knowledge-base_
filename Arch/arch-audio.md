@@ -102,15 +102,15 @@ freestar.config.enabled\_slots.push({ placementName: "baeldung\_leaderboard\_mid
 Сначала нам нужно включить необходимые службы:
 
 ```bash
-$ systemctl enable --user pipewire
-$ systemctl enable --user wireplumber
+systemctl enable --user pipewire
+systemctl enable --user wireplumber
 ```
 
 После включения давайте запустим эти службы:
 
 ```bash
-$ systemctl start --user pipewire
-$ systemctl start --user wireplumber
+systemctl start --user pipewire
+systemctl start --user wireplumber
 ```
 
 Теперь давайте убедимся, что PipeWire работает с использованием _pactl_:
