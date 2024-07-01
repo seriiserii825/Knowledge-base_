@@ -7,6 +7,12 @@ serii1981mysql;
 sudo pacman -S mariadb
 ```
 
+Once the installation is complete, you need to initialize the MariaDB data directory. Run the following command to do so:
+
+```
+sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+```
+
 # start mariadb
 
 ```
@@ -14,11 +20,6 @@ sudo systemctl start mysql.service
 sudo systemctl status mysql.service
 ```
 
-Once the installation is complete, you need to initialize the MariaDB data directory. Run the following command to do so:
-
-```
-sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
-```
 
 ## Secure MariaDB Installation
 
