@@ -8,7 +8,7 @@ To get the default value from shortcode attributes, add the default:shortcode_at
 
 ```
 
-[text* customtext default:shortcode_attr]
+[text* customtext readonly default:shortcode_attr]
 ```
 
 Then, add an attribute with the same name as the field (“customtext” in this case) into the shortcode for the contact form:
