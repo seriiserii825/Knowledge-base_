@@ -5,3 +5,4 @@ PermitRootLogin no
 OR
 # /etc/init.d/sshd restart
 
+ssh-copy-id username@remote_server
