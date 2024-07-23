@@ -100,3 +100,11 @@ gg=G Reindent the whole file
 
 # remove epty spaces
 :%s/\s\{2,}/ /g
+
+# command mode
+If you mean from Vim command line I would do:
+
+:normal 10GV20G
+To past right after line 14 I would do:
+
+:14put

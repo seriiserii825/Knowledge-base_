@@ -1,3 +1,3 @@
 $watsup = get_field('watsup', 'option');
 $watsup_clear = clear_phone($watsup);
-<a target="_blank" href="https://wa.me/+<?php echo $watsup_clear; ?>"><?php echo $watsup; ?></a>
+<a href="https://wa.me/?text=<?php echo clear_phone($whatsapp); ?>" target="_blank"><?php echo $whatsapp; ?></a>
