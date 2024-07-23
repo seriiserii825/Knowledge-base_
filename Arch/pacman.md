@@ -21,3 +21,9 @@ sudo pacman -R package_name
 ```
 sudo pacman -Rs package_name
 ```
+
+### Remove cached package files
+sudo pacman -Sc  
+
+# Remove orphaned package
+sudo pacman -Rns $(pacman -Qtdq)   
