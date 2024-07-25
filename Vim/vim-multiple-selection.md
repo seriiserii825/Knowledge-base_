@@ -19,3 +19,5 @@ run macros/ex/normal commands at cursors
 align cursors
 transpose selections
 add patterns with regex, or from visual mode
+
+
