@@ -7,6 +7,9 @@ $( document.body ).trigger( 'updated_checkout' );
 $( document.body ).trigger( 'checkout_error' );
 $( document.body ).trigger( 'applied_coupon_in_checkout' );
 $( document.body ).trigger( 'removed_coupon_in_checkout' );
+$(document).on("updated_cart_totals", function () {
+  $('.quantity input[type="number"]').styler();
+});
 Woocommerce cart page JS events
 $( document.body ).trigger( 'wc_cart_emptied' );
 $( document.body ).trigger( 'update_checkout' );

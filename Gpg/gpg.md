@@ -51,6 +51,7 @@ gpg -K
 ```
 
 ### export keys
+
 ```
 gpg --export -a john > public.key
 gpg --export-secret-key -a john > private.key
