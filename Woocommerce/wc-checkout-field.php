@@ -65,7 +65,7 @@ function office_true_print_field_value($order)
 ?>
 
 
-<?<?php
+<?php
 // bs-styles
 
 wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
