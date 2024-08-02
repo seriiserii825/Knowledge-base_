@@ -51,3 +51,14 @@ jQuery(document.body).on(
     console.log(e.type);
   }
 );
+
+
+  $("form.woocommerce-checkout").on(
+    "change",
+    'input[name^="shipping_method"]',
+    function () {
+      var selectedMethod = $('input[name^="shipping_method"]:checked').val();
+      console.log("Selected shipping method:", selectedMethod);
+      // Do something with the selected shipping method
+    }
+  );
