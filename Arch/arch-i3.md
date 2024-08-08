@@ -4,7 +4,15 @@ sudo pacman -S xorg xorg-xinit nvidia kitty vifm rofi mousepad
 
 Прописваешь для запуска i3. в ~/.xinitrc
 ```
-exec i3
+#!/bin/sh
+exec i3 &
+dunst &
+lxsession 
+```
+
+## make file executable
+```
+chmod +x .xinitrc
 ```
 
 ## lightdm
