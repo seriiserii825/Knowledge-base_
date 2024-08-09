@@ -108,3 +108,10 @@ If you mean from Vim command line I would do:
 To past right after line 14 I would do:
 
 :14put
+
+# increment decrement
+ctrl+v - visual block mode
+ctrl+a - increment
+ctrl+x - decrement
+g ctrl+a - increment with decimal
+g ctrl+x - decrement with decimal
