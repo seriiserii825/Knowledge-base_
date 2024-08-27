@@ -1,0 +1,18 @@
+### продукты с звездочкой
+meta_key = _featured
+meta_value = yes
+
+<?php
+$products = new WP_Query([
+  'post_type' => 'product',
+  'posts_per_page' => -1,
+  'post__in' => wc_get_featured_product_ids(),
+  'tax_query' => [
+    [
+      'taxonomy' => 'product_cat',
+      'field' => 'term_id',
+      'terms' => $term_id,
+    ]
+  ]
+]);
+?>

@@ -1,0 +1,4 @@
+/* // when image is a bit blured */
+img {
+  image-rendering: pixelated;
+}

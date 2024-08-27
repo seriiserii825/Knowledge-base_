@@ -1,0 +1,27 @@
+<ul class="categories-list">
+	<?php foreach ( $terms as $term ): ?>
+		<?php if ( $term->parent === 0 ): ?>
+            <li>
+				<?php
+				$term_id   = $term->term_id;
+				$term_name = $term->name;
+				?>
+                <a href="<?php echo get_term_link( $term_id, 'product_cat' ); ?>"><?php echo $term_name; ?></a>
+                <ul class="categories-list__sub">
+					<?php foreach ( $terms as $subcategory ): ?>
+						<?php if ( $subcategory->parent === $term_id ): ?>
+							<?php
+							$subcategory_id   = $subcategory->term_id;
+							$subcategory_name = $subcategory->name;
+							?>
+                            <li>
+                                <a href="<?php echo get_term_link( $subcategory_id, 'product_cat' ); ?>"><?php echo $subcategory_name; ?></a>
+                            </li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+                </ul>
+            </li>
+		<?php endif; ?>
+
+	<?php endforeach; ?>
+</ul>

@@ -1,0 +1,23 @@
+1.) Download a https://www.nerdfonts.com/
+
+2.) Unzip and copy to .local/share/fonts 
+
+3.) Run the command fc-cache -f to manually rebuild the font cache
+
+fc-list | grep "Nerd Font"
+
+
+After rebooting you can run:
+
+```
+fc-match DaddyTimeMono -a
+```
+
+i3conf 
+$ sudo pacman -S awesome-terminal-fonts
+
+# Other
+# see https://github.com/gabrielelana/awesome-terminal-fonts
+And update your bar configuration like so:
+
+font pango:FontAwesome, JetBrainsMonoNL NFM SemiBold:style=SemiBold,Regular 10
