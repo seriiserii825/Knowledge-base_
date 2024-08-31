@@ -3,7 +3,7 @@
 Install python3
 
 ## install pip
-Install python3-pip
+sudo pacman -S python-pip
 
 ## error pip
 Open Terminal
