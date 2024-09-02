@@ -1,0 +1,5 @@
+.img {
+  mask-image: url(wp-content/themes/bs-eti-srl/assets/i/static/clippath-fs8.png);
+  mask-size: cover;
+  mask-repeat: no-repeat;
+}
