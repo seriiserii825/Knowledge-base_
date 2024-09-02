@@ -3,15 +3,11 @@ string2 = "World"
 string3 = string1[:2] + string2[2:]
 print(string3)
 
+print(8/3) # 2.6666666666666665
+print(8//3) # 2
+print(round(8/3)) # 3
+print(round(8/3, 2)) # 2.67
 
-# number = int(input("Enter a number: "))
-# sum = 0
-#
-# while number:
-#     # remove last digit from number
-#     sum += number % 10 # sum = sum + number % 10
-#     # get the remaining number
-#     number //= 10
-#
-# print("Sum of digits: ", sum)
-#
+
+result = (0.9/0.3)
+result = "{:.2f}".format(result) # 3.00
