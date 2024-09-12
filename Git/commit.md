@@ -18,6 +18,7 @@ git push -f
 git reset --soft HEAD^ #удалить коммит, но оставить изменения
 git reset --hard HEAD^ #удалить коммит полностью
 git push origin +HEAD # force-push the new HEAD commit
+git push --force
 ```
 
 # Откатить изменения
