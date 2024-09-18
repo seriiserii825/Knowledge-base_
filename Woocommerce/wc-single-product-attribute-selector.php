@@ -1,3 +1,4 @@
+<?php 
 // Add Color Select to Product Page
 add_action('woocommerce_before_single_variation', 'custom_color_select_field');
 
@@ -66,4 +67,15 @@ function display_custom_color_in_minicart( $html, $cart_item, $cart_item_key ) {
         $html .= '<p class="custom-color">Color: ' . esc_html( $color ) . '</p>';
     }
     return $html;
+}
+
+// Validate custom color field on server-side
+add_filter('woocommerce_add_to_cart_validation', 'validate_custom_color_field', 10, 3);
+
+function validate_custom_color_field($passed, $product_id, $quantity) {
+    if (isset($_POST['custom_color']) && empty($_POST['custom_color'])) {
+        wc_add_notice(__('Seleziona un colore.', 'woocommerce'), 'error');
+        return false;
+    }
+    return $passed;
 }
