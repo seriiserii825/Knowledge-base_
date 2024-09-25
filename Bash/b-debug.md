@@ -4,7 +4,7 @@
 #! /bin/bash  -x
 ```
 
-### second set -x and +x
+### second set -x and +x for the line you want to debug
 ```
 if [-f $file_name ]
 then
