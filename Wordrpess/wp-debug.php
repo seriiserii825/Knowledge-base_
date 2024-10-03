@@ -24,3 +24,6 @@ if (!function_exists('write_log')) {
 write_log('THIS IS THE START OF MY CUSTOM DEBUG');
 //i can log data like objects
 <!-- write_log($whatever_you_want_to_log); -->
+
+<!-- call function and see log in debug.log  -->
+error_log(print_r(array_keys($fields), true));
