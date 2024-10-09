@@ -1,0 +1,73 @@
+Steps to Switch to the LTS Kernel on UEFI
+1. Install the LTS Kernel
+First, install the LTS kernel and headers using pacman:
+
+bash
+Copy code
+sudo pacman -S linux-lts linux-lts-headers
+This will install the LTS kernel on your system.
+
+2. Update systemd-boot Entries
+If you're using systemd-boot, you'll need to create a new boot entry for the LTS kernel:
+
+Locate the boot entries: Systemd-boot entries are usually stored in /boot/loader/entries/. You should have a file here for your current kernel (e.g., arch.conf).
+
+Create a new entry for the LTS kernel:
+
+Navigate to /boot/loader/entries/:
+
+bash
+Copy code
+cd /boot/loader/entries/
+Copy the existing Arch kernel entry and modify it for the LTS kernel:
+
+bash
+Copy code
+sudo cp arch.conf arch-lts.conf
+Open arch-lts.conf in a text editor:
+
+bash
+Copy code
+sudo nano arch-lts.conf
+Modify the file to use the LTS kernel. Replace the linux and initrd lines to point to the LTS kernel and initramfs:
+
+From:
+
+bash
+Copy code
+title   Arch Linux
+linux   /vmlinuz-linux
+initrd  /initramfs-linux.img
+options root=UUID=your-root-uuid rw
+To:
+
+bash
+Copy code
+title   Arch Linux LTS
+linux   /vmlinuz-linux-lts
+initrd  /initramfs-linux-lts.img
+options root=UUID=your-root-uuid rw
+Save and exit the file.
+
+Ensure loader.conf is pointing to the correct default (optional): If you want the LTS kernel to boot by default, edit /boot/loader/loader.conf:
+
+bash
+Copy code
+sudo nano /boot/loader/loader.conf
+And set the default entry:
+
+arduino
+Copy code
+default arch-lts.conf
+3. Reboot and Select LTS Kernel
+After setting up the boot entry, reboot your system. You should now see the LTS kernel as an option in your systemd-boot menu. If you configured arch-lts.conf as the default, the system will boot into the LTS kernel automatically.
+
+4. Verify the LTS Kernel
+Once you've rebooted into the LTS kernel, verify it by running:
+
+bash
+Copy code
+uname -r
+You should see the LTS kernel version (5.x.x-lts).
+
+Let me know if you run into any issues or need further clarification!
