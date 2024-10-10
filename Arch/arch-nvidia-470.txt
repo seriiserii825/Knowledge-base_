@@ -45,3 +45,7 @@ Once you've gone through these steps, reboot your system and check if the NVIDIA
 bash
 Copy code
 nvidia-smi
+
+
+sudo pacman -Rns xf86-video-nouveau
+
