@@ -1,5 +1,6 @@
 <!-- !!!! ATTENZIONE !!!! -->
 <!-- Don't use the same slug for page and post-type, pagination will not work. -->
+<!-- Settings -> Reading -> posts per page. -->
 
   <?php
   $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
