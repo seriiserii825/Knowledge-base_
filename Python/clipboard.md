@@ -1,5 +1,5 @@
 ## pyperclip
-
+subprocess.Popen(['notify-send', file_content])
 ### get from clipboard
 ```
 import pyperclip
