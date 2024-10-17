@@ -1,4 +1,5 @@
 ## go to console
+https://myaccount.google.com/apppasswords
 
 https://console.cloud.google.com/home/dashboard?project=api-al-tes
 
