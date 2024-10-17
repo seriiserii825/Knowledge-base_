@@ -5,6 +5,7 @@ nato_dict = {row.letter:row.code for (_, row) in data.iterrows()}
 
 data = pandas.read_csv("50_states.csv")
 all_states = data.state.to_list()
+all_birthdays = data.to_dict(orient="records")
 # states to learn
 guessed_states = []
 states_to_learn = [state for state in all_states if state not in guessed_states]
