@@ -33,3 +33,7 @@ def humanReadableTime(time):
     return f'{hours:02}:{minutes:02}:{seconds:02}'
 
 
+import datetime as dt
+
+today = dt.datetime.now()
+today_tuple = (today.month, today.day)
