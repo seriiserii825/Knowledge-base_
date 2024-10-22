@@ -15,71 +15,71 @@
      </svg>
 
    </div>
-</div>
+ </div>
 
-   <style lang="scss">
-     .language {
-       position: relative;
-       margin-right: 8rem;
+ <style lang="scss">
+   .language {
+     position: relative;
+     margin-right: 8rem;
 
-       &__btn {
-         position: absolute;
-         top: 1.9rem;
-         right: 0;
-       }
+     &__btn {
+       position: absolute;
+       top: 1.9rem;
+       right: 0;
      }
+   }
 
-     .widget_wpglobus {
-       &.active {
-         .wpglobus-selector-link {
-           &:nth-of-type(2) {
-             opacity: 1;
-             transform: translateY(0);
-           }
-         }
-       }
-
-       .widget-title {
-         display: none;
-       }
-
-       .list a span.code {
-         display: none;
-       }
-
+   .widget_wpglobus {
+     &.active {
        .wpglobus-selector-link {
-         display: flex !important;
-         align-items: center;
-         padding: 1.6rem;
-         color: #363636;
-         font-size: 20px;
-         font-weight: 500;
-
-         //&:first-of-type {
-         //  pointer-events: none;
-         //}
-
          &:nth-of-type(2) {
-           position: absolute;
-           top: 5rem;
-           left: 0;
-           background: #FFFFFF;
-           opacity: 0;
-           transition: all .5s;
-           transform: translateY(50%);
-
+           opacity: 1;
+           transform: translateY(0);
          }
        }
-
-       .list.flags img {
-         margin-bottom: 0;
-         border-radius: 3px;
-         width: 3.3rem;
-         margin-right: 0.8rem;
-       }
-
      }
-   </style>
+
+     .widget-title {
+       display: none;
+     }
+
+     .list a span.code {
+       display: none;
+     }
+
+     .wpglobus-selector-link {
+       display: flex !important;
+       align-items: center;
+       padding: 1.6rem;
+       color: #363636;
+       font-size: 20px;
+       font-weight: 500;
+
+       //&:first-of-type {
+       //  pointer-events: none;
+       //}
+
+       &:nth-of-type(2) {
+         position: absolute;
+         top: 5rem;
+         left: 0;
+         background: #FFFFFF;
+         opacity: 0;
+         transition: all .5s;
+         transform: translateY(50%);
+
+       }
+     }
+
+     .list.flags img {
+       margin-bottom: 0;
+       border-radius: 3px;
+       width: 3.3rem;
+       margin-right: 0.8rem;
+     }
+
+   }
+ </style>
  </div>
  <script>
    export default function wpGlobus() {
