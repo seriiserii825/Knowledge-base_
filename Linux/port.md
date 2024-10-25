@@ -1,3 +1,6 @@
+# install in arch
+sudo pacman -S net-tools  
+
 #port
 sudo apt-get install net-tools 
 sudo netstat -tpln | grep "tcp"

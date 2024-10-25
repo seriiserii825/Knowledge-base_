@@ -30,3 +30,7 @@ set email and password
 go to
 http://127.0.0.1:5050
 and login with email and password
+
+## reset login
+sudo rm /var/lib/pgadmin/pgadmin4.db
+pgadmin4
