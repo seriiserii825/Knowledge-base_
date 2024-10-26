@@ -1,6 +1,6 @@
 class Fruit:
     def __init__(self, name: str):
-        # This is a private attribute
+        # This is a protected attribute
         self._name = name
 
     @property
