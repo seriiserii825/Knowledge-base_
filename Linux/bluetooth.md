@@ -30,3 +30,7 @@ connect 34:88:5D:51:5A:95
 
 journalctl -xeu bluetooth.service
 
+# microphone check
+check when toggle mode in pavucontrol
+pactl list short sources
+parecord --device=bluez_source.5A_CC_BA_B1_C6_5E.handsfree_head_unit output.wav
