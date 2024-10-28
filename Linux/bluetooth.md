@@ -34,3 +34,5 @@ journalctl -xeu bluetooth.service
 check when toggle mode in pavucontrol
 pactl list short sources
 parecord --device=bluez_source.5A_CC_BA_B1_C6_5E.handsfree_head_unit output.wav
+
+https://discovery.endeavouros.com/audio/pipewire/2021/09/
