@@ -1,3 +1,8 @@
+## change port 
+sudo vim /etc/nginx/nginx.conf
+change port 80 to 81
+sudo systemctl restart nginx
+
 
 # create project
 sudo mkdir -p /var/www/oop.local/html
