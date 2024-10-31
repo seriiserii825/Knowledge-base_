@@ -1,4 +1,4 @@
-<?php 
+<?php
 $date_now = date('Y-m-d');
 
 $volantino = new WP_Query([
@@ -26,4 +26,13 @@ $volantino = new WP_Query([
 $posts = $volantino->posts;
 $total_posts = $volantino->found_posts;
 
+// compare by select multiple
 
+$query['meta_query'] = [
+  [
+    'key' => 'filter_usace',
+    'value' => $filter_usace,
+    'type' => 'CHAR',
+    'compare' => 'LIKE'
+  ]
+];
