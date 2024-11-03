@@ -116,3 +116,6 @@ docker-compose up -d nginx # create and start in background
 $ docker exec -it container /bin/bash
 cd /home/client
 npm install
+
+# inspect container for errors
+docker logs nginx_course

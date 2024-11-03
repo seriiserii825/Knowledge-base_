@@ -51,8 +51,11 @@ server {
 sudo ln -s /etc/nginx/sites-available/nuxt-bludelego.conf /etc/nginx/sites-enabled/nuxt-bludelego.conf
 
 #nginx conf
-sudo vim /etc/nginx/nginx.conf
+sudo nvim /etc/nginx/nginx.conf
 remove # from line server_names_hash_bucket_size
+add lines
+ types_hash_max_size 2048;    # Increase from 1024 to 2048
+types_hash_bucket_size 64;   # You can also set this to 128 or higher if needed
 sudo systemctl restart nginx
 sudo systemctl status nginx
 sudo systemctl enable nginx
@@ -61,5 +64,6 @@ sudo systemctl enable nginx
 sudo vim /etc/hosts
 127.0.0.1       oop.local
 
-
+# inspect container
+docker logs nginx_course
 
