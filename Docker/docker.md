@@ -119,3 +119,24 @@ npm install
 
 # inspect container for errors
 docker logs nginx_course
+
+
+## access denied for user serii mysql
+```
+docker exec -it mysql_course mysql -u root -p
+pass = root
+GRANT ALL PRIVILEGES ON laravel.* TO 'serii'@'%' IDENTIFIED BY 'serii1981';
+FLUSH PRIVILEGES;
+
+
+port 3306 not 33062
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=serii
+DB_PASSWORD=serii1981
+
+clear cache and migrate
+```
+
