@@ -1,7 +1,3 @@
-function onChange(e) {
-  console.log(e.target.value);
-}
-document.getElementById("search").addEventListener("keyup", onChange);
 const debounce = (fn, ms) => {
   let timeout;
   return function () {
@@ -12,3 +8,10 @@ const debounce = (fn, ms) => {
     timeout = setTimeout(fnCall, ms);
   };
 };
+
+function onChange(e) {
+  console.log(e.target.value);
+}
+
+onChange = debounce(onChange, 300);
+document.getElementById("search").addEventListener("keyup", onChange);
