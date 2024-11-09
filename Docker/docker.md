@@ -125,7 +125,9 @@ docker logs nginx_course
 ```
 docker exec -it mysql_course mysql -u root -p
 pass = root
-GRANT ALL PRIVILEGES ON laravel.* TO 'serii'@'%' IDENTIFIED BY 'serii1981';
+CREATE USER IF NOT EXISTS 'serii'@'%' IDENTIFIED BY 'serii1981';
+GRANT ALL PRIVILEGES ON laravel.* TO 'serii'@'%';
+GRANT CREATE ON *.* TO 'serii'@'%';
 FLUSH PRIVILEGES;
 
 
