@@ -128,6 +128,7 @@ pass = root
 CREATE USER IF NOT EXISTS 'serii'@'%' IDENTIFIED BY 'serii1981';
 GRANT ALL PRIVILEGES ON laravel.* TO 'serii'@'%';
 GRANT CREATE ON *.* TO 'serii'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE, ALTER, CREATE, DROP ON first_project.* TO 'serii'@'%';
 FLUSH PRIVILEGES;
 
 
