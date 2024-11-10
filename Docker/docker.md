@@ -121,6 +121,8 @@ npm install
 docker logs nginx_course
 
 ## change root password
+mysqlworkbench disable ssl in tab
+
 ```
 sudo mysql -u root 
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
@@ -131,81 +133,19 @@ sudo mysql -u root -p
 pass = root
 ```
 
-## access denied for user serii mysql
+## connect to container
 ```
-docker exec -it mysql_course mysql -u root -p
-pass = root
-CREATE USER IF NOT EXISTS 'serii'@'%' IDENTIFIED BY 'serii1981';
-GRANT ALL PRIVILEGES ON laravel.* TO 'serii'@'%';
-GRANT CREATE ON *.* TO 'serii'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE, ALTER, CREATE, DROP ON first_project.* TO 'serii'@'%';
+docker exec -it mysql_sockets mysql -u root -p 
+```
+
+## change root password
+```
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
 FLUSH PRIVILEGES;
-
-
-DB_CONNECTION=mysql
-DB_HOST=mysql_course
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=serii
-DB_PASSWORD=serii1981
-
-clear cache and migrate
-```
-.docker-compose.yml
-```javascript
-
-  mysql:
-    container_name: mysql_course
-    image: mysql:8.3.0
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root  # Add this line to set the root password
-      MYSQL_DATABASE: laravel     # Add this to automatically create the 'laravel' database
-      MYSQL_USER: serii           # Add this to create a user
-      MYSQL_PASSWORD: serii1981
-    volumes:
-      - "./docker/mysql:/var/lib/mysql"
-    ports:
-      - "33062:3306"
-    command: --authentication_policy=mysql_native_password
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin_course
-    restart: always
-    ports:
-     - '8084:80'
-    environment:
-      MAX_EXECUTION_TIME: 600
-      UPLOAD_LIMIT: 800M
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
-    depends_on:
-     - mysql
+exit;
 ```
 
-1. Create a new connection:
-    - **Connection Name**: Any name (e.g., `Docker MySQL`)
-    - **Hostname**: `localhost`
-    - **Port**: `33062`
-    - **Username**: `serii`
-    - **Password**: `serii1981` (You can save this in the vault for convenience)
-2. Click **Test Connection**.
-3. If the connection is successful, click **OK** to save it, and then you can connect to the MySQL instance.
-
-### 2\. **Connecting to MySQL via Port `3306` (From inside Docker network)**
-
-Port `3306` is only accessible within the Docker network. If you want to connect to MySQL from another container or service inside Docker, you can use:
-
-- **Hostname**: `mysql_course`
-- **Port**: `3306`
-- **Username**: `serii`
-- **Password**: `serii1981`
-
-This is not accessible directly from your host machine unless port `3306` is exposed, so for external tools like MySQL Workbench, use port `33062` as described in option 1.
-
-### conenct from terminal
-```javascript
-mysql -u serii -P 33062 -p --skip-ssl
+## connect again to mysql
+```
+mysql -u root -P 33062 -p --ssl=FALSE --default-auth=mysql_native_password
 ```
