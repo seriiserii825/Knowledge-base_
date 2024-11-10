@@ -120,6 +120,16 @@ npm install
 # inspect container for errors
 docker logs nginx_course
 
+## change root password
+```
+sudo mysql -u root 
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+FLUSH PRIVILEGES;
+exit;
+
+sudo mysql -u root -p
+pass = root
+```
 
 ## access denied for user serii mysql
 ```
