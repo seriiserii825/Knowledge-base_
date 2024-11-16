@@ -25,3 +25,9 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```
 docker-compose --version
 ```
+
+## if errors
+sudo chmod 666 /var/run/docker.sock
+sudo usermod -aG docker serii
+sudo chmod 666 /var/run/docker.sock
+newgrp docker
