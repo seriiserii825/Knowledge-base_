@@ -1,5 +1,4 @@
-## Install Docker Runtime[​](https://mpolinowski.github.io/docs/DevOps/Linux/2021-10-24--arch-linux-install-docker/2021-10-24/#install-docker-runtime "Direct link to Install Docker Runtime")
-
+## install
 ```
 sudo pacman -S docker 
 reboot
