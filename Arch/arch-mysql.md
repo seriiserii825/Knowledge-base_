@@ -13,6 +13,7 @@ sudo systemctl status mysqld
 
 ```
 sudo systemctl enable mysqld
+and change root password to 'root'
 ```
 
 ## Run the MySQL security installation script to configure security settings:  
