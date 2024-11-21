@@ -53,3 +53,25 @@ SHOW DATABASES;
 ```
 
 Congratulations! You have now successfully installed and configured MySQL on your Arch Linux system. You're ready to leverage the power of MySQL for your applications and projects.
+
+## error MySQL server has gone away 
+
+### in docker-compose.yml
+```
+command: --default-authentication-plugin=mysql_native_password
+```
+
+### connect to container
+```
+
+docker exec -it mysql_traversy mysql -u root -p
+SELECT user, host, plugin FROM mysql.user;
+
+need to be mysql_native_password
+
+ALTER USER 'root'@'%' IDENTIFIED WITH 'mysql_native_password' BY 'root';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'root';
+FLUSH PRIVILEGES;
+```
+
+
