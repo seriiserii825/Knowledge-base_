@@ -15,7 +15,7 @@ After installation, you must initialize the database directory:
 ### 3\. **Start and Enable the Service**
 
 Start the MariaDB service and enable it to run at boot:
-`sudo systemctl start mariadb sudo systemctl enable mariadb`
+`sudo systemctl start mariadb && sudo systemctl enable mariadb`
 Verify that the service is running:
 `sudo systemctl status mariadb`
 
