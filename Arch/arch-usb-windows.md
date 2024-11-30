@@ -1,7 +1,7 @@
 ## install Windows 10 on USB drive
 
 ```
-sudo pacman -S ntfs-3g
+sudo pacman -S exfatprogs
 ```
 
 ### 1\. **Unmount the USB Partition**
@@ -32,11 +32,18 @@ sudo parted /dev/sda mklabel msdos
 
 ### 4\. **Create a New Partition**
 
-Create a single primary partition:
+Delete Existing Partitions (if any):
 
-```
-sudo parted -a optimal /dev/sda mkpart primary ntfs 0% 100%
-```
+Press d and confirm the partition number.
+Repeat if there are multiple partitions.
+Create a New Partition:
+
+Press n for a new partition.
+Choose p for primary.
+Accept the defaults for partition number, first sector, and last sector (use the full disk).
+Write Changes and Exit:
+
+Press w to write the changes to the disk and exit.
 
 ### 5\. **Format the Partition**
 
