@@ -46,6 +46,8 @@ $rules = [
   'company_logo' => 'nullable|file|image',
 ];
 
+// !!!! important, php artisan storage:link
+
 // controller
 function store(StoreRequest $request)
 {
