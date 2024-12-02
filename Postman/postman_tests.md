@@ -43,3 +43,5 @@ pm.test("Should user not be empty", function () {
 - in right side use Authorization
 - select Type Bearer Token
 - insert {{jwt_token}}
+
+
