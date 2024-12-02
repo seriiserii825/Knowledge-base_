@@ -14,3 +14,5 @@ sleep — задерживает запуск скриптов на выбран
 
 #Get info about your system
 sudo dmidecode -t System | grep Product
+
+type - показывает, что за команда
