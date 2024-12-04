@@ -1,0 +1,5 @@
+• cat • cut • expand
+• fmt • head join less
+• nl • od • paste • pr
+sed • sort • split • tail
+• tr • unexpand • uniq • WC
