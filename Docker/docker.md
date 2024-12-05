@@ -149,3 +149,13 @@ exit;
 ```
 mysql -u root -P 33062 -p --ssl=FALSE --default-auth=mysql_native_password
 ```
+
+
+docker system prune
+docker-compose ps
+<!-- remove container -->
+docker-compose rm -f container_name
+<!-- view images -->
+docker images
+<!-- remove image -->
+docker rmi -f image_name
