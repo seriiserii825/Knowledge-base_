@@ -16,4 +16,4 @@
 • tr  - translate or delete characters
 • unexpand  - convert spaces to tabs
 • uniq - report or omit repeated lines
-• WC
+• wc - word count
