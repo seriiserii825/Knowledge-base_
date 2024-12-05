@@ -1,5 +1,19 @@
-• cat • cut • expand
-• fmt • head join less
-• nl • od • paste • pr
-sed • sort • split • tail
-• tr • unexpand • uniq • WC
+• cat - concatenate files and print on the standard output
+• cut - cut.md (cut columns from file)
+• expand - convert tabs to spaces
+• fmt  - format text by width 
+• head  - output the first part of files
+• join - join lines of two files on a common field
+• less - opposite of more
+• nl  - number lines of files
+• od  - dump files in octal and other formats
+• paste  - merge lines of files in to columns
+• pr - convert text files for printing
+• sed  - stream editor for filtering and transforming text
+• sort  - sort lines of text files(ascending or descending, randomize)
+• split  - split a file into pieces
+• tail - output the last part of files
+• tr  - translate or delete characters
+• unexpand 
+• uniq 
+• WC
