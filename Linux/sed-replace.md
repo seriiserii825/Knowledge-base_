@@ -1,3 +1,9 @@
+## scss variable with css
+```
+
+find . -name "*.scss" -type f -exec sed -i 's/\$\(.*\)/var(--\1)/g' {} +
+```
+
 ## replace
 ```
 sed -i 's/the/THE/g' sed-practice.txt
