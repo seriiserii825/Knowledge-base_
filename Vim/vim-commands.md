@@ -29,9 +29,17 @@ ctrl+d - down half page
 
 # insert
 gi - start insert mode at last position
+ctrl+o - go to normal mode make a command and go back to insert
+
+# indent
+- normal mode S
+
+
+
 
 # delete
 dG - удаление всех строк от текущей до последней
+dgg - удаление всех строк от текущей до первой
 d$ - удаление конца строки от текущей позиции
 d^ - удаление начала строки до текущей позиции.
 de - удаление до конца слова
