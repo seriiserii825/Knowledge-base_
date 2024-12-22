@@ -1,3 +1,90 @@
+### инкапсуляция
+- это когда мы скрываем данные от пользователя
+- это делается с помощью двойного подчеркивания перед именем переменной
+- это делается для того чтобы не дать пользователю изменять данные напрямую
+
+Пример:
+
+```py
+class Rectangle :
+    'Это класс Rectangle'
+    # Способ создания объекта (конструктор)
+    def __init__(self, width, height):         
+        self.__width= width
+        self.__height = height
+
+    def getWidth(self):        
+        return self.__width
+     
+    def getHeight(self):        
+        return self.__height
+ 
+    # Метод расчета площади.
+    def getArea(self):
+        return self.__width * self.__height
+```
+
+### наследование
+- это когда один класс наследует свойства другого класса
+- это делается с помощью ключевого слова `class`
+- это делается для того чтобы не писать один и тот же код несколько раз
+
+Пример:
+
+```py
+class Square(Rectangle):
+    'Это класс Square'
+    # Способ создания объекта (конструктор)
+    def __init__(self, side):         
+        self.__width= side
+        self.__height = side
+```
+
+
+### полиморфизм
+Использовании единственной сущности(метод, оператор или объект) для представления различных типов в различных сценариях использования.
+- это когда один метод может работать по-разному в разных классах
+- это делается с помощью ключевого слова `def`
+- переопределение методов в дочерних классах
+
+Пример:
+
+```py
+class Rectangle :
+    'Это класс Rectangle'
+    # Способ создания объекта (конструктор)
+    def __init__(self, width, height):         
+        self.__width= width
+        self.__height = height
+
+    def getWidth(self):        
+        return self.__width
+     
+    def getHeight(self):        
+        return self.__height
+ 
+    # Метод расчета площади.
+    def getArea(self):
+        return self.__width * self.__height
+
+class Square(Rectangle):
+    'Это класс Square'
+    # Способ создания объекта (конструктор)
+    def __init__(self, side):         
+        self.__width= side
+        self.__height = side
+
+    # Метод расчета площади.
+    def getArea(self):
+        return self.__width * self.__width
+```
+
+### абстракция
+- это когда мы скрываем сложные детали от пользователя
+- это делается с помощью ключевого слова `pass`
+- это делается для того чтобы не путать пользователя
+
+
 ## class
 
 ```
