@@ -10,9 +10,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiSecretKey: "NUXT_API_SECRET_KEY",
     public: {
-      apiBase: "NUXT_PUBLIC_API_BASE",
-      localBaseUrl: "NUXT_PUBLIC_LOCAL_BASE_URL",
-      apiBaseToken: "NUXT_PUBLIC_API_BASE_TOKEN",
+      apiBase: process.env.NUXT_PUBLIC_API_BASE,
+      localBaseUrl: process.env.NUXT_PUBLIC_LOCAL_BASE_URL,
+      apiBaseToken: process.env.NUXT_PUBLIC_API_BASE_TOKEN,
     },
   },
   vite: {
