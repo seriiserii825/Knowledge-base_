@@ -27,4 +27,9 @@ fc-cache -fv
 echo -e "\U1F600 \U1F44D \U1F680"  # 😀 👍 🚀
 ```
 
+## i3 conf
+
+```
+bindsym $mod+e exec --no-startup-id rofimoji --skin-tone light --action clipboard 
+```
 
