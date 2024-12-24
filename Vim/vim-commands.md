@@ -6,6 +6,8 @@ w - next word start
 b - previous word start
 e - next word end
 ge - previous word end
+g_ Move the last non-blank character of the line (but you remove trailing whitespace, right)
+ea Append to the end of the current word
 
 # revert
 zz -save and quit
@@ -27,26 +29,13 @@ ctrl+b - backward one page
 ctrl+u - up half page
 ctrl+d - down half page
 
-# insert
-gi - start insert mode at last position
-ctrl+o - go to normal mode make a command and go back to insert
-
-# indent
-- normal mode S
-
-
-
-
 # delete
 dG - удаление всех строк от текущей до последней
 dgg - удаление всех строк от текущей до первой
 d$ - удаление конца строки от текущей позиции
 d^ - удаление начала строки до текущей позиции.
 de - удаление до конца слова
-insert mode
-c-w - delete word
-c-u - delete line
-c-h - delete character
+da" Delete the next double-quoted string
 
 # yank
 уG - копирование строк от текущей до конца файла
@@ -54,27 +43,27 @@ y$ - копирование части строки от курсора до к�
 y^ - копирование части строки от курсора до начала строки
 
 # change
-#cw -изменение текущего слова
-#cc - всей текущей строки
+cw -изменение текущего слова
+cc - всей текущей строки
 cG - всех строк файла от текущей до последней
 cS -части строки от курсора до конца строки
 с^ - части строки от курсора до начала строки.
+ci" Change what’s inside the next double-quoted string
+ca{ Change outside the curly braces (try [, (, etc.)
+
+## jump
 g; Jump to the last change you made
 g, Jump back forward through the change list
-& Repeat last substitution on current line
-g& Repeat last substitution on all lines
-
-# visual 
+gi - start insert mode at last position
 `< Jump to beginning of last visual selection
 `> Jump to end of last visual selection
+
+# visual 
 va" - select with quotes
 vi" - select inside quotes"
 vis - select inside sentence
 vip - select inside paragraph
-
-# swap
-xp Swap character forward
-Xp Swap character backward
+o - visual mode toggle position
 
 # spelling
 z= Show spelling corrections
@@ -83,10 +72,8 @@ zw Remove from spelling dictionary
 
 # case 
 ~ Toggle case of current character
-gUw Uppercase until end of word (u for lower, ~ to toggle)
-gUiw Uppercase entire word (u for lower, ~ to toggle)
+visual mode + gu or gU Lowercase or uppercase selection
 gUU Uppercase entire line
-gu$ Lowercase until the end of the line
 
 
 # file
@@ -100,6 +87,11 @@ q/ - search history
 q? - search history backward
 q@ - repeat last macro
 
+### spelling
+z= Show spelling corrections
+zg Add to spelling dictionary
+zw Remove from spelling dictionary
+
 # indent
 gg=G Reindent the whole file
 
@@ -111,10 +103,8 @@ gg=G Reindent the whole file
 
 # command mode
 If you mean from Vim command line I would do:
-
 :normal 10GV20G
 To past right after line 14 I would do:
-
 :14put
 
 # increment decrement
@@ -126,3 +116,10 @@ g ctrl+x - decrement with decimal
 
 # remove more than one space in file
 :%s/\s\{2,}//g
+
+## folding
+zc Close current fold
+zo Open current fold
+za Toggle current fold
+zi Toggle folding entirely
+
