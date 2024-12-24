@@ -8,6 +8,16 @@ print(z[0:2])
 >>> print(z[:3])
 [3, 7, 4]
 
+## Копировать список
+```py
+z = [3, 7, 4, 2]
+y = z.copy()
+y = list(z)
+
+# или
+t = z[:]
+```
+
 # Создайте список
 >>> z = [4, 1, 5, 4, 10, 4]
 >>> print(z.index(4))
@@ -100,6 +110,20 @@ my_list.sort()
 list_2.sort()
 print(my_list)
 print(list_2)
+```
+
+## sort alphabetically
+```py
+my_list = ['alex', 'John', 'bob', 'Dave']
+my_list.sort(key=str.lower)
+print(my_list)
+```
+
+### sort num reverse
+```py
+my_list = [3, 5, 2, 4, 1]
+my_list.sort(reverse=True)
+print(my_list)
 ```
 
 Вывод:
