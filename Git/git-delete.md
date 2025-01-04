@@ -17,3 +17,7 @@ git reset --soft HEAD~1
 git reset --hard HEAD~1 
 ```
 
+## remove branch
+```bash
+git branch -d branchname
+```
