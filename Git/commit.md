@@ -1,3 +1,11 @@
+## git detach HEAD
+
+```
+git branch(will see branchname and detached HEAD)
+when you are in detached HEAD state, you can checkout to a branch to attach HEAD to a branch
+git checkout branchname
+```
+
 If you want to remove the 2 (two) last commits, there is an easy command to do that:
 
 ```
