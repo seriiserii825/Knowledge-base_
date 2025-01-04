@@ -1,0 +1,11 @@
+### git stash
+- `git stash` - stash changes in the working directory
+- `git stash push -m "message"` - stash changes with a message
+- `git stash list` - list all stashes
+- `git stash apply` - apply the latest stash
+- `git stash apply stash@{n}` - apply the nth stash
+- `git stash pop` - apply the latest stash and remove it from the stash list
+- `git stash pop stash@{n}` - apply the nth stash and remove it from the stash list
+- `git stash drop` - remove the latest stash from the stash list
+- `git stash drop stash@{n}` - remove the nth stash from the stash list
+- `git stash clear` - remove all stashes
