@@ -7,6 +7,7 @@ git rm --cached filename
 ## remove changes from git, reset to the last commit
 ```bash
 git checkout .
+git checkout filename - discard changes in a file
 ```
 
 ## remove commit
