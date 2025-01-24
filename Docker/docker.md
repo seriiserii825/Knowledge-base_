@@ -1,4 +1,5 @@
 ## don't restart docker
+
 ```javascript
 sudo systemctl disable docker.service
 sudo systemctl disable docker.socket
@@ -6,13 +7,15 @@ systemctl list-unit-files | grep -i docker
 ```
 
 ## docker mysql port is in use
-``` bash
+
+```bash
 docker ps
 docker stop container_id
 docker-compose up -d
 ```
 
 ## docker ssl
+
 To use docker with ssl, just need to install localy nginx, and will be generated ssl keyes
 that will update automatic ssl keys in container.
 
@@ -64,7 +67,9 @@ docker-compose up -d(d - in background)
 ```
 
 ## Очистка
+
 Ever wanted to get rid of unnecessary things with Docker? If you want to delete a Docker object, that's often the case. In that case, the command Docker prune is effective. The prune command allows you to delete unused Docker objects (containers, images, networks, volumes) all at once. The following is an example.
+
 ```javascript
 docker system prune
 ```
@@ -86,12 +91,15 @@ docker rm -vf $(docker ps -a -q)
 ```javascript
 docker images
 ```
+
 ## remove unused images
+
 ```javascript
 docker image prune -a
 ```
 
 ## Удалить образ
+
 ```
 docker rmi hash
 ```
@@ -118,13 +126,15 @@ cd /home/client
 npm install
 
 # inspect container for errors
+
 docker logs nginx_course
 
 ## change root password
+
 mysqlworkbench disable ssl in tab
 
 ```
-sudo mysql -u root 
+sudo mysql -u root
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
 FLUSH PRIVILEGES;
 exit;
@@ -134,11 +144,22 @@ pass = root
 ```
 
 ## connect to container
+
 ```
-docker exec -it mysql_sockets mysql -u root -p 
+docker exec -it mysql_sockets mysql -u root -p
 ```
 
+#### 2\. **Verify MySQL Root User Authentication Plugin**
+
+If the `mysql_native_password` command doesn’t work (e.g., for existing databases), you’ll need to manually change the root user's authentication plugin.
+
+1. Enter the MySQL container:
+   `docker exec -it mysql_example_app mysql -uroot -proot`
+2. Switch the root user's plugin to `mysql_native_password`:
+   `ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root'; FLUSH PRIVILEGES;`
+
 ## change root password
+
 ```
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
 FLUSH PRIVILEGES;
@@ -146,16 +167,22 @@ exit;
 ```
 
 ## connect again to mysql
+
 ```
 mysql -u root -P 33062 -p --ssl=FALSE --default-auth=mysql_native_password
 ```
 
-
 docker system prune
 docker-compose ps
+
 <!-- remove container -->
+
 docker-compose rm -f container_name
+
 <!-- view images -->
+
 docker images
+
 <!-- remove image -->
+
 docker rmi -f image_name
