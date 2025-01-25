@@ -1,5 +1,5 @@
 ## fat32
-sudo pacman -S dosfstools
+sudo pacman -S dosfstools mtools
 
 format usb
 sudo mkfs.msdos -F 32 /dev/sdd1
