@@ -1,47 +1,3 @@
-## don't restart docker
-
-```javascript
-sudo systemctl disable docker.service
-sudo systemctl disable docker.socket
-systemctl list-unit-files | grep -i docker
-```
-
-## docker mysql port is in use
-
-```bash
-docker ps
-docker stop container_id
-docker-compose up -d
-```
-
-## docker ssl
-
-To use docker with ssl, just need to install localy nginx, and will be generated ssl keyes
-that will update automatic ssl keys in container.
-
-## Установка docker
-
-```javascript
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-sudo apt update
-sudo apt-cache policy docker-ce
-sudo apt install docker-ce
-sudo systemctl status docker
-```
-
-## Установка docker-compose
-
-```javascript
-sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker-compose --version
-
-sudo apt install php-xml
-sudo apt-get install php-mbstring
-```
-
 ## Добавить пользователя в группу docker
 
 ```javascript
@@ -77,6 +33,8 @@ docker system prune
 ## Посмотреть контейнеры
 
 ```javascript
+docker ps
+docker ps -a
 docker-compose ps
 ```
 
@@ -129,20 +87,6 @@ npm install
 
 docker logs nginx_course
 
-## change root password
-
-mysqlworkbench disable ssl in tab
-
-```
-sudo mysql -u root
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
-FLUSH PRIVILEGES;
-exit;
-
-sudo mysql -u root -p
-pass = root
-```
-
 ## connect to container
 
 ```
@@ -165,24 +109,3 @@ ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
 FLUSH PRIVILEGES;
 exit;
 ```
-
-## connect again to mysql
-
-```
-mysql -u root -P 33062 -p --ssl=FALSE --default-auth=mysql_native_password
-```
-
-docker system prune
-docker-compose ps
-
-<!-- remove container -->
-
-docker-compose rm -f container_name
-
-<!-- view images -->
-
-docker images
-
-<!-- remove image -->
-
-docker rmi -f image_name
