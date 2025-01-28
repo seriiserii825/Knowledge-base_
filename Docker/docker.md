@@ -16,56 +16,57 @@ sudo chmod 666 /var/run/docker.sock
 newgrp docker
 ```
 
-## Запуск или установка
+### dockerignore
+```
+touch .dockerignore
+echo "node_modules" >> .dockerignore
+```
 
-```javascript
-docker-compose up -d(d - in background)
+### Создание образа
+
+```
+docker build -t server-app:v1 .
+```
+
+### Создание контейнера
+
+```
+docker run -d --name test2 -p 3002:3000 server-app:v1
 ```
 
 ## Очистка
 
-Ever wanted to get rid of unnecessary things with Docker? If you want to delete a Docker object, that's often the case. In that case, the command Docker prune is effective. The prune command allows you to delete unused Docker objects (containers, images, networks, volumes) all at once. The following is an example.
-
 ```javascript
-docker system prune
+docker system prune - удалить все неиспользуемые контейнеры(остановленные), сети, образы и тома
+docker system prune -a - hard reset, останавливает все контейнеры и удаляет все образы
 ```
 
-## Посмотреть контейнеры
+## Удалить образ
 
-```javascript
-docker ps
-docker ps -a
-docker-compose ps
+```
+docker rmi name or id
 ```
 
-## Удалить контейнеры
+Если образ используется, то сначала нужно удалить контейнер
 
-```javascript
-docker rm -vf $(docker ps -a -q)
+```
+docker ps - только запущенные контейнеры
+docker ps -a - все контейнеры
 ```
 
-## Посмотреть образы
+Если контейнер используется, то сначала нужно остановить его
 
-```javascript
+```
+docker stop container
+docker rm container_name
 docker images
+docker rmi image_name
 ```
 
 ## remove unused images
 
 ```javascript
 docker image prune -a
-```
-
-## Удалить образ
-
-```
-docker rmi hash
-```
-
-## Удалить образы
-
-```javascript
-docker rmi -f $(docker images -a -q)
 ```
 
 ## Переустановка контейнеров
@@ -86,12 +87,6 @@ npm install
 # inspect container for errors
 
 docker logs nginx_course
-
-## connect to container
-
-```
-docker exec -it mysql_sockets mysql -u root -p
-```
 
 #### 2\. **Verify MySQL Root User Authentication Plugin**
 
