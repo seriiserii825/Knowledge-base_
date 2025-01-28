@@ -37,6 +37,7 @@ docker run -d --name test2 -p 3002:3000 server-app:v1
 ## Очистка
 
 ```javascript
+docker container prune - удалить все остановленные контейнеры
 docker system prune - удалить все неиспользуемые контейнеры(остановленные), сети, образы и тома
 docker system prune -a - hard reset, останавливает все контейнеры и удаляет все образы
 ```
