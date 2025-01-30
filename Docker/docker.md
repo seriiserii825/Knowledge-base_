@@ -34,6 +34,22 @@ docker build -t server-app:v1 .
 docker run -d --name test2 -p 3002:3000 server-app:v1
 ```
 
+## Подключиться к контейнеру
+```
+docker exec -it test2 /bin/bash
+```
+
+## Добавить переменные окружения
+
+```
+docker run -d -e MY_ENV_VARIABLE=test nginx
+docker exec -it focused_wiles /bin/bash
+printenv
+NGINX_VERSION=1.27.3
+MY_ENV_VARIABLE=test
+
+```
+
 ## Очистка
 
 ```javascript
