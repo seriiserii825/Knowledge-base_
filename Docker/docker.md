@@ -1,3 +1,6 @@
+## Important commands
+run docker-compose up --build if was changed Dockerfile or docker-compose.yml file
+
 ## Добавить пользователя в группу docker
 
 ```javascript
@@ -73,10 +76,7 @@ docker image prune -a
 ## Переустановка контейнеров
 
 ```javascript
-docker-compose stop nginx # stop if running
-docker-compose rm -f nginx # remove without confirmation
-docker-compose build nginx # build
-docker-compose up -d nginx # create and start in background
+docker-compose up --build
 ```
 
 ## exec script in container
@@ -87,7 +87,11 @@ npm install
 
 # inspect container for errors
 
+```
 docker logs nginx_course
+docker volume ls
+docker inspect nginx_course
+```
 
 #### 2\. **Verify MySQL Root User Authentication Plugin**
 
