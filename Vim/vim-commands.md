@@ -87,11 +87,6 @@ q/ - search history
 q? - search history backward
 q@ - repeat last macro
 
-### spelling
-z= Show spelling corrections
-zg Add to spelling dictionary
-zw Remove from spelling dictionary
-
 # indent
 gg=G Reindent the whole file
 
