@@ -87,9 +87,6 @@ q/ - search history
 q? - search history backward
 q@ - repeat last macro
 
-# indent
-gg=G Reindent the whole file
-
 # remove blank lines
 :g/^$/d
 
