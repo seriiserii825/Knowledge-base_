@@ -21,4 +21,6 @@ md - mkdir
 ## swap panes 
 ctrl+u
 
-
+## restore visual selection
+av - make selection
+gv
