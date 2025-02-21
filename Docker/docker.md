@@ -56,6 +56,7 @@ MY_ENV_VARIABLE=test
 ## Очистка
 
 ```javascript
+docker stop $(docker ps -q) - остановить все контейнеры
 docker container prune - удалить все остановленные контейнеры
 docker system prune - удалить все неиспользуемые контейнеры(остановленные), сети, образы и тома
 docker system prune -a - hard reset, останавливает все контейнеры и удаляет все образы
