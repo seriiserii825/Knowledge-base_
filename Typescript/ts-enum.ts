@@ -1,12 +1,29 @@
-export enum E_Layouts {
-    DEFAULT = 'default',
-    USER = 'user'
+const user = {
+  name: "John",
+  age: 30,
+};
+
+// enum exists
+enum user2 {
+  name = "John",
+  age = 30,
 }
 
-export enum E_LayoutToFileMap {
-    default = 'DefaultLayout.vue',
-    user = 'UserLayout.vue'
+// enum does not exist until will be used in the code
+const enum user3 {
+  name = "John",
+  age = 30,
 }
 
-type NormalizedKey = keyof typeof E_LayoutToFileMap;
-const normalizedLayoutName: NormalizedKey = layout || E_Layouts.DEFAULT;
+const alex = user3.name;
+
+// in js file
+// const alex = "John";
+
+const enum EStatus {
+  NOT_FOUND = 404,
+  OK = 200,
+  ERROR = 500,
+}
+
+const status1 = EStatus.OK;
