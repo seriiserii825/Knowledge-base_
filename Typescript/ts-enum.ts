@@ -1,8 +1,3 @@
-const user = {
-  name: "John",
-  age: 30,
-};
-
 // enum exists
 enum user2 {
   name = "John",
