@@ -1,3 +1,22 @@
+function test2(str: string) {
+  return str.length;
+}
+
+// with ts-ignore
+// @ts-ignore
+const result: boolean = test2('Max');
+
+// with type assertion
+const result2 = test2('Max') as unknown as boolean;
+
+// object and array
+
+const one = [];
+const two = {};
+
+(one as unknown as [1,3,4,5])[0];
+(two as unknown as {name: 'Max'})['name'];
+
 // value
 let value: unknown;
 value = 'Max';

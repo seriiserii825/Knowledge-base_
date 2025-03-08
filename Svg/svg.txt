@@ -1,6 +1,8 @@
 sudo apt install librsvg2-bin
 rsvg-convert -a -w 20 -f svg view.svg -o view-resized.svg
 
+sudo pacman -S librsvg
+
 # svgo
 npm -g install svgo
 svgo file -o file_output
