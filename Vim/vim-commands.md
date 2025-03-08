@@ -12,12 +12,18 @@ ea Append to the end of the current word
 # revert
 zz -save and quit
 
-# jumps(by search with /)
+# jumps(by search with / or comment or substitute or marks)
 '' - jump back to the last position
 ` - jump back to the last cursor position
 ctrl+o - jump back to the last cursor position
 ctrl+i - jump forward to the last cursor position
 80% - jump to 80% of the file
+
+# changes from insert mode
+:changes - show changes
+g; - jump to the last change in insert mode
+g, - jump back forward through the change list
+
 
 # go
 ^ - start of line
