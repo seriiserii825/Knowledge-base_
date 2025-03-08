@@ -1,13 +1,18 @@
 #regexp
 s/a.*$// - удаление всего после символа а
 
-#movements
+# movements
 w - next word start
+W - next word start (ignore punctuation)
 b - previous word start
+B - previous word start (ignore punctuation)
 e - next word end
 ge - previous word end
 g_ Move the last non-blank character of the line (but you remove trailing whitespace, right)
 ea Append to the end of the current word
+
+## indent
+3>> - indent 3 lines
 
 # revert
 zz -save and quit
