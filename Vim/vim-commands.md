@@ -12,7 +12,18 @@ g_ Move the last non-blank character of the line (but you remove trailing whites
 ea Append to the end of the current word
 
 ## indent
-3>> - indent 3 lines
+`>3j - indent 3 lines`
+
+## yank lines
+y8j - yank 8 lines
+yG - yank to the end of the file
+ygg - yank to the beginning of the file
+
+## delete word
+d2w - delete 2 words
+
+## delete chars
+d8l - delete 8 characters
 
 # revert
 zz -save and quit
