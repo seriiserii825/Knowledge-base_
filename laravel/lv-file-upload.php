@@ -27,6 +27,13 @@ trait FileUpload
         $file->move(public_path($directory), $full_file_name);
         return '/' . $directory . '/' . $full_file_name;
     }
+
+    public function deleteFile(string $file_path): void
+    {
+        if (file_exists(public_path($file_path))) {
+            unlink(public_path($file_path));
+        }
+    }
 }
 
 class FileUploadController extends Controller
@@ -38,5 +45,18 @@ class FileUploadController extends Controller
         $file = $request->file('file');
         $path = $this->uploadFile($file);
         return response()->json(['path' => $path]);
+    }
+
+    public function destroy(Request $request, User $user)
+    {
+
+        if ($request->hasFile('image')) {
+            $image_path = $user->image;
+            if ($image_path) {
+                $this->deleteFile($image_path);
+            }
+            $validated['image'] = $this->uploadFile($request->file('image'));
+        }
+        $user->update($validated);
     }
 }
