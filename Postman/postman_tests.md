@@ -31,6 +31,36 @@ if (token) {
     });
 }
 ```
+## xcsrf token
+url /sanctum/csrf-cookie
+tests
+```javascript
+pm.test("Set XSRF-TOKEN", function () {
+    var xsrfToken = pm.cookies.get("XSRF-TOKEN");
+
+    pm.expect(xsrfToken).to.exist; // Ensure the cookie exists
+    pm.globals.set("xsrf_token", xsrfToken); // Store it as a global variable
+});
+```
+
+add in folder in pre-request
+```javascript
+// Check if the XSRF-TOKEN is already set
+if (!pm.globals.get("xsrf_token")) {
+    pm.sendRequest({
+        url: pm.environment.get("base_url") + "/sanctum/csrf-cookie",
+        method: "GET"
+    }, function (err, res) {
+        if (!err) {
+            var xsrfToken = pm.cookies.get("XSRF-TOKEN");
+            if (xsrfToken) {
+                pm.globals.set("xsrf_token", xsrfToken);
+            }
+        }
+    });
+}
+```
+
 
 #add user test
 pm.test("Should user not be empty", function () {
