@@ -20,6 +20,7 @@ md - mkdir
 
 ## swap panes 
 ctrl+u
+x - sync
 
 ## restore visual selection
 av - make selection
