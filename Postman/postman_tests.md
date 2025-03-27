@@ -18,6 +18,20 @@ pm.test("Should have jwt token", function () {
 - at the bottom use Tests tab and submit Send
 - you will have Test result
 
+## set token to Auth folder
+- select folder
+- in right side use tests
+```javascript
+var token = pm.globals.get("token");
+
+if (token) {
+    pm.request.headers.add({
+        key: "Authorization",
+        value: "Bearer " + token
+    });
+}
+```
+
 #add user test
 pm.test("Should user not be empty", function () {
     var jsonData = pm.response.json();
