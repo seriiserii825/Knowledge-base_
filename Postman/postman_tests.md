@@ -4,9 +4,9 @@
 - In right side use Response body: JSON value check
 
 #add title Should have..., and jwt
-pm.test("Should have jwt token", function () {
+pm.test("Should have token", function () {
 var jsonData = pm.response.json();
-pm.expect(jsonData.jwt).to.not.empty;
+pm.expect(jsonData.token).to.not.empty;
 });
 
 pm.test("Should have jwt token", function () {
