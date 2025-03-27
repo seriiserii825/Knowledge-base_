@@ -79,10 +79,11 @@ if (!pm.globals.get("xsrf_token")) {
 - in Pre-request Script use
 
 ```javascript
-pm.request.headers.add({
-  key: "Accept",
-  value: "application/json",
+pm.request.headers.upsert({
+    key: "Accept",
+    value: "application/json"
 });
+
 ```
 
 #add user test
