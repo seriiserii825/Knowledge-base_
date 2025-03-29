@@ -16,3 +16,7 @@
 sudo a2enmode headers
 sudo systemctl restart apache2
 ```
+
+in laravel cors.php
+
+'allowed_origins' => ['*'],
