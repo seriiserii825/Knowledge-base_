@@ -40,4 +40,30 @@
       });
     });
   }
+
+// toggleAll
+export default function whyUsAccordion() {
+  const headers = document.querySelectorAll(".why-us__header");
+
+  headers.forEach((header, index) => {
+    header.addEventListener("click", (e) => {
+			headers.forEach((elem, inner_index) => {
+				if (index === inner_index) return;
+				const item = elem.closest(".why-us__item");
+				const wrapper = item.querySelector(".why-us__body");
+				if (!wrapper) return;
+				wrapper.classList.remove("is-open");
+			});
+			const item =  e.currentTarget.closest(".why-us__item");
+      const wrapper = item.querySelector(".why-us__body");
+      if (!wrapper) return;
+			if (wrapper.classList.contains("is-open")) {
+				wrapper.classList.remove("is-open");
+				return;
+			}
+      wrapper.classList.add("is-open");
+    });
+  });
+}
+
 </script>
