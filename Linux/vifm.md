@@ -1,4 +1,9 @@
 https://vifm.info/cheatsheets.shtml
+## view all keymaps
+:nmap
+:imap
+:vmap
+
 # sort
 shift+s
 
