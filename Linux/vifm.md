@@ -17,17 +17,17 @@ F - filter without regexp
 = - local filter
 
 ## mkdir touch
-mf - touch
-md - mkdir
+cf - touch
+cd - mkdir
 
 ## swap panes 
 ctrl+u
 x - sync
 
 ## restore visual selection
-av - make selection
-gv - restore visual mode
-gs - restore selection
+av - append selection
+gv - restore last visual mode with V
+gs - restore selection with space
 
 ## symlinks
 copy file with yy, and switch to next pane
