@@ -1,3 +1,4 @@
+https://vifm.info/cheatsheets.shtml
 # sort
 shift+s
 
@@ -13,6 +14,7 @@ shift+tab
 ### filter files
 f - filter with regexp
 F - filter without regexp
+= - local filter
 
 ## mkdir touch
 mf - touch
@@ -24,4 +26,10 @@ x - sync
 
 ## restore visual selection
 av - make selection
-gv
+gv - restore visual mode
+gs - restore selection
+
+## symlinks
+copy file with yy, and switch to next pane
+ar - absolute symlink
+al - relative symlink
