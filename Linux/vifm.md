@@ -33,3 +33,4 @@ gs - restore selection
 copy file with yy, and switch to next pane
 ar - absolute symlink
 al - relative symlink
+:ln - create symlink for selected file or dir in next pane
