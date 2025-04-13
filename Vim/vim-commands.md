@@ -1,6 +1,24 @@
 #regexp
 s/a.*$// - удаление всего после символа а
 
+## new file
+:e filename - open new file
+:w filename - save file with new name
+
+## sort
+1,10sort - sort lines from 1 to 10
+1,$sort - sort all lines
+1,$sort! - sort all lines reverse
+1,$sort u - sort all lines unique
+
+## vimgrep
+```
+:vimgrep /pattern/ % - search pattern in current file 
+:vimgrep /pattern/ *.txt - search pattern in all txt files
+:vimgrep /pattern/ **/*.* - search pattern in all txt files in all directories
+:cope - open the list of matches
+```
+
 # movements
 w - next word start
 W - next word start (ignore punctuation)
@@ -30,7 +48,7 @@ zz -save and quit
 
 # jumps(by search with / or comment or substitute or marks)
 '' - jump back to the last position
-` - jump back to the last cursor position
+# ` - jump back to the last cursor position
 ctrl+o - jump back to the last cursor position
 ctrl+i - jump forward to the last cursor position
 80% - jump to 80% of the file
@@ -40,6 +58,14 @@ ctrl+i - jump forward to the last cursor position
 g; - jump to the last change in insert mode
 g, - jump back forward through the change list
 
+## scroll 
+ctrl+f - forward one page
+ctrl+b - backward one page
+ctrl+u - up half page
+ctrl+d - down half page
+shift+h - scroll to first line on the screen
+shift+m - scroll to middle line on the screen
+shift+l - scroll to last line on the screen
 
 # go
 ^ - start of line
@@ -120,6 +146,8 @@ If you mean from Vim command line I would do:
 :normal 10GV20G
 To past right after line 14 I would do:
 :14put
+:78,40s/some/any/gic - i(case isensitive) c(ask for confirmation) I(case sensitive)
+:22,28s/\<some\>/any/g - replace only whole words
 
 # increment decrement
 ctrl+v - visual block mode
