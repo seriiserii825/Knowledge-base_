@@ -1,5 +1,7 @@
 ### keybindings
 
+#### session
+
 ```bash
 # start a new session
 prefix + s
@@ -13,17 +15,25 @@ prefix + g, or s
 rename session
 prefix + $
 
+detach session
+prefix + d
+
+delete session
+prefix + x
+```
+
+#### window
+
+```bash
 start a new window
 prefix + c
 
 rename window
 prefix + ,
 
-detach session
-prefix + d
 
-delete session
-prefix + x
+delete window
+prefix + &
 
 split window
 prefix + |, or -
@@ -38,8 +48,7 @@ prefix + l,j,k,h
 tmux ls
 ```
 
-
-## new session 
+## new session
 
 ```bash
 tmux new -s session_name
@@ -93,4 +102,3 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```bash
 # Press prefix + I (capital I, as in Install) to fetch the plugin.
 ```
-
