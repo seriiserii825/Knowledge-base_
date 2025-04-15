@@ -1,0 +1,39 @@
+.gallery-list {
+  padding-bottom: 9.6rem;
+  &__wrap {
+    display: flex;
+    gap: 0.4rem;
+    padding-bottom: 6.4rem;
+    &:hover {
+      .gallery-list__item {
+        flex: 1 1 15%;
+      }
+    }
+    .gallery-list__item {
+      &:hover {
+        flex: 1 1 30%;
+      }
+    }
+  }
+  &__item {
+    position: relative;
+    flex: 1 1 20%;
+    height: 48rem;
+    transition: all 0.8s;
+    img,
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  &__footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
