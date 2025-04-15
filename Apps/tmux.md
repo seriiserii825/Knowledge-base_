@@ -1,3 +1,68 @@
+### keybindings
+
+```bash
+# start a new session
+prefix + s
+:new -s session_name
+# with plugin
+prefix + C
+
+# switch session
+prefix + g, or s
+
+rename session
+prefix + $
+
+start a new window
+prefix + c
+
+rename window
+prefix + ,
+
+detach session
+prefix + d
+
+delete session
+prefix + x
+
+split window
+prefix + |, or -
+
+resize
+prefix + l,j,k,h
+```
+
+## list sessions
+
+```bash
+tmux ls
+```
+
+
+## new session 
+
+```bash
+tmux new -s session_name
+```
+
+## attach to session
+
+```bash
+tmux attach -t session_name
+```
+
+## kill session
+
+```bash
+tmux kill-session -t session_name
+```
+
+## kill tmux
+
+```bash
+tmux kill-server
+```
+
 ### install
 
 ```bash
@@ -29,18 +94,3 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # Press prefix + I (capital I, as in Install) to fetch the plugin.
 ```
 
-### new session
-
-#### from inside
-
-```bash
-# start a new session
-prefix + s
-:new -s session_name
-```
-
-#### from outside
-
-```bash
-tmux new -s session_name
-```
