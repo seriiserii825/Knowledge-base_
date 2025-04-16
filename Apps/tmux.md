@@ -102,3 +102,23 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```bash
 # Press prefix + I (capital I, as in Install) to fetch the plugin.
 ```
+
+### sessions between few machine
+```bash
+
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+
+# Save every 15 minutes
+set -g @continuum-save-interval '15'
+
+# Enable autosave + autorestore
+set -g @continuum-restore 'on'
+set -g @resurrect-capture-pane-contents 'on'
+
+set -g @resurrect-dir '~/xubuntu/.tmux/resurrect'
+
+```
+
+on the second machine run git pull
+go inside tmux and run prefix + ctrl + r
