@@ -1,0 +1,44 @@
+<div class="about-slider">
+    <div class="swiper about-slider__swipper">
+        <div class="swiper-wrapper">
+            <?php foreach ($gallery as $item): ?>
+                <div class="swiper-slide">
+                    <img src="<?php echo $item['url']; ?>" alt="<?php echo $item['alt']; ?>" loading="lazy" />
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <footer class="about-slider__footer">
+        <button class="about-slider__btn about-slider__btn--prev">
+            prev
+        </button>
+        <button class="about-slider__btn about-slider__btn--next">
+            next
+        </button>
+    </footer>
+</div>
+
+<script charset="utf-8">
+import Swiper from "swiper";
+import "swiper/css";
+export default function aboutSlider() {
+  const swiper = new Swiper(".swiper", {
+    speed: 400,
+    slidesPerView: 2.5,
+    centeredSlides: true,
+    spaceBetween: 4,
+    initialSlide: 1
+  });
+  const btn_prev = document.querySelector(".about-slider__btn--prev");
+  const btn_next = document.querySelector(".about-slider__btn--next");
+  if (btn_next && btn_prev) {
+    btn_prev.addEventListener("click", () => {
+      swiper.slidePrev();
+    });
+
+    btn_next.addEventListener("click", () => {
+      swiper.slideNext();
+    });
+  }
+}
+</script>
