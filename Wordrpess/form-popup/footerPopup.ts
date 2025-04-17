@@ -8,8 +8,7 @@ export default function footerPopup() {
 
   document.addEventListener("click", (e) => {
     if (e.target === footer_popup) {
-      form_email?.setAttribute("value", "");
-      footer_popup?.classList.remove("active");
+      closePopup();
     }
   });
 
@@ -26,14 +25,28 @@ export default function footerPopup() {
   send_form_btn?.addEventListener("click", () => {
     if (send_form_input?.value && validateEmail(send_form_input.value)) {
       form_email?.setAttribute("value", send_form_input.value);
-      footer_popup?.classList.add("active");
+      showPopup();
     }
   });
 
   popup_close?.addEventListener("click", () => {
+    closePopup();
+  });
+
+  function showPopup(){
+    footer_popup?.classList.add("active");
+    setTimeout(() => {
+      footer_popup?.classList.add("show");
+    }, 100);
+  }
+
+  function closePopup(){
     form_email?.setAttribute("value", "");
     footer_popup?.classList.remove("active");
-  });
+    setTimeout(() => {
+      footer_popup?.classList.remove("show");
+    }, 100);
+  }
 
   function validateEmail(email) {
     const re =

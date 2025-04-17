@@ -20,51 +20,54 @@
   </div>
 </div>
 <style>
-.footer-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 9999;
-  opacity: 0;
-  pointer-events: none;
-  transition: all .4s;
-  &.active {
-    opacity: 1;
-    pointer-events: all;
-  }
-  &__body {
-    flex: 0 0 68.8rem;
-    padding: 4.8rem;
-    border-radius: 1.6rem;
-    border: 1px solid var(--Blue-Lightest, #c0e9fd);
-    background: #fff;
-    @media screen and (max-width: 576px) {
-      flex: initial;
-      padding: 3.2rem;
-      width: 96%;
-    }
-  }
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 3.2rem;
-  }
-  &__close {
-    display: flex;
+  .footer-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
     justify-content: center;
     align-items: center;
-    flex: 0 0 2.6rem;
-    height: 2.6rem;
-    background: #c0e9fd;
-    border-radius: 50%;
-    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .4s;
+    &.active {
+      display: flex;
+    }
+    &.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+    &__body {
+      flex: 0 0 68.8rem;
+      padding: 4.8rem;
+      border-radius: 1.6rem;
+      border: 1px solid var(--Blue-Lightest, #c0e9fd);
+      background: #fff;
+      @media screen and (max-width: 576px) {
+        flex: initial;
+        padding: 3.2rem;
+        width: 96%;
+      }
+    }
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3.2rem;
+    }
+    &__close {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 0 0 2.6rem;
+      height: 2.6rem;
+      background: #c0e9fd;
+      border-radius: 50%;
+      cursor: pointer;
+    }
   }
-}
 </style>
