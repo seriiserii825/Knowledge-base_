@@ -24,7 +24,20 @@ Ctrl+r a - paste from register a in insert mode
 :vimgrep /pattern/ % - search pattern in current file 
 :vimgrep /pattern/ *.txt - search pattern in all txt files
 :vimgrep /pattern/ **/*.* - search pattern in all txt files in all directories
+:cn - next
+:cp - prev
+@: - repeat last command
 :cope - open the list of matches
+```
+
+## args
+```
+args **/*.css - search all css files in all directories
+:vert sa args - open all buffers in vertical split
+argdo %s/old/new/g - replace old with new in all files
+windo difft - compare all files
+:vim /color/ ## - search color in all files from args
+:cdo s/color/new/g - replace color with new in all files
 ```
 
 # movements
