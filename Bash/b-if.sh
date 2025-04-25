@@ -1,3 +1,29 @@
+## example
+```bash
+MY_SHELL="bash"
+
+# variable to " - to prvevent side effects
+if [ "$MY_SHELL" = "bash" ]; then
+  echo "MY_SHELL is set to $MY_SHELL"
+  echo "MY_SHELL is set to ${MY_SHELL}ing"
+else
+  echo "MY_SHELL is not set to bash"
+fi
+
+
+if [ "$MY_SHELL" = "bash" ]; then
+  echo "MY_SHELL is set to $MY_SHELL"
+  echo "MY_SHELL is set to ${MY_SHELL}ing"
+elif [ "$MY_SHELL" = "zsh" ]; then
+  echo "MY_SHELL is not set to zsh"
+else
+  echo "MY_SHELL is not set to bash or zsh"
+fi
+```
+```
+
+
+
 ### Number Comparisons:
 ```
 -eq - is equal to - if [ "$a" -eq "$b" ]

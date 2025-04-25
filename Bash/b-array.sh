@@ -75,3 +75,53 @@ do
   echo "key :" $i
   echo "value:" ${array[$i]}
 done
+
+
+To access an individual element:
+
+```bash
+echo "${array[0]}"
+```
+
+To iterate over the elements:
+
+```bash
+for element in "${array[@]}"
+do
+    echo "$element"
+done
+```
+
+To get both the index and the value:
+
+```bash
+for index in "${!array[@]}"
+do
+    echo "$index ${array[index]}"
+done
+```
+
+The last example is useful because Bash arrays are sparse. In other words, you can delete an element or add an element and then the indices are not contiguous.
+
+```bash
+unset "array[1]"
+array[42]=Earth
+```
+
+To get the number of elements in an array:
+
+```bash
+echo "${#array[@]}"
+```
+
+As mentioned above, arrays can be sparse so you shouldn't use the length to get the last element. Here's how you can in Bash 4.2 and later:
+
+```bash
+echo "${array[-1]}"
+```
+
+in any version of Bash (from somewhere after 2.05b):
+
+```bash
+echo "${array[@]: -1:1}"
+```
