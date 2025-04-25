@@ -1,6 +1,40 @@
 ## read
 
 ```
+-p prompt	Display a prompt before reading input (only in bash)
+-s	Silent mode (no input echo, useful for passwords)
+read -sp "Enter password: " password
+echo
+
+-n N	Read exactly N characters (without waiting for Enter)
+read -n 1 -p "Press any key to continue..." key
+echo
+
+-t N	Timeout after N seconds
+read -t 5 -p "You have 5 seconds to type something: " input
+echo "Input: $input"
+
+-r	Don’t treat backslashes as escape characters
+read -r -p "Enter raw string: " raw
+echo "You entered: $raw"
+
+-a array	Store words into an array
+read -a words -p "Enter some words: "
+echo "First word: ${words[0]}"
+
+-e	Use readline (for editable input, history, etc.) — interactive use only
+# Let’s say you want to prompt the user for a filename, but let them autocomplete:
+read -e -p "Enter the filename: " filename
+echo "You selected: $filename"
+# Now if they start typing ~/Doc and press Tab, it'll autocomplete to ~/Documents (if it exists).
+
+-d delim	Read until delimiter instead of newline (Bash 4+)
+
+-u fd	Read from file descriptor fd
+
+```
+
+```
 echo "Linux:is:awesome." | (IFS=":" read -r var1 var2 var3; echo -e "$var1 n$var2 n$var3")
 Linux
 is
