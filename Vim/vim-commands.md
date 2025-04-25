@@ -40,6 +40,14 @@ windo difft - compare all files
 :cdo s/color/new/g - replace color with new in all files
 ```
 
+## args example
+```
+:args app/**/*.php resources/**/*.php
+:argadd `=split(system("find . -type f -name '*.php' -not -path './vendor/*'"), "\n")`
+:vim /Hero/ ## - search Hero in all files from args
+:cdo s/Hero/hero/g - replace Hero with hero in all files
+```
+
 # movements
 w - next word start
 W - next word start (ignore punctuation)
