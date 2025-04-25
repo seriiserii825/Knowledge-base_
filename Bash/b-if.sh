@@ -2,6 +2,11 @@
 ```bash
 MY_SHELL="bash"
 
+```
+host="google.meeet"
+ping -c 1 $host && echo "$host is reachable" || echo "$host is not reachable"
+```
+
 # variable to " - to prvevent side effects
 if [ "$MY_SHELL" = "bash" ]; then
   echo "MY_SHELL is set to $MY_SHELL"
