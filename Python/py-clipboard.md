@@ -12,6 +12,7 @@ clipboard = pyperclip.paste()
 import os
 
 def addToClipBoard(text):
-    command = 'echo ' + text.strip() + '| xclip -selection clipboard'
-    os.system(command)
+    # Copy to clipboard
+    pyperclip.copy(new_file_path.strip())
+    subprocess.run(['notify-send', new_file_path], check=True)
 ```
