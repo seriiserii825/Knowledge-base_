@@ -50,6 +50,12 @@ docker rm $(docker kill $(docker ps -aq))
 docker rmi -f $(docker images -a -q)
 ```
 
+## stop all running containers:
+
+```
+docker stop $(docker ps -aq)
+```
+
 ## Delete both all stopped containers and images in a single command:
 
 ```
