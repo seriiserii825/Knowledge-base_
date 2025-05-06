@@ -9,7 +9,7 @@ zO opens all folds at the cursor.
 zc closes a fold under cursor. 
 zC closes all folds untill parrent when cursor is in a child
 zM closes all open folds.
-zR decreases the foldlevel to zero -- all folds will be open.
+zR open all folds
 zm increases the foldlevel by one.
 zr decreases the foldlevel by one.
 zN close and remember folding
