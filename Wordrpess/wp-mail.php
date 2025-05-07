@@ -1,298 +1,241 @@
 <?php
-function true_localize_example()
+// create file js/contact-form.js
+wp_enqueue_script('contact-form', get_template_directory_uri() . '/js/contact-form.js', ['jquery'], null, true);
+wp_localize_script('contact-form', 'my_ajax_object', [
+  'ajax_url' => admin_url('admin-ajax.php'),
+  'nonce'    => wp_create_nonce('my_nonce')
+]);
+
+
+add_action('wp_ajax_send_contact_email', 'handle_send_contact_email');
+add_action('wp_ajax_nopriv_send_contact_email', 'handle_send_contact_email');
+
+
+function handle_send_contact_email()
 {
-	wp_enqueue_script('truescript', get_template_directory_uri() . '/vue/topcare/ajax.js', [], null, false);
-	wp_localize_script('truescript', 'true_object', array(
-		'ajax_url' => admin_url('admin-ajax.php'),
-		'nonce'    => wp_create_nonce('feedback-nonce'),
-	));
+  check_ajax_referer('my_nonce', 'security');
+
+  $name    = sanitize_text_field($_POST['name']);
+  $surname  = sanitize_text_field($_POST['surname']);
+  $immobile = sanitize_text_field($_POST['immobile']);
+  $phone   = sanitize_text_field($_POST['phone']);
+  $email   = sanitize_email($_POST['email']);
+  $subject = sanitize_text_field($_POST['subject']);
+  $message = sanitize_textarea_field($_POST['message']);
+
+  $to      = get_option('admin_email');
+  $subject = "Contact Form Submission: $subject";
+  $headers = ['Content-Type: text/html; charset=UTF-8', "Reply-To: $name <$email>"];
+  $bcc = "sergiu@bludelego.it";
+  $headers[] = "Bcc: $bcc";
+  $body   = "<p><strong>Nome:</strong> $name</p>";
+  $body  .= "<p><strong>Cognome:</strong> $surname</p>";
+  $body  .= "<p><strong>Immobile:</strong> $immobile</p>";
+  $body  .= "<p><strong>Telefono:</strong> $phone</p>";
+  $body  .= "<p><strong>Email:</strong> $email</p>";
+  $body  .= "<p><strong>Messaggio:</strong></p>";
+  $body  .= "<p>$message</p>";
+
+  $sent = wp_mail($to, $subject, $body, $headers);
+  $sent = wp_mail($email, $subject, $body, $headers);
+
+  if ($sent) {
+    wp_send_json_success('Message sent successfully!');
+  } else {
+    wp_send_json_error('Failed to send email.');
+  }
+
+  wp_die(); // important for AJAX
+}?>
+
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import ISubmit from "../../icons/ISubmit.vue";
+import axios from "axios";
+import Loader from "../Loader.vue";
+const props = defineProps({
+  codice: {
+    type: String,
+    required: true,
+  },
+});
+const checked = ref(false);
+const loading = ref(false);
+const first_click = ref(false);
+const error_message = ref("È richiesto il campo");
+const error_email = ref("Email non valida");
+const show_success_message = ref(false);
+const success_message = ref("Messaggio inviato con successo");
+const form = ref({
+  name: "",
+  surname: "",
+  immobile: "",
+  phone: "",
+  email: "",
+  subject: "",
+  message: "",
+});
+
+function validateFields() {
+  const { name, surname, immobile, phone, email, subject, message } = form.value;
+  return (
+    name.trim() !== "" &&
+    surname.trim() !== "" &&
+    immobile.trim() !== "" &&
+    phone.trim() !== "" &&
+    email.trim() !== "" &&
+    subject.trim() !== "" &&
+    message.trim() !== ""
+  );
 }
-add_action('wp_enqueue_scripts', 'true_localize_example');
-add_action('wp_ajax_topcare', 'ajax_form');
-add_action('wp_ajax_nopriv_topcare', 'ajax_form');
-function ajax_form()
-{
-	if (!wp_verify_nonce($_POST['nonce'], 'feedback-nonce')) {
-		wp_die('Data was recieved from another address');
-	}
-	if (!empty($_POST['checkField'])) {
-		wp_die('This is a spam');
-	}
 
-	// die(json_encode(array('type' => 'files', 'text' => $_FILES)));
-	//f.cioni@altuofianco.it
-	// assurance@altuofianco.it
-	// $mail_to                        = "sergiu@bludelego.it";
-	// $mail_to                        = "seriiburduja@gmail.com";
-	//	$mail_to                        = "f.cioni@altuofianco.it";
-	$mail_to                        = "assurance@altuofianco.it";
-	$request                        = $_REQUEST;
-	$verificationInput              = sanitize_text_field($_REQUEST['partita_iva']);
-	$validationToken                = sanitize_text_field($_REQUEST['validationToken']);
-	$socialRegion                   = sanitize_text_field($_REQUEST['socialRegion']);
-	$contactPerson                  = sanitize_text_field($_REQUEST['contactPerson']);
-	$personPhone                    = sanitize_text_field($_REQUEST['personPhone']);
-	$personEmail                    = sanitize_email($_REQUEST['personEmail']);
-	$company_name                   = sanitize_text_field($_REQUEST['company_name']);
-	$result                         = sanitize_text_field($_REQUEST['result']);
-	$response_text                  = sanitize_text_field($_REQUEST['response_text']);
-	$topcareYearNumber              = !empty($_REQUEST['topcareYearNumber']) ? sanitize_text_field($_REQUEST['topcareYearNumber']) : '';
-	$phoneTextareaNumbers           = !empty($_REQUEST['phoneTextareaNumbers']) ? sanitize_textarea_field($_REQUEST['phoneTextareaNumbers']) : '';
-	$selectPhone                    = !empty($_REQUEST['selectPhone']) ? sanitize_text_field($_REQUEST['selectPhone']) : '';
-	$selectPhoneAnotherNumberInput  = !empty($_REQUEST['selectPhoneAnotherNumberInput']) ? sanitize_text_field($_REQUEST['selectPhoneAnotherNumberInput']) : '';
-	$phoneNote                      = !empty($_REQUEST['phoneNote']) ? sanitize_textarea_field($_REQUEST['phoneNote']) : '';
-	$selectNet                      = !empty($_REQUEST['selectNet']) ? sanitize_text_field($_REQUEST['selectNet']) : '';
-	$netNote                        = !empty($_REQUEST['netNote']) ? sanitize_textarea_field($_REQUEST['netNote']) : '';
-	$selectMobile                   = !empty($_REQUEST['selectMobile']) ? sanitize_text_field($_REQUEST['selectMobile']) : '';
-	$mobileTextareaNumbers          = !empty($_REQUEST['mobileTextareaNumbers']) ? sanitize_textarea_field($_REQUEST['mobileTextareaNumbers']) : '';
-	$selectMobileAnotherNumberInput = !empty($_REQUEST['selectMobileAnotherNumberInput']) ? sanitize_text_field($_REQUEST['selectMobileAnotherNumberInput']) : '';
-	$mobileNote                     = !empty($_REQUEST['mobileNote']) ? sanitize_text_field($_REQUEST['mobileNote']) : '';
-	$administration_desc                     = !empty($_REQUEST['administration_desc']) ? sanitize_text_field($_REQUEST['administration_desc']) : '';
-	$administrator_file                     = !empty($_FILES['administrator_file']) ? sanitize_text_field($_FILES['administrator_file']) : '';
-
-	// $administrator_file = json_encode($administrator_file);
-	$userMessage                    = "";
-	$userMessage                    = "<p>Abbiamo ricevuto la sua segnalazione riportata qui sotto e provvederemo al più presto a prenderla in carico</p><br><br>";
-	$userMessage                    .= "
-	<table style='border-collapse: collapse;'>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Partita IVA: </strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${verificationInput}</td>
-		</tr>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Ragione Sociale:</strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${socialRegion}</td>
-		</tr>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Nominativo del Referente:</strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${contactPerson}</td>
-		</tr>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Telefono del Referente:</strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${personPhone}</td>
-		</tr>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Email del referente:</strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${personEmail}</td>
-		</tr>
-	</table>
-	<br>
-	";
-	if (!empty($topcareYearNumber)) {
-		$userMessage .= "
-		<table style='border-collapse: collapse;'>
-			<tr>
-				<td  style='padding: 10px; border: 1px solid #ccc;'>Hai aperto una segnalazione con il 1928?:</td>
-				<td  style='padding: 10px; border: 1px solid #ccc;'><strong>${topcareYearNumber}</strong></td>
-			</tr>
-		</table>
-		<br>
-		";
-	}
-	//
-	if (!empty($phoneTextareaNumbers)) {
-		$userMessage .= "<h2>Segnalazione disservizio fonia (rete fissa)</h2>
-		<table style='border-collapse: collapse;'> ";
-		if (!empty($selectPhone)) {
-			$userMessage .= "<tr> <td style='padding: 10px; border: 1px solid #ccc;'>Problematica riscontrata:</td> <td style='padding: 10px; border: 1px solid #ccc;'> <strong>${selectPhone}</strong></td></tr>";
-		}
-		if (!empty($phoneTextareaNumbers)) {
-			$userMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Numerazioni per cui si riscontra il disservizio:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${phoneTextareaNumbers}</strong></td></tr>";
-		}
-		if (!empty($selectPhoneAnotherNumberInput)) {
-			$userMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Indica il numero (fisso o cellulare) che riceverà le chiamate durante questo periodo:</td><td style='padding: 10px; border: 1px solid #ccc;'> <strong>${selectPhoneAnotherNumberInput}</strong></td></tr>";
-		}
-		if (!empty($phoneNote)) {
-			$userMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Note:</td><td style='padding: 10px; border: 1px solid #ccc;'> <strong>${phoneNote}</strong></td></tr>";
-		}
-	}
-	$userMessage .= "</table>";
-	if (!empty($netNote)) {
-		$userMessage .= "<h2>Segnalazione disservizio rete internet</h2><table  style='border-collapse: collapse;'>";
-		$userMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Problematica riscontrata: </td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${selectNet}</strong></td></tr>";
-		$userMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Note:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${netNote}</strong></td></tr></table>";
-	}
-	if (!empty($mobileTextareaNumbers)) {
-		$userMessage .= "<h2>Segnalazione disservizio rete mobile</h2> <table  style='border-collapse: collapse;'>";
-		if (!empty($selectMobile)) {
-			$userMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Problematica riscontrata:</td><td style='padding: 10px; border: 1px solid #ccc;'> <strong>${selectMobile}</strong></td></tr>";
-		}
-		if (!empty($mobileTextareaNumbers)) {
-			$userMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Numerazioni per cui si riscontra il disservizio:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${mobileTextareaNumbers}</strong></td></tr>";
-		}
-		if (!empty($selectMobileAnotherNumberInput)) {
-			$userMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Indica il numero (mobile) che riceverà le chiamate durante questo periodo:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${selectMobileAnotherNumberInput}</strong></td></tr>";
-		}
-		if (!empty($mobileNote)) {
-			$userMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Note:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${mobileNote}</strong></td></tr>";
-		}
-		$userMessage .= "</table><br><br>";
-	}
-	$userMessage .= "<p><em>Servizio assistenza TopCare Altuofianco</em></p>";
-	//======================================================
-	$clientMessage = "";
-	$clientMessage .= "<p>Ecco una copia della richiesta pervenuta</p><br>";
-	$clientMessage .= "
-	<table style='border-collapse: collapse;'>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Partita IVA: </strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${verificationInput}</td>
-		</tr>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Ragione Sociale:</strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${socialRegion}</td>
-		</tr>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Nominativo del Referente:</strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${contactPerson}</td>
-		</tr>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Telefono del Referente:</strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${personPhone}</td>
-		</tr>
-		<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Email del referente:</strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${personEmail}</td>
-		</tr>
-	</table>
-	<br>
-	";
-	if (!empty($topcareYearNumber)) {
-		$clientMessage .= "
-		<table style='border-collapse: collapse;'>
-			<tr>
-				<td  style='padding: 10px; border: 1px solid #ccc;'>Hai aperto una segnalazione con il 1928?:</td>
-				<td  style='padding: 10px; border: 1px solid #ccc;'><strong>${topcareYearNumber}</strong></td>
-			</tr>
-		</table>
-		<br>
-		";
-	}
-	//
-	if (!empty($phoneTextareaNumbers)) {
-		$clientMessage .= "<h2>Segnalazione disservizio fonia (rete fissa)</h2>
-		<table style='border-collapse: collapse;'> ";
-		if (!empty($selectPhone)) {
-			$clientMessage .= "<tr> <td style='padding: 10px; border: 1px solid #ccc;'>Problematica riscontrata:</td> <td style='padding: 10px; border: 1px solid #ccc;'> <strong>${selectPhone}</strong></td></tr>";
-		}
-		if (!empty($phoneTextareaNumbers)) {
-			$clientMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Numerazioni per cui si riscontra il disservizio:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${phoneTextareaNumbers}</strong></td></tr>";
-		}
-		if (!empty($selectPhoneAnotherNumberInput)) {
-			$clientMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Indica il numero (fisso o cellulare) che riceverà le chiamate durante questo periodo:</td><td style='padding: 10px; border: 1px solid #ccc;'> <strong>${selectPhoneAnotherNumberInput}</strong></td></tr>";
-		}
-		if (!empty($phoneNote)) {
-			$clientMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Note:</td><td style='padding: 10px; border: 1px solid #ccc;'> <strong>${phoneNote}</strong></td></tr>";
-		}
-	}
-	$clientMessage .= "</table>";
-	if (!empty($netNote)) {
-		$clientMessage .= "<h2>Segnalazione disservizio rete internet</h2><table  style='border-collapse: collapse;'>";
-		$clientMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Problematica riscontrata: </td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${selectNet}</strong></td></tr>";
-		$clientMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Note:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${netNote}</strong></td></tr></table>";
-	}
-	if (!empty($mobileTextareaNumbers)) {
-		$clientMessage .= "<h2>Segnalazione disservizio rete mobile</h2> <table  style='border-collapse: collapse;'>";
-		if (!empty($selectMobile)) {
-			$clientMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Problematica riscontrata:</td><td style='padding: 10px; border: 1px solid #ccc;'> <strong>${selectMobile}</strong></td></tr>";
-		}
-		if (!empty($mobileTextareaNumbers)) {
-			$clientMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Numerazioni per cui si riscontra il disservizio:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${mobileTextareaNumbers}</strong></td></tr>";
-		}
-		if (!empty($selectMobileAnotherNumberInput)) {
-			$clientMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Indica il numero (mobile) che riceverà le chiamate durante questo periodo:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${selectMobileAnotherNumberInput}</strong></td></tr>";
-		}
-		if (!empty($mobileNote)) {
-			$clientMessage .= "<tr><td style='padding: 10px; border: 1px solid #ccc;'>Note:</td><td style='padding: 10px; border: 1px solid #ccc;'><strong>${mobileNote}</strong></td></tr>";
-		}
-		$clientMessage .= "</table><br><br>";
-	}
-
-	if (!empty($administration_desc)) {
-		$clientMessage .= "<h2>Segnalazione problematica amministrativa</h2> <table  style='border-collapse: collapse;'>";
-		$clientMessage .= "<tr>
-				<td style='padding: 10px; border: 1px solid #ccc;'><strong>Descrizione della problematica:</strong></td>
-				<td style='padding: 10px; border: 1px solid #ccc;'>${administration_desc}</td></tr>";
-		if (isset($administrator_file) && !empty($administrator_file)) {
-			$clientMessage .= "<tr>
-			<td style='padding: 10px; border: 1px solid #ccc;'><strong>Problematica riscontrata:</strong></td>
-			<td style='padding: 10px; border: 1px solid #ccc;'>${administrator_file}</td></tr>";
-		}
-		$clientMessage .= "</table><br><br>";
-	}
-	$clientMessage .= "
-		<div style='font-size: 12px;'>
-			<p>Company name: <strong>${company_name}</strong></p>
-			<p>Result: <strong>${result}</strong></p>
-			<p>Text: <strong>${response_text}</strong></p>
-			<p>ValidationToken: <strong>${validationToken}</strong></p>
-		</div>
-	";
-	//	$mail_to_third  = "topcare.altuofianco@gmail.com";
-	$thm       = 'La tua richiesta di assistenza TopCare';
-	$thmClient = 'Richiesta TopCare pervenuta da modulo web';
-
-	if (!function_exists('wp_handle_upload')) {
-		require_once(ABSPATH . 'wp-admin/includes/file.php');
-	}
-	$file = $_FILES['administrator_file'];
-
-	if ($file) {
-		$upload_overrides = array(
-			'test_form' => false
-		);
-
-		$file_project = wp_handle_upload($file, $upload_overrides);
-
-		$attachments = array(
-			$file_project['file'] // 3 файл
-		);
-
-		// wp_die(
-		// 	json_encode(array('type' => 'success', 'text' => $attachments))
-		// );
-		// die(json_encode(array('type' => 'file', 'result' => $file_project)));
-
-		$headers = [
-			"MIME-Version: 1.0",
-			"From: $contactPerson <$personEmail>",
-			"Content-Type: text/html; charset=UTF-8",
-			"Bcc: altuofianco.topcare@gmail.com"
-		];
-		add_filter('wp_mail_content_type', 'my_custom_email_content_type');
-		function my_custom_email_content_type()
-		{
-			return 'text/html';
-		}
-
-		// wp_mail($personEmail, $thm, $userMessage, $headers)
-
-		if (wp_mail($mail_to, $thmClient, $clientMessage, $headers, $attachments)) {
-			$output = json_encode(array('type' => 'success', 'text' => 'Email was sent successfully'));
-			foreach ((array)$attachments as $file) {
-				if (file_exists($file)) {
-					unlink($file);
-				}
-			}
-			wp_die($output);
-		} else {
-			$output = json_encode(array('type' => 'error', 'text' => 'Could not send mail! Please check your PHP mail configuration.'));
-			wp_die($output);
-		}
-	} else {
-		$headers = [
-			"MIME-Version: 1.0",
-			"From: $contactPerson <$personEmail>",
-			"Content-Type: text/html",
-			'Bcc: altuofianco.topcare@gmail.com'
-		];
-		// wp_mail($personEmail, $thm, $userMessage, $headers)
-		if (wp_mail($personEmail, $thm, $userMessage, $headers) && wp_mail($mail_to, $thmClient, $clientMessage, $headers)) {
-			$output = json_encode(array('type' => 'success', 'text' => 'Email was sent successfully'));
-			wp_die($output);
-		} else {
-			$output = json_encode(array('type' => 'error', 'text' => 'Could not send mail! Please check your PHP mail configuration.'));
-			wp_die($output);
-		}
-	}
+function validateEmail(email: string) {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
 }
+
+function resetForm() {
+  form.value.name = "";
+  form.value.surname = "";
+  form.value.immobile = "";
+  form.value.phone = "";
+  form.value.email = "";
+  form.value.subject = "";
+  form.value.message = "";
+  checked.value = false;
+  first_click.value = false;
+}
+
+onMounted(() => {
+  form.value.immobile = props.codice;
+});
+
+async function onSubmit() {
+  if (checked.value) {
+    first_click.value = true;
+    if (validateFields()) {
+      loading.value = true;
+      try {
+        const formData = new FormData();
+        formData.append("action", "send_contact_email");
+        formData.append("security", my_ajax_object.nonce);
+        formData.append("name", form.value.name);
+        formData.append("surname", form.value.surname);
+        formData.append("immobile", form.value.immobile);
+        formData.append("phone", form.value.phone);
+        formData.append("email", form.value.email);
+        formData.append("subject", form.value.subject);
+        formData.append("message", form.value.message);
+
+        const response = await axios.post(my_ajax_object.ajax_url, formData, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        });
+        setTimeout(() => {
+          loading.value = false;
+          show_success_message.value = true;
+          resetForm();
+          setTimeout(() => {
+            show_success_message.value = false;
+          }, 6000);
+        }, 400);
+        console.log(response, "response");
+      } catch (error) {
+        console.log(error, "error");
+        loading.value = false;
+      }
+    }
+  }
+}
+</script>
+<template>
+  <div class="add-form">
+    <h2 class="add-form__title">Richiedi informazioni</h2>
+    <div class="add-form__body">
+      <div class="add-form__row">
+        <div class="add-form__group">
+          <input type="text" v-model="form.name" placeholder="Nome*" class="add-form__input" />
+          <span class="add-form__error" v-if="form.name == '' && first_click">{{
+            error_message
+          }}</span>
+        </div>
+        <div class="add-form__group">
+          <input
+            type="text"
+            v-model="form.surname"
+            placeholder="Cognome*"
+            class="add-form__input"
+          />
+          <span class="add-form__error" v-if="form.surname == '' && first_click">{{
+            error_message
+          }}</span>
+        </div>
+      </div>
+      <div class="add-form__group">
+        <input
+          type="text"
+          v-model="form.immobile"
+          placeholder="Immobile*"
+          class="add-form__input"
+          :disabled="true"
+        />
+        <span class="add-form__error" v-if="form.immobile == '' && first_click">{{
+          error_message
+        }}</span>
+      </div>
+      <div class="add-form__group">
+        <input type="text" v-model="form.phone" placeholder="Telefono*" class="add-form__input" />
+        <span class="add-form__error" v-if="form.phone == '' && first_click">{{
+          error_message
+        }}</span>
+      </div>
+      <div class="add-form__group">
+        <input type="email" v-model="form.email" placeholder="Email*" class="add-form__input" />
+        <span class="add-form__error" v-if="form.email == '' && first_click">{{
+          error_message
+        }}</span>
+        <span class="add-form__error" v-if="form.email !== '' && !validateEmail(form.email)">{{
+          error_email
+        }}</span>
+      </div>
+      <div class="add-form__group">
+        <input type="text" v-model="form.subject" placeholder="Oggetto*" class="add-form__input" />
+        <span class="add-form__error" v-if="form.subject == '' && first_click">{{
+          error_message
+        }}</span>
+      </div>
+      <div class="add-form__group">
+        <textarea
+          v-model="form.message"
+          placeholder="Messaggio*"
+          class="add-form__textarea"
+        ></textarea>
+        <span class="add-form__error" v-if="form.message == '' && first_click">{{
+          error_message
+        }}</span>
+      </div>
+      <div class="add-form__privacy">
+        <input v-model="checked" type="checkbox" id="privacy" class="add-form__checkbox" />
+        <label for="privacy" class="add-form__privacy-label">
+          <p>
+            Cliccando su invia dichiari di aver preso visione e di accettare la nostra <a
+              href="/privacy-policy"
+              target="_blank"
+              >privacy policy</a
+            >
+          </p>
+        </label>
+      </div>
+      <Loader v-if="loading" />
+      <button @click="onSubmit" :disabled="!checked" class="add-form__submit">
+        <span>Invia</span>
+        <ISubmit />
+      </button>
+      <div class="add-form__success" v-if="show_success_message">
+        {{ success_message }}
+      </div>
+    </div>
+  </div>
+</template>

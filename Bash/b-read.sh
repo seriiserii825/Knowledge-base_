@@ -6,6 +6,13 @@
 read -sp "Enter password: " password
 echo
 
+# multiple variables
+read -p "Enter names separated by space: " name1 name2 name3
+echo "Name 1: $name1"
+echo "Name 2: $name2"
+echo "Name 3: $name3"
+# last variable stores the rest of the input
+
 -n N	Read exactly N characters (without waiting for Enter)
 read -n 1 -p "Press any key to continue..." key
 echo
