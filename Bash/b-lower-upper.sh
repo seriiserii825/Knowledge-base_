@@ -1,3 +1,10 @@
+echo "type a word"
+read st1
+echo ${st1,,}   # all lowercase
+echo ${st1^} # Upper first letter
+echo ${st1^^} # UPPERCASE
+
+
 declare -l lcfn # contents will be converted to lowercase
 for FN in *.JPG
 do
