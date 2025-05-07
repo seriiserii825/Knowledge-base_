@@ -178,6 +178,13 @@ To past right after line 14 I would do:
 :78,40s/some/any/gic - i(case isensitive) c(ask for confirmation) I(case sensitive)
 :22,28s/\<some\>/any/g - replace only whole words
 
+# new line before #
+:g/^#/execute 'put! =""' | normal! k
+Explanation:
+:g/^#/ runs the command on every line that starts with #.
+put! ="" inserts a blank line above.
+normal! k moves the cursor back up to the # line so the next match is correctly handled.
+
 # increment decrement
 ctrl+v - visual block mode
 ctrl+a - increment
