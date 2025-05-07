@@ -1,3 +1,11 @@
+declare -u upper_var="hello world"
+echo "$upper_var"  # Outputs "HELLO WORLD"
+
+declare -l lower_var="HELLO WORLD"
+echo "$lower_var"  # Outputs "hello world"
+
+
+
 echo "type a word"
 read st1
 echo ${st1,,}   # all lowercase
