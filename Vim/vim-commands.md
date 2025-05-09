@@ -1,3 +1,11 @@
+# command mode
+If you mean from Vim command line I would do:
+:normal 10GV20G
+To past right after line 14 I would do:
+:14put
+:78,40s/some/any/gic - i(case isensitive) c(ask for confirmation) I(case sensitive)
+:22,28s/\<some\>/any/g - replace only whole words
+
 #regexp
 s/a.*$// - удаление всего после символа а
 
@@ -169,14 +177,6 @@ q@ - repeat last macro
 
 # remove epty spaces
 :%s/\s\{2,}/ /g
-
-# command mode
-If you mean from Vim command line I would do:
-:normal 10GV20G
-To past right after line 14 I would do:
-:14put
-:78,40s/some/any/gic - i(case isensitive) c(ask for confirmation) I(case sensitive)
-:22,28s/\<some\>/any/g - replace only whole words
 
 # new line before #
 :g/^#/execute 'put! =""' | normal! k
