@@ -16,3 +16,6 @@ nvm uninstall <version_number>
 # set default version
 
 nvm alias default 16
+
+echo "$NVM_DIR"
+/home/serii/.config/nvm
