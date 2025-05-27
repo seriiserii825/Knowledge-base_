@@ -34,3 +34,25 @@ singers.sort(compareValues('name'));
 
 // array is sorted by date if birth in descending order
 singers.sort(compareValues('born', 'desc'));
+
+const filials = [
+  {
+    id: 829,
+    terms: [{ id: 153, name: "Norvegia", slug: "norvegia" }],
+    title: "JWK AUDIO",
+  },
+  {
+    id: 828,
+    terms: [{ id: 152, name: "Irlanda|Regno Unito", slug: "irlandaregno-unito" }],
+    title: "Karma AV",
+  }
+];
+
+export default function useSortArray(arr: any) {
+  const sortedArray = [...arr].sort((a, b) => {
+    const nameA = a.terms[0]?.name?.toUpperCase() || "";
+    const nameB = b.terms[0]?.name?.toUpperCase() || "";
+    return nameA.localeCompare(nameB);
+  });
+  return sortedArray;
+}
