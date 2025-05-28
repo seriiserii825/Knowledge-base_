@@ -1,7 +1,7 @@
 ## install
 sudo pacman -S pyenv
-pyenv install 3.12.0
-pyenv local 3.12.0
+pyenv install 3.11.1
+pyenv local 3.11.1
 which python
 python --version
 
