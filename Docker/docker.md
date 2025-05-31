@@ -25,16 +25,18 @@ docker rm container_id conainer_id - remove one or more containers
 docker run -name DB mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest
 ```
 
+inside container view env
+
+```bash
+env - List all environment variables
+```
+
 ## connect to container
 
 ```bash
 docker exec -it container_id /bin/bash - Connect to a running container
 docker attach container_id - Attach to a running container
 docker exec -it DB_mysql /bin/bash - Connect to a running container named DB_mysql
-docker exec -it DB_mysql /bin/bash mysql -uroot -p - Connect to a MySQL database
-inside container view environment variables
-```
-
-```bash
-env - List all environment variables
+docker exec -it DB_mysql /bin/bash mysql -uroot -p - Connect to a MySQL 
+                            database inside container view environment variables
 ```
