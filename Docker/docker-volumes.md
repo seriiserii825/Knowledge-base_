@@ -29,7 +29,7 @@ List all running containers
 docker ps
 ```
 
-get ip
+### Get ip
 
 ```bash
 ip a - Get the IP address of the container
