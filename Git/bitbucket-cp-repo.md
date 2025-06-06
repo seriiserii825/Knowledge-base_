@@ -1,3 +1,5 @@
+https://admin.atlassian.com/o/create
+
 This method retains **all commits, branches, tags, etc.**
 
 #### 1\. **Clone the existing repo from Account A**
