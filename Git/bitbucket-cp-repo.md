@@ -7,6 +7,7 @@ bash
 CopyEdit
 
 `git clone --mirror https://bitbucket.org/accountA/repo-name.git cd repo-name.git`
+`git clone --mirror git@bitbucket.org:bludelego/rewind_ios.git`
 
 - Use `--mirror` to clone everything: branches, tags, and all refs.
     
@@ -26,8 +27,15 @@ bash
 
 CopyEdit
 
-`git push --mirror https://bitbucket.org/accountB/new-repo-name.git`
+`git push --mirror https://bitbucket.org/blueline2025/rewind_ios.git`
+git push --mirror git@bitbucket.org:blueline-ios/rewind-ios.git
+git clone git@bitbucket.org:blueline-ios/rewind-ios.git
+git push --mirror https://bludelego@bitbucket.org/blueline-ios/rewind-ios.git
 
 #### 4\. **Done!**
 
 Now the new repo under Account B has all commits, branches, and tags.
+
+Blue2023Delego20!!!!
+
+Blue2023Delego20!!!!
