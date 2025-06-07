@@ -12,3 +12,7 @@ else
     echo "File does not exist"
 fi
 ```
+
+## show pretty print
+curl https://api.openweathermap.org/data/2.5/weather\?lat\=47.00604248046875\&lon\=28.856674194335938\
+  &appid\=appkey | python -mjson.tool
