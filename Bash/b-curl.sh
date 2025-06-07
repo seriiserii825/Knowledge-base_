@@ -16,3 +16,9 @@ fi
 ## show pretty print
 curl https://api.openweathermap.org/data/2.5/weather\?lat\=47.00604248046875\&lon\=28.856674194335938\
   &appid\=appkey | python -mjson.tool
+
+## install httpie in arch
+sudo pacman -S httpie
+# httpie example
+ http https://api.openweathermap.org/data/2.5/weather\?lat\=47.00604248046875\&lon\=28.8566741943359 38\
+
