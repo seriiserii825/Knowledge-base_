@@ -38,6 +38,3 @@ git push --mirror https://bludelego@bitbucket.org/blueline-ios/rewind-ios.git
 
 Now the new repo under Account B has all commits, branches, and tags.
 
-Blue2023Delego20!!!!
-
-Blue2023Delego20!!!!
