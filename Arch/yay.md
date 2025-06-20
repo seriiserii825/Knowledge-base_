@@ -1,3 +1,12 @@
+## view installed packages
+```
+yay -Qem
+-Q - query installed packages
+-e - only explicitly installed packages
+-m - only installed packages from the AUR
+```
+
+
 ## install
 
 ```
