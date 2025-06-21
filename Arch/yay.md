@@ -1,11 +1,12 @@
 ## view installed packages
+
 ```
 yay -Qem
 -Q - query installed packages
 -e - only explicitly installed packages
 -m - only installed packages from the AUR
+-Qi - show detailed information about installed packages, who depends on them, etc.
 ```
-
 
 ## install
 
