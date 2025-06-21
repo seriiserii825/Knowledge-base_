@@ -42,3 +42,5 @@ on = ["C"]
 run = "plugin ouch"
 desc = "Compress with ouch"
 ```
+
+## extract, by default is enter
