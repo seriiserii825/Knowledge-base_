@@ -1,7 +1,11 @@
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash 
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 
 #install
+
+```
+
 nvm ls-remote | grep -i "latest lts"
+```
 
 // в моём случае результат таков
 v4.9.1 (Latest LTS: Argon)
