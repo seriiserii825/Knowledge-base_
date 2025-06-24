@@ -42,14 +42,30 @@ NUXT_PUBLIC_LOCAL_BASE_URL=http://localhost:4174
 NUXT_PUBLIC_API_BASE_TOKEN=my_token
 ```
 
+### useAxios.ts a composable for Axios
+
+```typescript
+// composables/useAxios.ts
+import axios from "axios";
+
+export const useAxios = () => {
+  const config = useRuntimeConfig();
+
+  return axios.create({
+    baseURL: config.public.api_base,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authkey: config.public.auth_key,
+      userToken: config.public.user_token,
+    },
+  });
+};
+```
+
 ## index.vue
 
 ```
-const runtimeConfig = useRuntimeConfig();
-const apiBase = runtimeConfig.public.apiBase;
-console.log("apiBase", apiBase);
-const localBaseUrl = runtimeConfig.public.localBaseUrl;
-console.log("localBaseUrl", localBaseUrl);
-const apiBaseToken = runtimeConfig.public.apiBaseToken;
-console.log("apiBaseToken", apiBaseToken);
+const axiosInstance = useAxios();
+const data = await axiosInstance.get(`/property?id_property=${property_id.value}`);
 ```
