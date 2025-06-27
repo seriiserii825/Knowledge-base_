@@ -11,16 +11,13 @@
 ```bash
 cf - Open multiple links in a new tab
 gf - Open a link in non-active new tab
+af - Open a link in active new tab
 ;di - Download image
 i - Go to edit box
 I - Go to edit box with vim editor
 L - Enter regional Hints mode
-O - Open detected links from text
-af - Open a link in active new tab
-C - Open a link in non-active new tab
 <Ctrl-h> - Mouse over elements.
 <Ctrl-j> - Mouse out elements.
-q - Click on an Image or a button
 ```
 
 ## Scroll page
@@ -31,6 +28,7 @@ d - Scroll half page down
 ```
 
 ## Tabs
+
 ```bash
 yt- Duplicate current tab
 yT - Duplicate current tab in background
@@ -93,15 +91,11 @@ oi - Open incognito window
 oy - Open Omnibar for youtube Search
 ox - Open recently closed URL
 oh - Open URL from history
-<Ctrl-i> - Edit selected URL with vim editor, then open
-<Ctrl-c> - Copy selected item url or all listed item urls
-<Ctrl-r> - Re-sort history by visitCount or lastVisitTime
 ```
 
 ## Settings
 
 ```bash
-;pm - Preview markdown
 ;e - Edit Settings
 ```
 
@@ -121,12 +115,7 @@ zv - Enter visual mode, and select whole element
 * - Find selected text in current page
 o - Go to Other end of highlighted text
 * - Search word under the cursor
-<Enter> - Click on node under cursor.
-; - Repeat latest f, F
-, - Repeat latest f, F in opposite direction
 p - Expand selection to parent element
 V - Select a word(w) or line(l) or sentence(s) or paragraph(p)
 t - Translate selected text with google
-qTranslate word under cursor
-yYank visually selected text to system clipboard
 ```
