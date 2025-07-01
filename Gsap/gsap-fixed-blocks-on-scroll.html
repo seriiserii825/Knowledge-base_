@@ -1,0 +1,49 @@
+<div class="experiences__container">
+  <?php foreach ($items as $item) : ?> <?php $image = $item['image']; $logo = $item['logo'];
+  $subtitle = $item['subtitle']; $description = $item['description']; ?>
+  <div class="experiences__inner">
+    <div class="experiences__item">
+      <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" loading="lazy" />
+      <div class="experiences__body">
+        <header class="experiences__header"><?php echo $logo; ?></header>
+        <footer class="experiences__footer">
+          <div class="experiences__content">
+            <h3 class="experiences__subtitle"><?php echo $subtitle; ?></h3>
+            <div class="experiences__description"><?php echo $description; ?></div>
+          </div>
+          <a href="#" class="btn"><?php echo $button_text; ?></a>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <?php endforeach; ?>
+</div>
+<script charset="utf-8">
+  import gsap from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+
+  export default function experienceAnimation() {
+    const experience_container = document.querySelector(".experiences__container") as HTMLElement;
+
+    const boxes = document.querySelectorAll(".experiences__inner") as NodeListOf<HTMLElement>;
+
+    if (!boxes.length) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    boxes.forEach((box) => {
+      animateBox(box, experience_container);
+    });
+
+    function animateBox(box: HTMLElement, section: HTMLElement) {
+      ScrollTrigger.create({
+        trigger: box,
+        start: "top 5%",
+        endTrigger: section,
+        end: "bottom 60%",
+        pin: box,
+        pinSpacing: false,
+        // markers: true
+      });
+    }
+  }
+</script>
