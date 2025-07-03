@@ -1,0 +1,190 @@
+<?php
+$main_slider = get_field('main_slider');
+$items = $main_slider['items'];
+?>
+<div class="main-slider">
+  <div class="main-slider__body">
+    <div class="main-slider__prev"></div>
+    <div class="main-slider__next"></div>
+  </div>
+  <div class="main-slider__count">
+    <div class="main-slider__current">1</div>
+    <div class="main-slider__total">2</div>
+  </div>
+  <div class="main-slider__images swiper">
+    <div class="swiper-wrapper">
+      <?php foreach ($items as $item) : ?>
+        <div class="swiper-slide">
+          <img class="main-slider__img" src="<?php echo $item['image']; ?>" alt="" loading="lazy" />
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+  <div class="main-slider__carousel swiper">
+    <div class="swiper-wrapper">
+      <?php foreach ($items as $item) : ?>
+        <?php
+        $label = $item['label'];
+        $title = $item['title'];
+        $image = $item['image'];
+        ?>
+        <div class="swiper-slide main-slider__item">
+          <span class="hidden"><?php echo $image; ?></span>
+          <h3 class="main-slider__label"><?php echo $label; ?></h3>
+          <h2 class="main-slider__title"><?php echo $title; ?></h2>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</div>
+<script charset="utf-8">
+import Swiper from "swiper/bundle";
+import "swiper/css/bundle";
+
+export default function mainSlider() {
+  const main_slider = document.querySelector(".main-slider") as HTMLElement;
+  const main_slider_body = document.querySelector(".main-slider__body") as HTMLElement;
+  const prev = document.querySelector(".main-slider__prev") as HTMLElement;
+  const next = document.querySelector(".main-slider__next") as HTMLElement;
+
+  const counter = document.querySelector(".main-slider__count") as HTMLElement;
+  const current = counter.querySelector(".main-slider__current") as HTMLElement;
+  const totalEl = counter.querySelector(".main-slider__total") as HTMLElement;
+
+  const swiper_images = new Swiper(".main-slider__images", {
+    controller: {
+      control: null, // will set after init
+      by: "slide", // sync by slide index instead of translate
+    },
+    slidesPerView: 1,
+    effect: "fade",
+    loop: true, // optional but usually needed for fade
+    speed: 1000,
+    autoplay: {
+      delay: 3000,
+    },
+    initialSlide: 0, // same here
+  });
+
+  swiper_images.on("slideChange", () => {
+    const totalSlides = swiper_images.slides.length;
+    totalEl.textContent = totalSlides.toString();
+    current.textContent = (swiper_images.realIndex + 1).toString();
+  });
+
+  swiper_images.init(); // Important if you use `swiper.on("init")`
+
+  const swiper_carousel = new Swiper(".main-slider__carousel", {
+    controller: {
+      control: null,
+      by: "slide",
+    },
+    speed: 1000,
+    slidesPerView: 1,
+    centeredSlides: false,
+    spaceBetween: 4,
+    // loop: true,
+    initialSlide: 0, // same here
+    breakpoints: {
+      992: {
+        slidesPerView: 1.5,
+        centeredSlides: true,
+      }
+    },
+  });
+
+  // Link the two sliders
+  swiper_images.controller.control = swiper_carousel;
+  swiper_carousel.controller.control = swiper_images;
+
+  // Create the cursor block element
+  const view_text = "View";
+  const prev_text = "Prev";
+  const next_text = "Next";
+  const cursorBlock = document.createElement("div");
+  cursorBlock.classList.add("cursor-block");
+  cursorBlock.textContent = view_text;
+  document.body.appendChild(cursorBlock);
+
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  let isInside = false;
+
+  // Show block once on mouse enter
+  main_slider_body.addEventListener("mouseenter", () => {
+    showCursor();
+  });
+
+  // Update target position on mouse move
+  main_slider_body.addEventListener("mousemove", (e) => {
+    if (cursorBlock.style.display === "none") {
+      showCursor();
+    }
+    targetX = e.clientX;
+    targetY = e.clientY;
+  });
+
+  // Hide block on leave
+  main_slider_body.addEventListener("mouseleave", () => {
+    hideCursor();
+  });
+
+  prev.addEventListener("mouseenter", () => {
+    cursorBlock.textContent = prev_text;
+  });
+
+  next.addEventListener("mouseenter", () => {
+    cursorBlock.textContent = next_text;
+  });
+
+  prev.addEventListener("mouseleave", () => {
+    cursorBlock.textContent = view_text;
+  });
+
+  next.addEventListener("mouseleave", () => {
+    cursorBlock.textContent = view_text;
+  });
+
+  prev.addEventListener("click", () => {
+    console.log("Prev button clicked!");
+    swiper_images.slidePrev(600);
+  });
+
+  next.addEventListener("click", () => {
+    console.log("Next button clicked!");
+    swiper_images.slideNext(600);
+  });
+
+  function showCursor() {
+    cursorBlock.style.display = "flex";
+    setTimeout(() => {
+      cursorBlock.style.transform = "translate(-50%, -50%) scale(1)";
+      isInside = true;
+    }, 300);
+  }
+
+  function hideCursor() {
+    cursorBlock.style.transform = "translate(-50%, -50%) scale(0)";
+    setTimeout(() => {
+      cursorBlock.style.display = "none";
+    }, 300);
+    isInside = false;
+  }
+
+  // Smooth follow animation
+  function animate() {
+    if (isInside) {
+      // Move current position closer to target position (lerp)
+      currentX += (targetX - currentX) * 0.15; // 0.15 = smoothing factor
+      currentY += (targetY - currentY) * 0.15;
+
+      cursorBlock.style.left = currentX + "px";
+      cursorBlock.style.top = currentY + "px";
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+</script>
