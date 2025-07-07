@@ -4,6 +4,13 @@
 uv init
 ```
 
+## Sync for existing project
+
+```bash
+uv lock
+uv sync
+```
+
 ## add package
 
 ```bash
