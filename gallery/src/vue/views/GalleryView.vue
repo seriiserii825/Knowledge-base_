@@ -24,7 +24,7 @@ function showPopup(url: string) {
 async function getData() {
   const url = window.location.origin + "/wp-json/gallery/v1/all";
   try {
-    const resonse = await axiosWp(url);
+    const resonse = await axiosWp.get(url);
     const data = resonse.data as TGalleryResponse;
     title.value = data.title;
     gallery.value = data.gallery;
