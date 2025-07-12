@@ -18,29 +18,66 @@
 от TokyoStockExchange, мы создаем интерфейс StockExchange,
 в котором объявляется один метод:
 
-```java
-
-public interface StockExchange {
- Money currentPrice(String symbol);
-}
-```
-
 Класс TokyoStockExchange проектируется с расчетом на реализацию этого интерфейса.
 При ссылке на StockExchange передается в аргументе конструктора
 Portfolio:
 
 ```java
 from abc import ABC, abstractmethod
+import unittest
 
+# Interface (Abstract Base Class)
 class StockExchange(ABC):
     @abstractmethod
-    def current_price(self, symbol: str) -> 'Money':
+    def current_price(self, symbol: str) -> float:
         pass
 
+# Real implementation (Tokyo Stock Exchange simulator)
+class TokyoStockExchange(StockExchange):
+    def current_price(self, symbol: str) -> float:
+        # Actual implementation would call real API
+        raise NotImplementedError("Real API call not implemented for tests")
+
+# Test stub implementation
+class FixedStockExchangeStub(StockExchange):
+    def __init__(self):
+        self.prices = {}
+    
+    def fix(self, symbol: str, price: float):
+        self.prices[symbol] = price
+    
+    def current_price(self, symbol: str) -> float:
+        return self.prices.get(symbol, 0.0)
+
+# Portfolio class
 class Portfolio:
     def __init__(self, exchange: StockExchange):
         self.exchange = exchange
-    # ...
+        self.holdings = {}
+    
+    def add(self, quantity: int, symbol: str):
+        self.holdings[symbol] = self.holdings.get(symbol, 0) + quantity
+    
+    def value(self) -> float:
+        total = 0.0
+        for symbol, quantity in self.holdings.items():
+            price = self.exchange.current_price(symbol)
+            total += price * quantity
+        return total
+
+# Test case
+class PortfolioTest(unittest.TestCase):
+    def setUp(self):
+        self.exchange = FixedStockExchangeStub()
+        self.exchange.fix("MSFT", 100)
+        self.portfolio = Portfolio(self.exchange)
+    
+    def test_given_five_msft_total_should_be_500(self):
+        self.portfolio.add(5, "MSFT")
+        self.assertEqual(500, self.portfolio.value())
+
+if __name__ == '__main__':
+    unittest.main()
 ```
 
 Теперь наш тест может создать пригодную для тестирования реализацию
@@ -51,21 +88,3 @@ class Portfolio:
 стоимость $100 за акцию. Тестовая реализация интерфейса StockExchange сводится
 к простому поиску по таблице. После этого пишется тест,
 который должен вернуть общую стоимость портфеля в $500:
-
-```java
-public class PortfolioTest {
- private FixedStockExchangeStub exchange;
- private Portfolio portfolio;
- @Before
- protected void setUp() throws Exception {
- exchange = new FixedStockExchangeStub();
- exchange.fix("MSFT", 100);
- portfolio = new Portfolio(exchange);
- }
- @Test
- public void GivenFiveMSFTTotalShouldBe500() throws Exception {
- portfolio.add(5, "MSFT");
- Assert.assertEquals(500, portfolio.value());
- }
-}
-```
