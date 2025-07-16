@@ -7,19 +7,19 @@ export default function useHandleAxiosErrors(error: unknown, errors: any) {
       if (status === 422) {
         for (const key in errors.value) {
           if (errors.value[key].length > 0) {
-            console.log('error', 'Error', errors.value[key][0]);
+            console.error('error', 'Error', errors.value[key][0]);
           }
         }
       } else {
-        console.log('error', 'Error', data.message || 'Something went wrong');
+        console.error('error', 'Error', data.message || 'Something went wrong');
       }
     } else {
-      console.log('error', 'Error', 'No response from server.');
+      console.error('error', 'Error', 'No response from server.');
     }
   } else if (error instanceof Error) {
-    console.log('error', 'Error', error.message);
+    console.error('error', 'Error', error.message);
   } else {
-    console.log('error', 'Error', 'An unknown error occurred.');
+    console.error('error', 'Error', 'An unknown error occurred.');
   }
 }
 
