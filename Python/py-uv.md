@@ -1,7 +1,16 @@
 # Init
 
+## Generate pyproject
+
 ```bash
-uv init
+cd inside project
+uv init .
+```
+
+## add package
+
+```bash
+uv add <project_name>
 ```
 
 ## Sync for existing project
@@ -9,12 +18,6 @@ uv init
 ```bash
 uv lock
 uv sync
-```
-
-## add package
-
-```bash
-uv add <project_name>
 ```
 
 ## remove package
