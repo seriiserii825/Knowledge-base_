@@ -28,42 +28,69 @@ $button_text = $custom_slider['button_text'];
 
 
 <script>
-  import Swiper from "swiper";
-  import {
-    Pagination
-  } from "swiper/modules";
-  import "swiper/css";
+import Swiper from "swiper";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
 
-  Swiper.use([Pagination]);
+Swiper.use([Pagination]);
 
-  export default function customSwiper() {
-    const swiper = new Swiper(".custom-gallery__slider", {
-      speed: 400,
-      slidesPerView: 2,
-      spaceBetween: 50,
-      pagination: {
-        el: ".custom-gallery__pagination",
-        clickable: true,
-        type: "bullets",
-        bulletClass: "swiper-pagination-bullet",
-        bulletActiveClass: "swiper-pagination-bullet-active",
+export default function customSliderSwiper() {
+  const desktop_per_view = 2;
+  const swiper = new Swiper(".custom-gallery__slider", {
+    speed: 400,
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+    spaceBetween: 0,
+    loop: false,
+    pagination: {
+      el: ".custom-gallery__pagination",
+      clickable: true,
+      type: "bullets",
+      bulletClass: "swiper-pagination-bullet",
+      bulletActiveClass: "swiper-pagination-bullet-active",
+    },
+    breakpoints: {
+      768: {
+        slidesPerView: desktop_per_view,
+        slidesPerGroup: 2,
+        spaceBetween: 50,
       },
-    });
+    },
+    on: {
+      afterInit(this: Swiper) {
+        updateFraction(this);
+      },
+      slideChange(this: Swiper) {
+        updateFraction(this);
+      },
+      resize(this: Swiper) {
+        updateFraction(this);
+      },
+    },
+  });
 
-    // ✅ Safe: use swiper *after* it's defined
-    updateFraction(swiper);
+  // Update fraction after initialization
+  updateFraction(swiper);
+}
 
-    swiper.on("slideChange", () => {
-      updateFraction(swiper);
-    });
+function updateFraction(swiper: Swiper) {
+  // Handle slidesPerView which can be number, "auto", or undefined
+  const slidesPerView = typeof swiper.params.slidesPerView === 'number' 
+    ? swiper.params.slidesPerView 
+    : 1; // Default to 1 if "auto" or undefined
+  const slidesPerGroup = swiper.params.slidesPerGroup || 1;
+  const totalSlides = swiper.slides.length;
+
+  // Calculate total groups based on slidesPerGroup
+  const totalGroups = Math.ceil(totalSlides / slidesPerGroup);
+
+  // Calculate current group based on active slide index
+  const currentIndex = swiper.activeIndex;
+  const currentGroup = Math.ceil((currentIndex + slidesPerView) / slidesPerGroup);
+
+  const fractionEl = document.querySelector(".custom-gallery__fraction");
+  if (fractionEl) {
+    fractionEl.innerHTML = `${currentGroup} / ${totalGroups}`;
   }
-
-  function updateFraction(swiper: Swiper) {
-    const current = swiper.realIndex + 1;
-    const total = swiper.slides.length;
-    const fractionEl = document.querySelector(".custom-gallery__fraction");
-    if (fractionEl) {
-      fractionEl.innerHTML = `${current} / ${total}`;
-    }
-  }
+}
 </script>
