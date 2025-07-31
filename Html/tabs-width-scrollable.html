@@ -1,0 +1,69 @@
+<script charset="utf-8">
+  const tabs_btn_all = document.querySelectorAll(".my-tabs__tab") as NodeListOf<HTMLButtonElement>;
+  const contnent_all = document.querySelectorAll(".my-tabs__content") as NodeListOf<HTMLDivElement>;
+  const my_tabs_header = document.querySelector(".my-tabs__header") as HTMLElement;
+
+  tabs_btn_all.forEach((tab, index) => {
+    tab.addEventListener("click", () => {
+      resetTabs();
+      setActiveTab(index);
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    setScrollableTabs();
+  });
+
+  setScrollableTabs();
+
+  function setScrollableTabs() {
+    let total_tabs_width = 0;
+    tabs_btn_all.forEach((tab) => {
+      total_tabs_width += tab.offsetWidth;
+    });
+
+    const tabs_top = my_tabs_header.parentElement as HTMLElement;
+    const container_width = tabs_top.offsetWidth;
+
+    if (total_tabs_width + 100 > container_width) {
+      my_tabs_header.style.width = total_tabs_width + 100 + "px";
+    } else {
+      my_tabs_header.style.width = "";
+    }
+  }
+</script>
+
+<div class="my-tabs__top">
+  <div class="our-rooms__header my-tabs__header">
+    <?php foreach ($elements as $k => $item) : ?> <?php $tab_title = $item['tab_title']; ?>
+    <div class="my-tabs__tab <?php echo $k == 0 ? 'active' : null; ?>">
+      <?php echo $tab_title; ?>
+    </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+
+<style type="text/css" media="screen">
+  .my-tabs {
+    &__top {
+      width: 100%;
+      overflow-x: auto;
+      @media screen and (max-width: 576px) {
+        margin-bottom: 0;
+      }
+    }
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 2.2rem;
+    }
+    &__tab {
+      padding: 8px 16px;
+      font-size: 1.45rem;
+      font-weight: 300;
+      line-height: 2.177rem;
+      white-space: nowrap;
+    }
+  }
+</style>
