@@ -80,6 +80,12 @@ Path('new_folder').mkdir(exist_ok=True)
 Path('parent/child').mkdir(parents=True, exist_ok=True)
 ```
 
+### Создание файла
+
+```python
+Path('new_file.txt').touch(exist_ok=True)
+```
+
 ---
 
 ### 🔹 Удаление файлов
