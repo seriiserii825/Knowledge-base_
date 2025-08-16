@@ -181,12 +181,6 @@ z= Show spelling corrections
 zg Add to spelling dictionary
 zw Remove from spelling dictionary
 
-# case
-
-~ Toggle case of current character
-visual mode + gu or gU Lowercase or uppercase selection
-gUU Uppercase entire line
-
 # file
 
 :e! - отмена всех изменений в буфере с перезагрузкой в него файла с диска
