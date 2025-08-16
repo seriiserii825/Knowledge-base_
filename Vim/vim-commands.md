@@ -4,7 +4,7 @@ If you mean from Vim command line I would do:
 :normal 10GV20G
 To past right after line 14 I would do:
 :14put
-:78,40s/some/any/gic - i(case isensitive) c(ask for confirmation) I(case sensitive)
+:78,40s/some/any/gic - i(case insensitive) c(ask for confirmation) I(case sensitive)
 :22,28s/\<some\>/any/g - replace only whole words
 
 ## regexp
@@ -34,7 +34,7 @@ Ctrl+r a - paste from register a in insert mode
 
 ## vimgrep
 
-```
+```vim
 :vimgrep /pattern/ % - search pattern in current file
 :vimgrep /pattern/ *.txt - search pattern in all txt files
 :vimgrep /pattern/ **/*.* - search pattern in all txt files in all directories
@@ -46,11 +46,11 @@ Ctrl+r a - paste from register a in insert mode
 
 ## args
 
-```
+```vim
 args **/*.css - search all css files in all directories
 :vert sa args - open all buffers in vertical split
 argdo %s/old/new/g - replace old with new in all files
-windo difft - compare all files
+window diff - compare all files
 :vim /color/ ## - search color in all files from args
 :cdo s/color/new/g - replace color with new in all files
 ```
@@ -223,6 +223,8 @@ ctrl+a - increment
 ctrl+x - decrement
 g ctrl+a - increment with decimal
 g ctrl+x - decrement with decimal
+40 ctrl+a - increment 40 (each line)
+20 ctrl+x - decrement 20 (each line)
 
 # remove more than one space in file
 
