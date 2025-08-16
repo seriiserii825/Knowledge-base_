@@ -1,5 +1,13 @@
 # Visual
 
+## join
+
+```vim
+14,22join - join lines 14 to 22
+```
+
+## columns
+
 ```vim
 Chapter            Page
 Normal mode          15

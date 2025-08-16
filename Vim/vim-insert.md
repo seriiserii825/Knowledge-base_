@@ -10,6 +10,14 @@ Commands to revert mistakes in insert mode.
 <C-r>+ Insert register content
 <C-r>= Evaluate expression and insert result
 R - Enter replace mode
+<C-v>{symbol} - Insert a special character
+```
+
+## insert dollar and euro sign
+
+```vim
+<C-v>u0024 - Insert dollar sign
+<C-v>u20ac - Insert euro sign
 ```
 
 ## Calculating aspect ration(float)
