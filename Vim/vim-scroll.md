@@ -2,6 +2,7 @@
 
 ```vim
 
+zz - center the current line in the window
 ctrl+f - forward one page
 ctrl+b - backward one page
 ctrl+u - up half page

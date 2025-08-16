@@ -8,3 +8,10 @@ Commands to revert mistakes in insert mode.
 <C-u> Delete all characters before cursor
 <C-o> Execute one normal mode command
 ```
+
+example:
+
+```vim
+iHello<C-o>zz - Insert "Hello" and then execute the `zz`
+command to center the line.
+```
