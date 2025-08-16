@@ -7,9 +7,24 @@ Commands to revert mistakes in insert mode.
 <C-w> Delete word before cursor
 <C-u> Delete all characters before cursor
 <C-o> Execute one normal mode command
+<C-r>+ Insert register content
+<C-r>= Evaluate expression and insert result
+R - Enter replace mode
 ```
 
-example:
+## Calculating aspect ration(float)
+
+```vim
+<C-r>=640/200.0<CR>
+```
+
+## replace mode
+
+```vim
+RHello - Enter replace mode and type "Hello", replacing existing text.
+```
+
+## Centering text in insert mode
 
 ```vim
 iHello<C-o>zz - Insert "Hello" and then execute the `zz`
