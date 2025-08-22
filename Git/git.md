@@ -20,6 +20,9 @@
 ```bash
 git ls-files
 git rm --cached filename
+git clean -n - show untracked files
+git clean -f filename - untracked files
+git clean -fd - untracked files and directories
 ```
 
 ### remove changes from git, reset to the last commit
