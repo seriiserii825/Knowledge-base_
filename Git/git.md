@@ -80,6 +80,13 @@ git reset --hard HEAD~1 - delete the last commit
 git reflog - show all the commits
 git reset --hard <commit-hash>`
 
+### remove branch localy and remotely
+
+```bash
+git branch -d <branch-name> - delete local branch
+git push origin --delete <branch-name> - delete remote branch
+```
+
 ### get back deleted branch
 
 ```bash
