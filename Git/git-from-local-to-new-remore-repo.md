@@ -1,9 +1,15 @@
 # Instructions
 
-## set origin to new remote repo
+## set origin to existing remote repo
 
 ```bash
 git remote set-url origin https://bitbucket.org/blueline-ios/rewind-ios.git
+```
+
+## set origin to new remote repo
+
+```bash
+git remote add origin git@bitbucket.org:webapp-laravel/lv-pro-tasks.git
 ```
 
 ## push branch
