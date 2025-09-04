@@ -1,6 +1,6 @@
 # Instructions
 
-## set origin to existing remote repo
+## set origin to existing remote in local repo with git remote -v
 
 ```bash
 git remote set-url origin https://bitbucket.org/blueline-ios/rewind-ios.git
@@ -12,9 +12,7 @@ git remote set-url origin https://bitbucket.org/blueline-ios/rewind-ios.git
 git remote add origin git@bitbucket.org:webapp-laravel/lv-pro-tasks.git
 ```
 
-## push branch
-
-check if local and remote branch have the same name
+## push branch with force
 
 ```bash
 git push -u origin main --force
