@@ -17,6 +17,7 @@ export default defineNuxtConfig({
 ```
 NUXT_TOKEN=my_token
 NUXT_PUBLIC_APIBASE=https://menu.altuofianco.com/api/v1
+PORT=3001 // default is 3000
 ```
 
 ## useAxios.ts a composable for Axios
