@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { onMounted, PropType, ref } from "vue";
-import { TGalleryItem } from "../../types/TGalleryResponse";
-import IClose from "../../icons/IClose.vue";
-import ILeft from "../../icons/ILeft.vue";
+import { onMounted, PropType, ref } from 'vue';
+import { TGalleryItem } from '../../types/TGalleryResponse';
+import IClose from '../../icons/IClose.vue';
+import ILeft from '../../icons/ILeft.vue';
 const emits = defineEmits(['emit_close']);
 const props = defineProps({
   images: {
     type: Array as PropType<TGalleryItem[]>,
-    required: true,
+    required: true
   },
   current_index: {
     type: Number,
-    required: true,
-  },
+    required: true
+  }
 });
 
 const index = ref(0);
@@ -46,17 +46,17 @@ onMounted(() => {
   index.value = props.current_index;
   show_image.value = true;
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
       show_image.value = false;
       setTimeout(() => {
-        emits("emit_close");
+        emits('emit_close');
       }, 300);
     }
-    if (event.key === "ArrowLeft") {
+    if (event.key === 'ArrowLeft') {
       goPrev();
     }
-    if (event.key === "ArrowRight") {
+    if (event.key === 'ArrowRight') {
       goNext();
     }
   });
@@ -66,12 +66,18 @@ onMounted(() => {
 <template>
   <div class="gallery-popup">
     <div v-if="images.length" class="gallery-popup__body">
-      <Transition name="fade">
-        <img v-if="show_image" :src="images[index].url" :alt="images[index].alt" />
-      </Transition>
-      <button class="gallery-popup__close" @click="$emit('emit_close')">
-        <IClose />
-      </button>
+      <div class="gallery-popup__inner">
+        <Transition name="fade">
+          <img
+            v-if="show_image"
+            :src="images[index].url"
+            :alt="images[index].alt"
+          />
+        </Transition>
+        <button class="gallery-popup__close" @click="$emit('emit_close')">
+          <IClose />
+        </button>
+      </div>
       <footer class="gallery-popup__buttons">
         <div class="gallery-popup__btn" @click="goPrev">
           <ILeft />
@@ -96,4 +102,3 @@ onMounted(() => {
   opacity: 0;
 }
 </style>
-
