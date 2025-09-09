@@ -16,7 +16,8 @@
     justify-content: center;
     align-items: center;
     width: 90%;
-    height: 80vh;
+    height: 90vh;
+    overflow: hidden;
     @media screen and (max-width: 992px) {
       width: 98%;
       height: 70rem;
@@ -25,6 +26,16 @@
 
   &__inner {
     position: relative;
+    height: 100%;
+    @media screen and (max-width: 576px) {
+      height: auto;
+    }
+    img {
+      height: 100%;
+      @media screen and (max-width: 992px) {
+        height: auto;
+      }
+    }
   }
 
   &__close {
@@ -45,12 +56,21 @@
       top: 3.2rem;
       right: 3.2rem;
     }
+    @media screen and (max-width: 576px) {
+      top: 1.6rem;
+      right: 1.6rem;
+      width: 4.8rem;
+      height: 4.8rem;
+    }
     &:hover {
       background: red;
     }
     svg {
       position: relative;
       transform: scale(0.8);
+      @media screen and (max-width: 576px) {
+        transform: scale(0.6);
+      }
     }
   }
   &__buttons {
@@ -74,12 +94,20 @@
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.4s;
+    @media screen and (max-width: 576px) {
+      width: 4.8rem;
+      height: 4.8rem;
+    }
     &:hover {
       background: var(--accent);
     }
     &:last-of-type {
       transform: rotate(180deg);
     }
+    svg {
+      @media screen and (max-width: 576px) {
+        transform: scale(0.6);
+      }
+    }
   }
 }
-
