@@ -1,6 +1,3 @@
-# Nuxt useFetch with debounced Query Parameters
-
-```vue
 <script setup lang="ts">
 import { useDebounceFn } from "@vueuse/core";
 import type { TCategory } from "~/server/mock/data";
@@ -58,4 +55,3 @@ const { data: filteredPosts } = await useFetch("/api/posts", {
     </ul>
   </div>
 </template>
-```
