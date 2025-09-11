@@ -6,4 +6,5 @@
 1,$sort - sort all lines
 1,$sort! - sort all lines reverse
 1,$sort u - sort all lines unique
+'<,'>!tac - reverse lines in visual mode
 ```
