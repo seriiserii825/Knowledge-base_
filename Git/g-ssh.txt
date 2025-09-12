@@ -1,5 +1,5 @@
 ssh-keygen -t ed25519 -C "seriiburduja@mail.com"
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_ed25519
 sudo apt install xclip
 xclip -sel clip < ~/.ssh/id_rsa.pub
