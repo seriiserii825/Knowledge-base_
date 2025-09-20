@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Vite + TS</title>
+  </head>
+  <body class="min-h-screen bg-gray-50 text-gray-900 antialiased">
+    <div id="app">
+      <main class="mx-auto max-w-xl p-6">
+        <form id="training-form" class="space-y-8 rounded-2xl bg-white p-6 shadow">
+          <!-- Q1: text input -->
+          <fieldset class="space-y-2">
+            <legend class="text-sm font-medium text-gray-700">1) Your name</legend>
+            <label for="q_name" class="sr-only">Your name</label>
+            <input
+              id="q_name"
+              name="name"
+              type="text"
+              placeholder="John Doe"
+              class="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-indigo-200" />
+            <p class="text-xs text-gray-500">Expect a string value.</p>
+          </fieldset>
+
+          <!-- Q2: one checkbox (boolean) -->
+          <fieldset class="space-y-2">
+            <legend class="text-sm font-medium text-gray-700">2) Accept terms?</legend>
+            <label class="flex items-center gap-3">
+              <input
+                id="q_terms"
+                name="accept_terms"
+                type="checkbox"
+                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+              <span class="text-sm">I agree to the Terms</span>
+            </label>
+            <p class="text-xs text-gray-500">Maps to a boolean (checked = true).</p>
+          </fieldset>
+
+          <!-- Q3: multiple checkboxes (string[]) -->
+          <fieldset class="space-y-2">
+            <legend class="text-sm font-medium text-gray-700">3) Tech you use (choose many)</legend>
+            <div class="space-y-2">
+              <label class="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  name="tech[]"
+                  value="vue"
+                  class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span class="text-sm">Vue</span>
+              </label>
+              <label class="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  name="tech[]"
+                  value="react"
+                  class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span class="text-sm">React</span>
+              </label>
+              <label class="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  name="tech[]"
+                  value="laravel"
+                  class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span class="text-sm">Laravel</span>
+              </label>
+              <label class="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  name="tech[]"
+                  value="wordpress"
+                  class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span class="text-sm">WordPress</span>
+              </label>
+            </div>
+            <p class="text-xs text-gray-500">Maps to a string[] from checked values.</p>
+          </fieldset>
+
+          <!-- Q4: one radio (single choice string) -->
+          <fieldset class="space-y-2">
+            <legend class="text-sm font-medium text-gray-700">
+              4) Newsletter frequency (choose one)
+            </legend>
+            <div class="space-y-2">
+              <label class="flex items-center gap-3">
+                <input
+                  type="radio"
+                  name="frequency"
+                  value="daily"
+                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span class="text-sm">Daily</span>
+              </label>
+              <label class="flex items-center gap-3">
+                <input
+                  type="radio"
+                  name="frequency"
+                  value="weekly"
+                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span class="text-sm">Weekly</span>
+              </label>
+              <label class="flex items-center gap-3">
+                <input
+                  type="radio"
+                  name="frequency"
+                  value="monthly"
+                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span class="text-sm">Monthly</span>
+              </label>
+            </div>
+            <p class="text-xs text-gray-500">Maps to a single string.</p>
+          </fieldset>
+
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-indigo-600 px-4 py-2 text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+            Submit
+          </button>
+        </form>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+
+<script charset="utf-8">
+export default function homeWork1(): void {
+  type TRadio = {
+    type: "radio";
+    value: string;
+  };
+  type TCheckboxSingle = {
+    type: "checkbox";
+    value: boolean;
+  };
+  type TCheckboxMulti = {
+    type: "checkbox_multiple";
+    value: string[];
+  };
+  type TText = {
+    type: "text";
+    value: string;
+  };
+
+  type TAnswer = TRadio | TCheckboxSingle | TCheckboxMulti | TText;
+
+  const form = document.querySelector("#training-form") as HTMLFormElement;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Option A: FormData (short & robust)
+    const fd = new FormData(form);
+    const fd_freq = fd.get("frequency");
+    const freq_raw = typeof fd_freq == "string" ? fd_freq : "";
+
+    const check_multi_raw = fd.getAll("tech[]");
+    const multi_check = check_multi_raw.map((item) => String(item));
+
+    // use your union types here
+    const answers: Record<string, TAnswer> = {
+      name: {
+        type: "text",
+        value: (fd.get("name") as string) ?? "",
+      },
+      terms: {
+        type: "checkbox",
+        value: fd.get("accept_terms") !== null,
+      },
+      tech: {
+        type: "checkbox_multiple",
+        value: multi_check
+      },
+      frequency: {
+        type: "radio",
+        value: freq_raw,
+      },
+    };
+
+    console.log(JSON.stringify(answers, null, 4));
+  });
+}
+</script>
