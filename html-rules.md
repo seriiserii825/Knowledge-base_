@@ -1,64 +1,63 @@
-# Правила написания HTML и CSS кода
+# Reguli de scriere HTML și CSS
 
-## 1\. Базовые HTML-правила
+## 1. Reguli HTML de bază
 
-- Всегда описывайте цвет фона для `body`, даже если он белый.
-- Названия классов и `id` должны по смыслу соответствовать применению (например: `header`, `menu`, `footer`, `news`).
-- У всех изображений обязательно есть атрибут `alt`.
-- У декоративных изображений — пустой `alt=""`.
-- У каждой страницы есть уникальный `<title>` и `<meta description>`.
-- На каждой странице присутствует уникальный `<h1>`.
-- Заголовки структурированы и идут по порядку (H1 → H2 → H3).
-
----
-
-## 2\. Текст и контент
-
-- Нет “рыбы” (Lorem ipsum, заглушек).
-- Нет орфографических ошибок.
-- Контраст текста соответствует WCAG (не сливается с фоном).
-- Сетка и блоки не ломаются при очень длинных словах (например, в немецком языке).
-- Проверен случай с пустым и чрезмерно длинным контентом.
+- Definiți întotdeauna culoarea de fundal pentru corp, chiar dacă este alb.
+- Numele și ID-urile claselor trebuie să fie semnificative pentru utilizarea lor preconizată (de exemplu, header, meniu, subsol, știri).
+- Toate imaginile trebuie să aibă un atribut alt.
+- Imaginile decorative trebuie să aibă un atribut alt="" gol.
+- Fiecare pagină are un <title> și o <meta description> unice.
+- Fiecare pagină are un <h1> unic.
+- Titlurile sunt structurate și ordonate (H1 → H2 → H3).
 
 ---
 
-## 3\. CSS и стили
+## 2. Text și conținut
 
-- Для элементов, где текст должен быть в одну строку, задано `white-space: nowrap`.
-- Для кнопок (не `input`) используется `cursor: pointer`.
-- Активные состояния (`:active`) у кнопок/ссылок стилизованы.
-- Фокусные состояния (`:focus`) видимы для всех интерактивных элементов.
-- На мобильных нет горизонтального скролла.
-
----
-
-## 4\. Ссылки и навигация
-
-- Все меню работают, при наведении и клике есть эффекты (`hover`, `active`).
-- Логотип ведёт на главную страницу.
-- Внешние ссылки имеют `target="_blank"` и `rel="noopener noreferrer"`.
-- Нет “битых” ссылок.
-- Для `tel:` и `mailto:` используются корректные форматы (`tel:+373...`, `mailto:...@...`).
-- Внутренние якорные ссылки (`#id`) ведут к существующим элементам.
+- Fără bloatware (Lorem ipsum, substituenți).
+- Fără greșeli de ortografie.
+- Contrastul textului respectă WCAG (nu se amestecă cu fundalul).
+- Aspectele grilă și bloc nu se întrerup cu cuvinte foarte lungi (de exemplu, în germană).
+- Testat pentru conținut gol și excesiv de lung.
 
 ---
 
-## 5\. Формы и попапы
+## 3. CSS și stiluri
 
-- Все формы работают, ошибки подсвечиваются.
-- Попапы удобно закрываются (крестик, клик вне окна, Esc).
-
----
-
-## 6\. Медиа и изображения
-
-- Изображения подгружаются лениво (`loading="lazy"`) и не ломают вёрстку.
-- Все изображения оптимизированы (сжаты, корректный размер, нет загрузки огромных фото для превью).
+- Elementele unde textul ar trebui să fie pe o singură linie sunt setate la `white-space: nowrap`.
+- Butoanele (nu `input`) sunt setate la `cursor: pointer`.
+- Stările active (`:active`) pentru butoane/linkuri sunt stilizate.
+- Stările de focalizare (`:focus`) sunt vizibile pentru toate elementele interactive.
+- Nu există scroll orizontală pe dispozitivele mobile.
 
 ---
 
-## 7\. JS и интерактив
+## 4. Linkuri și navigare
 
-- В консоли браузера нет ошибок.
-- Слайдеры, галереи, аккордеоны корректно работают при изменении размера окна.
-- Нет “мертвых зон” — кликабельные области совпадают с визуальными элементами.
+- Toate meniurile sunt funcționale, cu efecte de hover și clic (`hover`, `active`).
+- Logoul din header face legătura către pagina principală. - Linkurile externe au `target="_blank"` și `rel="noopener noreferrer"`.
+- Nu există linkuri rupte.
+- Se utilizează formate corecte pentru `tel:` și `mailto:` (`tel:+373...`, `mailto:...@...`).
+- Linkurile ancoră interne (`#id`) indică către elemente existente.
+
+---
+
+## 5\. Formulare și ferestre popup
+
+- Toate formularele funcționează, erorile sunt evidențiate.
+- Ferestrele popup pot fi închise cu ușurință (cruce, clic în afara ferestrei, Esc).
+
+---
+
+## 6\. Media și imagini
+
+- Imaginile sunt încărcate în mod lenjerie (`loading="lazy"`) și nu perturbă aspectul.
+- Toate imaginile sunt optimizate (comprimate, dimensionate corect, fără fotografii de previzualizare uriașe).
+
+---
+
+## 7\. JS și interactiv
+
+- Nu există erori în consola browserului.
+- Sliderele, galeriile și acordeoanele funcționează corect atunci când fereastra este redimensionată.
+- Nu există zone inactive - zonele pe care se poate face clic se aliniază cu elementele vizuale.
