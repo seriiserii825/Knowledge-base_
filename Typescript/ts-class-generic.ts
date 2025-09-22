@@ -1,7 +1,7 @@
 export default {};
 
 // class Storage<T extends string> {
-class Storage<T> {
+class Storage<T extends { id: number }> {
   items: Array<T>;
 
   constructor() {
@@ -13,22 +13,16 @@ class Storage<T> {
   getItems(): Array<T> {
     return this.items;
   }
-  removeItem(item: T): void {
-    const index = this.items.indexOf(item);
-    if (index !== -1) {
-      this.items.splice(index, 1);
-    }
+  getItem(id: number) {
+    return this.items.find((item) => item.id === id);
+  }
+  removeItem(id: number): void {
+    this.items = this.items.filter((item) => item.id !== id);
   }
   clean(): void {
     this.items = [];
   }
 }
 
-const stringStorage = new Storage<string>();
-stringStorage.addItem("Hello");
-
-const clientsStorage = new Storage<{ name: string; age: number }>();
-clientsStorage.addItem({
-  name: "charlie",
-  age: 44,
-});
+const storage = new Storage<{ id: number; name: string }>();
+storage.addItem({ id: 4, name: "george" });
