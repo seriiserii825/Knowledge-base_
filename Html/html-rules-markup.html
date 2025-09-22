@@ -1,0 +1,461 @@
+<!-- Checklist (БЭМ) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" />
+<style>
+  :root {
+    --bg: #0b0c10;
+    --panel: #121318;
+    --muted: #8a8f98;
+    --text: #eef2f7;
+    --brand: #7c5cff;
+    --brand-weak: rgba(124, 92, 255, 0.25);
+    --ok: #1fbe72;
+    --warn: #ffb020;
+    --err: #ff5a6c;
+    --stroke: #22242c;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
+    --focus: 0 0 0 3px var(--brand-weak), 0 8px 20px rgba(124,92,255,.25);
+  }
+
+  /* Base layout (optional) */
+  body {
+    margin: 0;
+    background: radial-gradient(1000px 500px at 100% 0, #141622 20%, #0d0f16 45%, #090a0e 100%), var(--bg);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    color: var(--text);
+  }
+  .container {
+    max-width: 940px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  /* ===== BLOCK: tasks ===== */
+  .tasks {
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 18%), var(--panel);
+    border: 1px solid var(--stroke);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .tasks__header {
+    padding: 22px 22px 0;
+  }
+  .tasks__title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    margin: 0 0 4px;
+  }
+  .tasks__subtitle {
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .tasks__controls {
+    display: flex;
+    gap: 10px;
+    padding: 0 22px 18px;
+    border-bottom: 1px dashed var(--stroke);
+  }
+  .tasks__chip {
+    font-size: 12px;
+    padding: 8px 12px;
+    border: 1px solid var(--stroke);
+    border-radius: 999px;
+    color: var(--muted);
+    background: rgba(255,255,255,.02);
+    user-select: none;
+  }
+
+  .tasks__body {
+    padding: 18px 12px 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  @media (min-width: 760px) {
+    .tasks__body {
+      grid-template-columns: 1fr 1fr;
+      padding: 20px;
+      gap: 16px;
+    }
+  }
+
+  /* ===== GROUP ===== */
+  .tasks__group {
+    background: rgba(255,255,255,.02);
+    border: 1px solid var(--stroke);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+  }
+  .tasks__group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 4px 10px;
+    border-bottom: 1px dashed var(--stroke);
+    margin-bottom: 10px;
+  }
+  .tasks__group-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .2px;
+  }
+  .tasks__group-count {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .tasks__list {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* ===== ITEM ===== */
+  .tasks__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--stroke);
+    border-radius: 12px;
+    background: rgba(255,255,255,.015);
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .tasks__item:hover {
+    transform: translateY(-1px);
+    border-color: rgba(124,92,255,.35);
+    background: rgba(124,92,255,.06);
+  }
+
+  /* native checkbox hidden but accessible */
+  .tasks__checkbox {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+  .tasks__checkbox:focus-visible + .tasks__label {
+    box-shadow: var(--focus);
+  }
+
+  .tasks__label {
+    grid-column: 1 / span 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 10px;
+    padding: 6px 8px;
+    outline: none;
+    transition: box-shadow .2s ease;
+  }
+
+  /* custom check */
+  .tasks__box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--muted);
+    border-radius: 6px;
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 20px;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .tasks__tick {
+    width: 12px;
+    height: 12px;
+    opacity: 0;
+    transform: scale(.7) rotate(-8deg);
+    transition: transform .2s ease, opacity .15s ease;
+    /* tick using CSS only */
+    background:
+      linear-gradient(45deg, rgba(0,0,0,0) 46%, var(--panel) 47%) no-repeat 0 0/100% 100%,
+      linear-gradient(135deg, rgba(0,0,0,0) 46%, var(--panel) 47%) no-repeat 0 0/100% 100%;
+    mask:
+      conic-gradient(from 135deg at 12% 72%, #000 0 90deg, transparent 0) 0 0/100% 100%;
+    background-color: var(--text);
+    border-radius: 2px;
+  }
+
+  .tasks__text {
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .tasks__meta {
+    grid-column: 3;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* states by modifiers (optional) */
+  .tasks__item--ok { border-color: rgba(31,190,114,.25); }
+  .tasks__item--warn { border-color: rgba(255,176,32,.25); }
+  .tasks__item--err { border-color: rgba(255,90,108,.28); }
+
+  /* checked visual state */
+  .tasks__checkbox:checked + .tasks__label .tasks__box {
+    background: radial-gradient(12px 12px at 50% 50%, var(--brand) 0 75%, transparent 76%),
+                var(--brand);
+    border-color: var(--brand);
+  }
+  .tasks__checkbox:checked + .tasks__label .tasks__tick {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  .tasks__checkbox:checked + .tasks__label .tasks__text {
+    text-decoration: line-through;
+    opacity: .8;
+  }
+
+  /* footer */
+  .tasks__footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px 18px;
+    border-top: 1px dashed var(--stroke);
+  }
+  .tasks__hint { color: var(--muted); font-size: 13px; }
+  .tasks__badge {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--stroke);
+    background: rgba(255,255,255,.02);
+    color: var(--muted);
+  }
+</style>
+
+<div class="container">
+  <section class="tasks" aria-labelledby="tasks-title">
+    <header class="tasks__header">
+      <h2 class="tasks__title" id="tasks-title">HTML completion checklist</h2>
+      <p class="tasks__subtitle">отметь, что уже готово; Vue логику добавишь позже</p>
+    </header>
+
+    <div class="tasks__controls" aria-hidden="true">
+      <span class="tasks__chip">HTML</span>
+      <span class="tasks__chip">Accessibility</span>
+      <span class="tasks__chip">SEO</span>
+      <span class="tasks__chip">Perf</span>
+    </div>
+
+    <div class="tasks__body">
+      <!-- Group: Structure -->
+      <section class="tasks__group" aria-labelledby="g-structure">
+        <div class="tasks__group-header">
+          <h3 class="tasks__group-title" id="g-structure">Structure</h3>
+          <span class="tasks__group-count">5 tasks</span>
+        </div>
+        <ul class="tasks__list">
+          <li class="tasks__item tasks__item--ok">
+            <input class="tasks__checkbox" type="checkbox" id="doctype" />
+            <label class="tasks__label" for="doctype">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Valid <code>&lt;!doctype html&gt;</code> and language on <code>&lt;html lang=&quot;…&quot;&gt;</code></span>
+            </label>
+            <span class="tasks__meta">HTML</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="head" />
+            <label class="tasks__label" for="head">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text"><code>&lt;head&gt;</code> has charset, viewport, title, favicon</span>
+            </label>
+            <span class="tasks__meta">HTML</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="semantic" />
+            <label class="tasks__label" for="semantic">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Semantic layout: <code>header / main / footer / nav / section / article</code></span>
+            </label>
+            <span class="tasks__meta">Semantics</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="no-hscroll" />
+            <label class="tasks__label" for="no-hscroll">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">No horizontal scroll on mobile</span>
+            </label>
+            <span class="tasks__meta">Layout</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="images-alt" />
+            <label class="tasks__label" for="images-alt">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">All images have meaningful <code>alt</code></span>
+            </label>
+            <span class="tasks__meta">A11y</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Group: Accessibility -->
+      <section class="tasks__group" aria-labelledby="g-a11y">
+        <div class="tasks__group-header">
+          <h3 class="tasks__group-title" id="g-a11y">Accessibility</h3>
+          <span class="tasks__group-count">5 tasks</span>
+        </div>
+        <ul class="tasks__list">
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="labels" />
+            <label class="tasks__label" for="labels">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Form controls are labeled (<code>&lt;label for&gt;</code> or <code>aria-label</code>)</span>
+            </label>
+            <span class="tasks__meta">A11y</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="keyboard" />
+            <label class="tasks__label" for="keyboard">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Keyboard focus visible and logical order</span>
+            </label>
+            <span class="tasks__meta">A11y</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="contrast" />
+            <label class="tasks__label" for="contrast">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Text contrast meets WCAG AA</span>
+            </label>
+            <span class="tasks__meta">A11y</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="skiplink" />
+            <label class="tasks__label" for="skiplink">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Skip-to-content link exists</span>
+            </label>
+            <span class="tasks__meta">A11y</span>
+          </li>
+
+          <li class="tasks__item tasks__item--warn">
+            <input class="tasks__checkbox" type="checkbox" id="motion" />
+            <label class="tasks__label" for="motion">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Respects <code>prefers-reduced-motion</code> for heavy animations</span>
+            </label>
+            <span class="tasks__meta">Motion</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Group: SEO -->
+      <section class="tasks__group" aria-labelledby="g-seo">
+        <div class="tasks__group-header">
+          <h3 class="tasks__group-title" id="g-seo">SEO</h3>
+          <span class="tasks__group-count">4 tasks</span>
+        </div>
+        <ul class="tasks__list">
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="meta" />
+            <label class="tasks__label" for="meta">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text"><code>&lt;title&gt;</code> and meta description set</span>
+            </label>
+            <span class="tasks__meta">SEO</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="h1" />
+            <label class="tasks__label" for="h1">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Exactly one <code>&lt;h1&gt;</code> per page</span>
+            </label>
+            <span class="tasks__meta">SEO</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="links" />
+            <label class="tasks__label" for="links">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">External links: <code>target="_blank" rel="noopener noreferrer"</code></span>
+            </label>
+            <span class="tasks__meta">Links</span>
+          </li>
+
+          <li class="tasks__item tasks__item--err">
+            <input class="tasks__checkbox" type="checkbox" id="og" />
+            <label class="tasks__label" for="og">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">OpenGraph / Twitter meta present</span>
+            </label>
+            <span class="tasks__meta">Social</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Group: Performance -->
+      <section class="tasks__group" aria-labelledby="g-perf">
+        <div class="tasks__group-header">
+          <h3 class="tasks__group-title" id="g-perf">Performance</h3>
+          <span class="tasks__group-count">4 tasks</span>
+        </div>
+        <ul class="tasks__list">
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="images-opt" />
+            <label class="tasks__label" for="images-opt">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Images optimized (<code>loading="lazy"</code>, sizes/srcset)</span>
+            </label>
+            <span class="tasks__meta">Perf</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="fonts" />
+            <label class="tasks__label" for="fonts">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Fonts: display strategy set (swap/optional)</span>
+            </label>
+            <span class="tasks__meta">Perf</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="critical" />
+            <label class="tasks__label" for="critical">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Critical CSS considered; unused CSS minimized</span>
+            </label>
+            <span class="tasks__meta">Perf</span>
+          </li>
+
+          <li class="tasks__item">
+            <input class="tasks__checkbox" type="checkbox" id="bundle" />
+            <label class="tasks__label" for="bundle">
+              <span class="tasks__box"><i class="tasks__tick" aria-hidden="true"></i></span>
+              <span class="tasks__text">Bundle size ok; no blocking third-party scripts</span>
+            </label>
+            <span class="tasks__meta">Perf</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <footer class="tasks__footer">
+      <p class="tasks__hint">Подсказка: можешь пробросить значения чекбоксов в v-model и сохранять прогресс в LocalStorage.</p>
+      <span class="tasks__badge" aria-hidden="true">No JS — pure HTML/CSS</span>
+    </footer>
+  </section>
+</div>
