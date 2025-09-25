@@ -6,16 +6,21 @@ new_data = {
 }
 try:
     with open('data.json', 'r') as file:
-        #reading old data
+        # reading old data
         data = json.load(file)
-        #updating old data with new data
+        # updating old data with new data
         data.update(new_data)
 except FileNotFoundError:
     with open('data.json', 'w') as file:
-        #saving updated data
+        # saving updated data
         json.dump(new_data, file, indent=4)
 else:
     with open('data.json', 'w') as file:
-        #saving updated data
+        # saving updated data
         json.dump(data, file, indent=4)
 
+
+def saveToJson(data, filename):
+    with open(filename, "w", encoding="utf-8") as file:
+        # ensure_ascii=False to keep unicode characters for cyrillic
+        json.dump(data, file, indent=4, ensure_ascii=False)
