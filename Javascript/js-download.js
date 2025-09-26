@@ -1,3 +1,6 @@
+// for html anchor tag
+// <a href="files/example.pdf" download>Download PDF</a>
+
 function downloadFile() {
   const download_file_array = file_path.value.split("/");
   const file_name = download_file_array[download_file_array.length - 1];
