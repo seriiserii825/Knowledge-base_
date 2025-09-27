@@ -5,7 +5,7 @@ type B = Awaited<Promise<Promise<number>>>;
 // type B = number
 type C = Awaited<boolean | Promise<number>>;
 // type C = number | boolean
-// ------------ Partial -------------
+// ====--====--====--====--====--====-- Partial ====--====--====--====--====--====---
 interface Todo {
   title: string;
   description: string;
@@ -20,14 +20,14 @@ const todo1 = {
 const todo2 = updateTodo(todo1, {
   description: "throw out trash",
 });
-// ------------ Required -------------
+// ====--====--====--====--====--====-- Required ====--====--====--====--====--====---
 interface Props {
   a?: number;
   b?: string;
 }
 const obj: Props = { a: 5 };
 const obj2: Required<Props> = { a: 5 }; // Error: Property 'b' is missing in type '{ a: number; }' but required in type 'Required<Props>'.
-// ------------ Readonly -------------
+// ====--====--====--====--====--====-- Readonly ====--====--====--====--====--====---
 interface Todo2 {
   title: string;
 }
@@ -35,7 +35,7 @@ const todo: Readonly<Todo2> = {
   title: "Delete inactive users",
 };
 todo.title = "Hello"; // Error: Cannot assign to 'title' because it is a read-only property.
-// ------------ Record -------------
+// ====--====--====--====--====--====-- Record ====--====--====--====--====--====---
 type CatName = "miffy" | "boris" | "mordred";
 interface CatInfo {
   age: number;
@@ -46,7 +46,7 @@ const cats: Record<CatName, CatInfo> = {
   boris: { age: 5, breed: "Maine Coon" },
   mordred: { age: 16, breed: "British Shorthair" },
 };
-// ------------ Pick -------------
+// ====--====--====--====--====--====-- Pick ====--====--====--====--====--====---
 // Constructs a type by picking the set of properties K from T
 interface Todo3 {
   title: string;
@@ -58,7 +58,7 @@ const todo3: Todo3Preview = {
   title: "Clean room",
   completed: false,
 };
-// ------------ Omit -------------
+// ====--====--====--====--====--====-- Omit ====--====--====--====--====--====---
 // Constructs a type by picking all properties from T and then removing K
 interface Todo4 {
   title: string;
@@ -78,7 +78,7 @@ const todoInfo: Todo4Info = {
   description: "Kindergarten closes at 5pm",
 };
 
-// ------------ Exclude -------------
+// ====--====--====--====--====--====-- Exclude ====--====--====--====--====--====---
 type Shape =
   | { kind: "circle"; radius: number }
   | { kind: "square"; x: number }
@@ -87,7 +87,7 @@ type T3 = Exclude<Shape, { kind: "circle" }>;
 
 // result type T3 = { kind: "square"; x: number } | { kind: "triangle"; x: number; y: number }
 
-//=----------- Extract -------------
+//=====--====--====--====--====--- Extract ====--====--====--====--====--====---
 // Constructs a type by extracting from T all properties that are assignable to K(oposite of Exclude)
 type TShape =
   | { kind: "circle"; radius: number }
@@ -96,7 +96,7 @@ type TShape =
 type T5 = Extract<Shape, { kind: "circle" }>;
 // result type T5 = { kind: "circle"; radius: number }
 
-// ReturnType =------------
+// ReturnType =====--====--====--====--====--====--
 declare function f1(): { a: number; b: string };
 type T6 = ReturnType<typeof f1>;
 
