@@ -21,5 +21,5 @@ function userFilterOriginal<T>(type: T) {
 }
 
 function userFilter<T extends TUser["type"]>(type_prop: T) {
-  return (u: TUser): u is Extract<TUser, { type: typeof type_prop }> => u.type === type_prop;
+  return (u: TUser): u is Extract<TUser, { type: T }> => u.type === type_prop;
 }
