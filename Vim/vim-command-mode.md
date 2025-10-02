@@ -26,4 +26,7 @@ that does not contain word "some"
 
 ```vim
 :v/some/d
+
+:grep @include border-bottom **/*.scss
+:copen
 ```
