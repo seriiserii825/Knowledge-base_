@@ -23,3 +23,19 @@ function userFilterOriginal<T>(type: T) {
 function userFilter<T extends TUser["type"]>(type_prop: T) {
   return (u: TUser): u is Extract<TUser, { type: T }> => u.type === type_prop;
 }
+
+//===============================================================
+
+type Dice = 1 | 2 | 3 | 4 | 5 | 6;
+
+function isDice(input: number): input is Dice {
+  return [1, 2, 3, 4, 5, 6].includes(input);
+}
+
+function rollDice(input: number) {
+  if (isDice(input)) {
+    console.log(input, "input");
+  } else {
+    // input все еще `number`
+  }
+}
