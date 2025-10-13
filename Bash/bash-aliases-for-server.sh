@@ -30,6 +30,7 @@ alias n14='nvm use 14'
 alias n16='nvm use 16'
 alias n18='nvm use 18'
 alias n20='nvm use 20'
+alias rmn="rm -rf node_modules"
 
 alias nru="npm run update"
 alias bib="bun install && bun run build"
