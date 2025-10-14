@@ -39,6 +39,12 @@ git reset --hard HEAD~1
 git branch -d branchname
 ```
 
+### remove remote branch
+
+```bash
+git push origin --delete branchname
+```
+
 ## Checkout to new commit and want to save changes
 
 ### View detached HEAD
