@@ -30,6 +30,12 @@ ls -l $(npm root -g)
 
 ```
 
+### Удалить установленные через npm link
+
+```bash
+npm uninstall -g <package-name>
+```
+
 ### Через npm (локально)
 
 В package.json добавьте поле bin:
