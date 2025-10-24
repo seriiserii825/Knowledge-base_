@@ -1,85 +1,64 @@
-# fs
+### 📖 Чтение файлов
 
-## Enhanced File Operations
-
-```bash
-
-Copy: fs.copy(src, dest): Copies directories and files, including nested contents, from the source to the destination.
-Move: fs.move(src, dest): Transfers folders and files, providing an option to rename them.
-Remove: fs.remove(path): Deletes folders and files recursively.
+```ts
+fs.readFile(path, options, callback) — читает весь файл целиком.
+fs.readFileSync(path, options) — синхронное чтение файла.
+fs.createReadStream(path, options) — потоковое чтение файла.
 ```
 
-## Directory Operations
+### 📝 Запись файлов
 
-```bash
-
-Ensure Directory: fs.ensureDir(path): Verifies if a directory already exists; if not, creates the directory.
-Empty Directory: fs.emptyDir(path): Deletes a directory's contents but leaves the directory itself intact.
-Ensure File: fs.ensureFile(path): Verifies if a file already exists; if not, creates the file.
+```ts
+fs.writeFile(path, data, options, callback) — записывает данные, перезаписывая файл.
+fs.writeFileSync(path, data, options) — синхронная запись.
+fs.appendFile(path, data, options, callback) — добавляет данные в конец файла.
+fs.createWriteStream(path, options) — потоковая запись в файл.
 ```
 
-## JSON Handling
+### 📁 Каталоги
 
-```bash
-
-Read JSON: fs.readJson(path): Reads a JSON file and parses its content.
-Write JSON: fs.writeJson(path, data): Writes a JavaScript object to a file as JSON.
+```ts
+fs.readdir(path, options, callback) — читает содержимое папки.
+fs.mkdir(path, options, callback) — создаёт папку.
+fs.rm(path, options, callback) — удаляет файл или папку (в т.ч. рекурсивно).
+fs.rmdir(path, callback) — удаляет пустую папку (устарел).
 ```
 
-## Promise Support
+### 📦 Работа с файлами
 
-```bash
-
-Promise-Based API: Most methods return Promises, making writing asynchronous code with the async/await syntax easier.
+```ts
+fs.stat(path, callback) — получает информацию о файле (размер, дата, тип).
+fs.lstat(path, callback) — информация о ссылке (не разыменовывает).
+fs.existsSync(path) — проверяет, существует ли файл или папка.
+fs.access(path, mode, callback) — проверяет права доступа.
+fs.copyFile(src, dest, callback) — копирует файл.
+fs.rename(oldPath, newPath, callback) — переименовывает или перемещает файл.
+fs.unlink(path, callback) — удаляет файл.
 ```
 
-## Convenience Methods
+### 🔗 Ссылки и дескрипторы
 
-```bash
-
-Output File: fs.outputFile(path, data): Creates directories if none already exist and writes data to a file.
-Output JSON: fs.outputJson(path, data): Creates folders if none already exist before writing a JavaScript object in JSON to a file.
-Read File: fs.readFile(path): Reads the content of a file.
-Write File: fs.writeFile(path, data): Writes data to a file.
-Path Exists: fs.pathExists(path): Checks if a file or directory exists at the given path.
+```ts
+fs.open(path, flags, mode, callback) — открывает файл и возвращает дескриптор.
+fs.close(fd, callback) — закрывает открытый дескриптор.
+fs.readlink(path, callback) — читает путь символической ссылки.
+fs.symlink(target, path, type, callback) — создаёт символическую ссылку.
 ```
 
-## Create Symbolic Links
+### ⚙️ Права и атрибуты
 
-```bash
-
-Ensure Symlink: fs.ensureSymlink(srcpath, dstpath): Verifies whether a symbolic link is present, and if not, creates one.
+```ts
+fs.chmod(path, mode, callback) — изменяет права доступа (например, 0o755).
+fs.chown(path, uid, gid, callback) — меняет владельца и группу.
+fs.utimes(path, atime, mtime, callback) — обновляет время доступа/изменения.
+fs.realpath(path, callback) — возвращает абсолютный путь (разрешает .. и .).
 ```
 
-## example
+### 🧩 Утилиты и наблюдение
 
-```javascript
-// Asynchronous function to perform various file operations
-async function performFileOperations() {
-  try {
-    // Ensure a directory exists; create it if it doesn't
-    await fs.ensureDir('exampleDir');
-    // Create a file and write some data to it
-    await fs.outputFile('exampleDir/exampleFile.txt', 'Hello, world!');
-    // Read the file's content
-    const data = await fs.readFile('exampleDir/exampleFile.txt', 'utf-8');
-    console.log('File Content:', data);
-    // Recursively copy the file
-    await fs.copy('exampleDir/exampleFile.txt', 'exampleDir/copyOfExampleFile.txt');
-    // Move the file to a new location
-    await fs.move('exampleDir/copyOfExampleFile.txt', 'exampleDir/movedExampleFile.txt');
-    // Remove the file
-    await fs.remove('exampleDir/movedExampleFile.txt');
-    // Ensure a file exists; create it if it doesn't
-    await fs.ensureFile('exampleDir/newFile.txt');
-    // Write JSON data to a file
-    const jsonData = { name: 'John Doe', age: 30 };
-    await fs.writeJson('exampleDir/data.json', jsonData);
-    // Read JSON data from a file
-    const jsonFileContent = await fs.readJson('exampleDir/data.json');
-    console.log('JSON File Content:', jsonFileContent);
-  } catch (err) {
-    console.error('Error during file operations:', err);
-  }
-}
+```ts
+fs.watch(path, options, listener) — следит за изменениями файла/папки.
+fs.watchFile(filename, options, listener) — следит с интервалом опроса.
+fs.unwatchFile(filename) — прекращает слежение.
+fs.cp(src, dest, options, callback) — рекурсивно копирует (Node.js 16+).
 ```
