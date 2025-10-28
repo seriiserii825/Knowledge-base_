@@ -22,3 +22,20 @@ services:
       - .:/app
       - /app/node_modules
 ```
+
+## commands
+
+```
+# 1) Rebuild the php-fpm image (clean rebuild)
+docker compose build --no-cache php-fpm
+
+# 2) Recreate the php-fpm container using the new image
+docker compose up -d --no-deps --force-recreate php-fpm
+```
+
+## short command
+
+```
+
+docker compose up -d --build php-fpm
+```

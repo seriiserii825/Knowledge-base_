@@ -1,7 +1,19 @@
-### 1\. **Install MariaDB**
+# 1\. **Install MariaDB**
 
 Use `pacman` to install MariaDB:
 `sudo pacman -S mariadb`
+
+## Set the root password by logging into the MariaDB shell:
+
+```bash
+sudo mariadb
+```
+
+```sql
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'newpass';
+FLUSH PRIVILEGES;
+```
 
 ---
 
