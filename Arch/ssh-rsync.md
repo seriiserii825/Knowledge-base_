@@ -2,11 +2,11 @@
 
 ```bash
 
-rsync -avz -e "ssh -p 22" serii@myserver.com:/var/www/html/config.php ~/Documents/
+rsync -avz -e "ssh -p 1979" serii@myserver.com:/var/www/html/config.php ~/Documents/
 ```
 
 ## upload
 
 ```bash
-rsync -avz ./.config.php serii@myserver.com:/var/www/html/
+rsync -avz -e "ssh -p 1979" ./.config.php serii@myserver.com:/var/www/html/
 ```
