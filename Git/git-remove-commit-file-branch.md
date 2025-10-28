@@ -15,6 +15,8 @@ git rm --cached filename
 git clean -n - show untracked files
 git clean -f filename - untracked files
 git clean -fd - untracked files and directories
+git clean -fdn - preview untracked files and directories
+git restore --staged . - unstage all files
 ```
 
 ### remove changes from git, reset to the last commit
