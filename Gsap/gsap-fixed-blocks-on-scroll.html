@@ -1,49 +1,124 @@
-<div class="experiences__container">
-  <?php foreach ($items as $item) : ?> <?php $image = $item['image']; $logo = $item['logo'];
-  $subtitle = $item['subtitle']; $description = $item['description']; ?>
-  <div class="experiences__inner">
-    <div class="experiences__item">
-      <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" loading="lazy" />
-      <div class="experiences__body">
-        <header class="experiences__header"><?php echo $logo; ?></header>
-        <footer class="experiences__footer">
-          <div class="experiences__content">
-            <h3 class="experiences__subtitle"><?php echo $subtitle; ?></h3>
-            <div class="experiences__description"><?php echo $description; ?></div>
+<script lang="ts" setup>
+import { onMounted, ref } from "vue";
+import AppSidebar from "../components/products-filter/AppSidebar.vue";
+import FilterTop from "../components/products-filter/FilterTop.vue";
+import ProductsLoop from "../components/products-filter/ProductsLoop.vue";
+import ProductPopup from "../components/products-filter/ProductPopup.vue";
+import { useProductsFilterStore } from "../pinia/products-filter-stori";
+import { storeToRefs } from "pinia";
+
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const wrapRef = ref<HTMLElement | null>(null);
+const asideRef = ref<HTMLElement | null>(null); // пин
+const mainRef = ref<HTMLElement | null>(null); // контент
+
+let st: ScrollTrigger | null = null;
+
+function createPinOnce() {
+  if (st) return;
+  const wrap = wrapRef.value;
+  const aside = asideRef.value;
+  const main = mainRef.value;
+  if (!wrap || !aside || !main) return;
+
+  if (window.matchMedia("(max-width: 870px)").matches) return;
+
+  st = ScrollTrigger.create({
+    trigger: wrap, // когда верх wrap дойдет до 8% вьюпорта — начинаем пин
+    start: "top 8%",
+    endTrigger: main, // а заканчиваем, когда низ main
+    end: "90% 92%", // дойдет до 92% (зеркально старту)
+    pin: aside, // пинится именно aside
+    pinSpacing: false,
+    markers: false, // оставь на время отладки
+    invalidateOnRefresh: true,
+  });
+}
+
+const products_filter_store = useProductsFilterStore();
+const { popup_is_open } = storeToRefs(products_filter_store);
+async function init() {
+  await products_filter_store.getAll();
+  const term_slug = getTermSlug();
+  products_filter_store.current_taxonomy = term_slug;
+  await products_filter_store.filterProducts();
+  console.log("init pin");
+  setTimeout(() => {
+    createPinOnce();
+  }, 1000);
+}
+
+function getTermSlug() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get("term") || "";
+}
+
+onMounted(() => {
+  init();
+});
+</script>
+<template>
+  <div class="products-filter">
+    <div class="container">
+      <div class="products-filter__wrap" ref="wrapRef">
+        <aside class="products-filter__sidebar">
+          <div class="products-filter__aside" ref="asideRef">
+            <AppSidebar />
           </div>
-          <a href="#" class="btn"><?php echo $button_text; ?></a>
-        </footer>
+        </aside>
+
+        <main class="products-filter__main" ref="mainRef">
+          <FilterTop />
+          <ProductsLoop />
+        </main>
       </div>
     </div>
   </div>
-  <?php endforeach; ?>
-</div>
-<script charset="utf-8">
-  import gsap from "gsap";
-  import ScrollTrigger from "gsap/ScrollTrigger";
+  <ProductPopup v-if="popup_is_open" />
+</template>
+<style lang="scss">
+.products-filter {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1720px;
 
-  export default function experienceAnimation() {
-    const experience_container = document.querySelector(".experiences__container") as HTMLElement;
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 
-    const boxes = document.querySelectorAll(".experiences__inner") as NodeListOf<HTMLElement>;
-
-    if (!boxes.length) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    boxes.forEach((box) => {
-      animateBox(box, experience_container);
-    });
-
-    function animateBox(box: HTMLElement, section: HTMLElement) {
-      ScrollTrigger.create({
-        trigger: box,
-        start: "top 5%",
-        endTrigger: section,
-        end: "bottom 60%",
-        pin: box,
-        pinSpacing: false,
-        // markers: true
-      });
+    @media screen and (max-width: 870px) {
+      flex-direction: column;
     }
   }
-</script>
+
+  &__sidebar {
+    flex: 0 0 43.6rem;
+    background: rgba(32, 56, 100, 0.04);
+    padding: 3.2rem 1.6rem;
+
+    @media screen and (max-width: 870px) {
+      width: 100%;
+      margin-bottom: 3.2rem;
+    }
+  }
+
+  &__main {
+    flex: 1;
+    padding-left: 13.8rem;
+
+    @media screen and (max-width: 1550px) {
+      padding-left: 4rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      padding-left: 0;
+      width: 100%;
+    }
+  }
+}
+</style>
