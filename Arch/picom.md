@@ -1,4 +1,4 @@
 # version
 ```bash
-aur/picom-ftlabs-git
+yay -S picom-ftlabs-git
 ```
