@@ -1,94 +1,70 @@
-Awesome—here’s a clean, copy-pasteable setup for **Husky v9+** from zero, using your SCSS formatter and `vue-tsc` type check. This uses **Bun** (I’ll note npm/yarn variants too).
+# husky
 
-# 1) Install Husky
+## 1) Install Husky
 
-bash
+```bash
+bun add -D husky
+```
 
-Copy code
+## 2) Add the prepare script
 
-`# choose ONE of these bun add -D husky # npm i -D husky # yarn add -D husky`
+Add/keep this in package.json:
 
-# 2) Add the prepare script
+```json
+{
+  "scripts": {
+    "prepare": "husky"
+  }
+}
+```
 
-Add/keep this in `package.json`:
+## 3) Initialize Husky
 
-json
+This creates the .husky/ folder and wiring.
 
-Copy code
+```bash
+bun run prepare
+```
 
-`{   "scripts": {     "prepare": "husky"   } }`
+## 4. Create the pre-commit hook
 
-# 3) Initialize Husky
+Create file: .husky/pre-commit (no subfolder like \_/, no sourcing!)
 
-This creates the `.husky/` folder and wiring.
-
-bash
-
-Copy code
-
-`bun run prepare # or: npx husky install`
-
-# 4) Create the pre-commit hook
-
-Create file: `.husky/pre-commit` (no subfolder like `_/`, no sourcing!)
-
-bash
-
-Copy code
-
-`#!/usr/bin/env sh  # Stop on first failure set -e  # Run your checks bun run format:scss bun run type:check  echo "✅ Pre-commit checks passed"`
+```bash
+#!/usr/bin/env sh
+# Stop on first failure
+set -e
+# Run your checks
+bun run format:scss
+bun run type:check
+echo "✅ Pre-commit checks passed"
+```
 
 Make it executable:
 
-bash
+```bash
+chmod +x .husky/pre-commit
+```
 
-Copy code
+## 6) Verify Husky is active
 
-`chmod +x .husky/pre-commit`
+```bash
+git config --get core.hooksPath
+```
 
-> **Important (v9+):** Do **NOT** include the deprecated lines
-> 
-> bash
-> 
-> Copy code
-> 
-> `. "$(dirname -- "$0")/_/husky.sh"`
-> 
-> and you don’t need a `.husky/_` directory at all.
-
-# 5) Remove old config
-
-Delete the old, ignored block from `package.json`:
-
-json
-
-Copy code
-
-`"husky": {   "hooks": {     "pre-commit": "npm run format:scss && npm run type:check"   } }`
-
-# 6) Verify Husky is active
-
-bash
-
-Copy code
-
-`git config --get core.hooksPath # should print: .husky`
+# should print: .husky
 
 If it doesn’t:
 
-bash
+```bash
+git config core.hooksPath .husky
+```
 
-Copy code
-
-`git config core.hooksPath .husky`
-
-# 7) Test it
+## 7) Test it
 
 Make a tiny, intentional SCSS error, then:
 
-bash
-
-Copy code
-
-`git add -A git commit -m "test husky"`
-
+```bash
+git add -A
+git commit -m "test husky"
+```
