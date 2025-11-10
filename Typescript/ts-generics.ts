@@ -41,10 +41,18 @@ getData<ApiResponse<Post[]>>("https://jsonplaceholder.typicode.com/posts/1").the
   console.log(data.data);
 });
 
-// getData<User[]>("https://jsonplaceholder.typicode.com/posts/1").then((data) => {
-//   console.log(data);
-// });
-//
-// getData<Post[]>("https://jsonplaceholder.typicode.com/posts/1").then((data) => {
-//   console.log(data);
-// });
+/////////////////////////
+
+function processing<T>(data: T): T {
+  return data;
+}
+
+interface ProcessingFn {
+  <T>(data: T): T;
+}
+
+let newFunc: ProcessingFn = processing;
+
+interface DataSaver {
+  processing: ProcessingFn
+}
