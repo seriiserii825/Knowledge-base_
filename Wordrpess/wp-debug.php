@@ -1,44 +1,35 @@
 <?php  
-// Enable WP_DEBUG mode
 define('WP_DEBUG', true);
-
-// Enable Debug logging to the /wp-content/debug.log file
 define('WP_DEBUG_LOG', true);
-
-// Disable display of errors and warnings
 define('WP_DEBUG_DISPLAY', false);
 @ini_set('display_errors', 0);
 
-// Exclude notices and deprecations from logging
-error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED);
-
-// create plugin file in
-// wp-content/mu-plugins/limit-error-reporting.php
+// Логировать без Notice/Deprecated. Хочешь — убери и Warning.
+error_reporting(
+  E_ALL
+    & ~E_NOTICE
+    & ~E_USER_NOTICE
+    & ~E_DEPRECATED
+    & ~E_USER_DEPRECATED
+  // & ~E_WARNING
+  // & ~E_USER_WARNING
+);
 ?>
 
-
+<!-- чтобы заглушить notice в debug.log -->
+<!-- wp-content/mu-plugins/silence-doing-it-wrong.php -->
 <?php
 /**
- * Plugin Name: Limit Error Reporting (local)
- * Description: Exclude notices and deprecations from debug.log on local.
+ * Plugin Name: Silence Doing It Wrong Notices
+ * Description: Disables _doing_it_wrong() trigger_error notices.
  */
 
-// Only adjust on local + when WP_DEBUG is on.
-if ( defined('WP_ENVIRONMENT_TYPE') && WP_ENVIRONMENT_TYPE === 'local' && defined('WP_DEBUG') && WP_DEBUG ) {
-
-    // Remove notices, user notices, deprecated (incl. user) and strict.
-    $level = E_ALL & ~E_NOTICE & ~E_USER_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_STRICT;
-    error_reporting($level);
-
-    // Prevent WordPress from triggering notice-level logs for “doing it wrong” and deprecated calls.
-    add_filter('doing_it_wrong_trigger_error', '__return_false');
-    add_filter('deprecated_function_trigger_error', '__return_false');
-    add_filter('deprecated_argument_trigger_error', '__return_false');
-    add_filter('deprecated_file_trigger_error', '__return_false');
-}
+add_filter('doing_it_wrong_trigger_error', '__return_false');                // _doing_it_wrong()
+add_filter('deprecated_function_trigger_error', '__return_false');           // deprecated_function_run
+add_filter('deprecated_argument_trigger_error', '__return_false');           // deprecated_argument_run
+add_filter('deprecated_file_trigger_error', '__return_false');               // deprecated_file_included
 
 ?>
-
 <?php
 
 //func.php
