@@ -14,6 +14,10 @@ export default function accessIndexType() {
     [key: string]: string;
   };
 
+  const colors = ["red", "green", "blue"] as const;
+  type Color = (typeof colors)[number];
+  const new_color: Color = "red";
+
   const debts = "debts";
 
   // Using Access Index Type to create a new type based on an existing type
@@ -28,7 +32,7 @@ export default function accessIndexType() {
   type TCmpanyDepartment = keyof TCompany["departments"];
 
   // Creating a type that represents all possible value types of TCompany
-  type TCompanyKeysType = TCompany[keyof TCompany]
+  type TCompanyKeysType = TCompany[keyof TCompany];
 
   const company: TCompany = {
     name: "TechCorp",
@@ -38,11 +42,11 @@ export default function accessIndexType() {
     departments: {
       HR: "Human Resources",
       IT: "Information Technology",
-      Sales: "Sales Department"
+      Sales: "Sales Department",
     },
     management: {
-      owner: "Alice Johnson"
-    }
+      owner: "Alice Johnson",
+    },
   };
 
   function printDebs<T, K extends keyof T, S extends keyof T>(company: T, name: K, debts: S) {
