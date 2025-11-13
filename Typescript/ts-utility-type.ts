@@ -1,103 +1,98 @@
-// Awaited
-type A = Awaited<Promise<string>>;
-// type A = string
-type B = Awaited<Promise<Promise<number>>>;
-// type B = number
-type C = Awaited<boolean | Promise<number>>;
-// type C = number | boolean
-// ====--====--====--====--====--====-- Partial ====--====--====--====--====--====---
-interface Todo {
-  title: string;
-  description: string;
-}
-function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
-  return { ...todo, ...fieldsToUpdate };
-}
-const todo1 = {
-  title: "organize desk",
-  description: "clear clutter",
-};
-const todo2 = updateTodo(todo1, {
-  description: "throw out trash",
-});
-// ====--====--====--====--====--====-- Required ====--====--====--====--====--====---
-interface Props {
-  a?: number;
-  b?: string;
-}
-const obj: Props = { a: 5 };
-const obj2: Required<Props> = { a: 5 }; // Error: Property 'b' is missing in type '{ a: number; }' but required in type 'Required<Props>'.
-// ====--====--====--====--====--====-- Readonly ====--====--====--====--====--====---
-interface Todo2 {
-  title: string;
-}
-const todo: Readonly<Todo2> = {
-  title: "Delete inactive users",
-};
-todo.title = "Hello"; // Error: Cannot assign to 'title' because it is a read-only property.
-// ====--====--====--====--====--====-- Record ====--====--====--====--====--====---
-type CatName = "miffy" | "boris" | "mordred";
-interface CatInfo {
+export default function unionTypes() {
+// 1. Partial<T> — делает все свойства необязательными
+interface User {
+  name: string;
   age: number;
-  breed: string;
 }
-const cats: Record<CatName, CatInfo> = {
-  miffy: { age: 10, breed: "Persian" },
-  boris: { age: 5, breed: "Maine Coon" },
-  mordred: { age: 16, breed: "British Shorthair" },
+
+const u: Partial<User> = {
+  name: "Ivan", // age можно не указывать
 };
-// ====--====--====--====--====--====-- Pick ====--====--====--====--====--====---
-// Constructs a type by picking the set of properties K from T
-interface Todo3 {
-  title: string;
-  description: string;
-  completed: boolean;
+// 2. Required<T> — делает все свойства обязательными
+interface Props {
+  title?: string;
+  count?: number;
 }
-type Todo3Preview = Pick<Todo3, "title" | "completed">;
-const todo3: Todo3Preview = {
-  title: "Clean room",
-  completed: false,
+
+const p: Required<Props> = {
+  title: "Hello",
+  count: 5,
 };
-// ====--====--====--====--====--====-- Omit ====--====--====--====--====--====---
-// Constructs a type by picking all properties from T and then removing K
-interface Todo4 {
-  title: string;
-  description: string;
-  completed: boolean;
-  createdAt: number;
+// 3. Readonly<T> — запрещает менять свойства
+interface Point {
+  x: number;
+  y: number;
 }
-type Todo4Preview = Omit<Todo4, "description">;
-const todo4: Todo4Preview = {
-  title: "Clean room",
-  completed: false,
-  createdAt: 1615544252770,
+
+const p: Readonly<Point> = { x: 1, y: 2 };
+// p.x = 10  // ❌ ошибка
+// 4. Record<K, T> — объект с фиксированными ключами
+type Role = "admin" | "user";
+
+const access: Record<Role, number> = {
+  admin: 10,
+  user: 1,
 };
-type Todo4Info = Omit<Todo4, "completed" | "createdAt">;
-const todoInfo: Todo4Info = {
-  title: "Pick up kids",
-  description: "Kindergarten closes at 5pm",
+// 5. Pick<T, K> — выбирает несколько свойств
+interface User {
+  id: number;
+  login: string;
+  email: string;
+}
+
+const u: Pick<User, "login" | "email"> = {
+  login: "ivan",
+  email: "ivan@mail.com",
 };
+// 6. Omit<T, K> — исключает свойства
+interface User {
+  id: number;
+  login: string;
+  email: string;
+}
 
-// ====--====--====--====--====--====-- Exclude ====--====--====--====--====--====---
-type Shape =
-  | { kind: "circle"; radius: number }
-  | { kind: "square"; x: number }
-  | { kind: "triangle"; x: number; y: number };
-type T3 = Exclude<Shape, { kind: "circle" }>;
+const u: Omit<User, "id"> = {
+  login: "ivan",
+  email: "ivan@mail.com",
+};
+// 7. Exclude<T, U> — убирает из union'a лишнее
+type Letters = "a" | "b" | "c";
 
-// result type T3 = { kind: "square"; x: number } | { kind: "triangle"; x: number; y: number }
+type WithoutA = Exclude<Letters, "a">;
+// "b" | "c"
+// 8. Extract<T, U> — берет только совпадающие
+type All = "a" | "b" | "c";
+type Target = "b" | "z";
 
-//=====--====--====--====--====--- Extract ====--====--====--====--====--====---
-// Constructs a type by extracting from T all properties that are assignable to K(oposite of Exclude)
-type TShape =
-  | { kind: "circle"; radius: number }
-  | { kind: "square"; x: number }
-  | { kind: "triangle"; x: number; y: number };
-type T5 = Extract<Shape, { kind: "circle" }>;
-// result type T5 = { kind: "circle"; radius: number }
+type OnlyCommon = Extract<All, Target>;
+// "b"
+// 9. NonNullable<T> — убирает null и undefined
+type T = string | null | undefined;
+type Clean = NonNullable<T>;
+// string
+// 10. ReturnType<T> — тип возвращаемого значения
+function sum(a: number, b: number) {
+  return a + b;
+}
 
-// ReturnType =====--====--====--====--====--====--
-declare function f1(): { a: number; b: string };
-type T6 = ReturnType<typeof f1>;
+type R = ReturnType<typeof sum>; // number
+// 11. Parameters<T> — типы аргументов функции
+function login(name: string, age: number) {}
 
-// result type T6 = { a: number; b: string }
+type P = Parameters<typeof login>; 
+// [string, number]
+// 12. ConstructorParameters<T>
+class Car {
+  constructor(public model: string, public year: number) {}
+}
+
+type Params = ConstructorParameters<typeof Car>;
+// [string, number]
+// 13. InstanceType<T> — тип созданного экземпляра
+class Car {
+  model = "BMW";
+}
+
+type C = InstanceType<typeof Car>; 
+// Car
+}
