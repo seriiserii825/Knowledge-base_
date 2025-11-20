@@ -54,6 +54,9 @@
     svg {
       position: relative;
       z-index: 2;
+      @media screen and (max-width: 576px) {
+        transform: scale(0.5);
+      }
       path {
         stroke: var(--contrast);
         transition: all 0.4s;
@@ -74,12 +77,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 6.4rem;
-    height: 6.4rem;
+    width: 7.4rem;
+    height: 7.4rem;
     font-size: 2rem;
     border-radius: 48px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     transition: all 0.4s;
+    @media screen and (max-width: 576px) {
+      width: 4rem;
+      height: 4rem;
+    }
     &:hover {
       color: white;
       background-color: var(--accent-dark);
