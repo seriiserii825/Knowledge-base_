@@ -1,36 +1,89 @@
-sudo pacman -S postgresql
+# ============================
+# PostgreSQL CLI — все команды
+# ============================
 
-## setup
-sudo -iu postgres
-sudo -u postgres initdb --locale en_US.UTF-8 -D /var/lib/postgres/data
-systemctl start postgresql
-systemctl enable postgresql
-systemctl status postgresql
+# Подключение
+psql -U user -d db
+psql -U user
+psql -h host -p port -U user db
 
-## Create user and database
-sudo -iu postgres
-psql
+# Выход
+\q
 
-# Create user
-CREATE USER serii WITH PASSWORD 'serii1981';
-ALTER USER serii WITH SUPERUSER;
+# Помощь
+\?
+\h                 # помощь по SQL
+\h SELECT          # помощь по конкретной команде
 
-## pgadmin
-go to project folder
-source venv/bin/activate
-pip install pip==24.0
+# Информация
+\conninfo
+\encoding
 
+# Базы данных
+\l                  # список БД
+\list
+\c dbname           # подключиться к БД
+CREATE DATABASE name;
+DROP DATABASE name;
 
-sudo chown $USER /var/lib/pgadmin
-sudo chown $USER /var/log/pgadmin
+# Таблицы / схемы
+\dt                 # список таблиц
+\dt+                # с размером
+\d tablename        # структура таблицы
+\dn                 # список схем
+\df                 # список функций
+\dv                 # список вьюх
+\di                 # индексы
+\ds                 # последовательности
 
-## start pgadmin
-pgadmin4
-set email and password
-go to
-http://127.0.0.1:5050
-and login with email and password
+# Пользователи / роли
+\du
+CREATE USER name WITH PASSWORD 'pass';
+DROP USER name;
+ALTER USER name WITH SUPERUSER;
 
-## reset login
-sudo rm /var/lib/pgadmin/pgadmin4.db
-pgadmin4
+# SQL основные команды
+SELECT * FROM table;
+INSERT INTO table (...) VALUES (...);
+UPDATE table SET ... WHERE ...;
+DELETE FROM table WHERE ...;
+
+# Управление таблицами
+CREATE TABLE name (...);
+DROP TABLE name;
+ALTER TABLE name ADD COLUMN col TYPE;
+ALTER TABLE name DROP COLUMN col;
+
+# Состояние подключения
+\conninfo
+
+# Поиск
+\df *substring*      # поиск функции
+\dt *user*           # поиск таблиц
+
+# Настройки вывода
+\x on                # расширенный вывод
+\x off
+\timing              # включить время выполнения
+
+# Работа с файлами
+\i file.sql          # выполнить SQL-файл
+\o out.txt           # вывод в файл
+\o                   # отключить вывод в файл
+
+# Экспорт / импорт
+\copy table TO 'file.csv' CSV HEADER;
+\copy table FROM 'file.csv' CSV HEADER;
+
+# История
+\s                   # показать историю команд
+\w file.txt          # сохранить историю в файл
+
+# Транзакции
+BEGIN;
+COMMIT;
+ROLLBACK;
+
+# Подсчёт размера
+\l+                  # размеры БД
+\d+ tablename        # размер таблицы
