@@ -1,10 +1,6 @@
-# ============================
-# PostgreSQL CLI — все команды
-# ============================
-
 # Docker
 
-docker exec -it postgres psql -u postgres
+docker exec -it postgres psql -U postgres
 alter role postgres with password 'newpassword';
 create database mydb;
 
