@@ -328,16 +328,16 @@ bun add @nestjs/jwt @nestjs/passport passport passport-jwt
 ```typescript
 // src/auth/auth.module.ts
 
-import { JwtModule } from '@nestjs/jwt';
-import {PassportModule} from '@nestjs/passport';
+import { JwtModule } from "@nestjs/jwt";
+import { PassportModule } from "@nestjs/passport";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
-      secret: 'your_jwt_secret_key',
-      signOptions: { expiresIn: '1h' },
+      secret: "your_jwt_secret_key",
+      signOptions: { expiresIn: "1h" },
     }),
   ],
   controllers: [AuthController],
@@ -398,3 +398,126 @@ auth controller signIn method
     return this.authService.signIn(authCredentialsDto);
   }
 ```
+
+### JWT Strategy
+
+```typescript
+// src/auth/jwt.strategy.ts
+
+import { PassportStrategy } from "@nestjs/passport";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Strategy, ExtractJwt } from "passport-jwt";
+import { UserRepository } from "./user.repository";
+import { IJwtPayload } from "./interfaces/jwt-payload.interface";
+import { UserEntity } from "./user.entity";
+
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: "your_jwt_secret_key", // the same as in auth.module.ts
+    });
+  }
+  async validate(payload: IJwtPayload): Promise<UserEntity> {
+    const { username } = payload;
+    const user = await this.userRepository.findOne({
+      where: { username },
+    });
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
+    return user;
+  }
+}
+```
+
+### provide JwtStrategy in AuthModule
+
+```typescript
+// src/auth/auth.module.ts
+
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([UserEntity]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: 'your_jwt_secret_key',
+      signOptions: { expiresIn: '1h' },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, UserRepository, JwtStrategy],
+  exports: [JwtStrategy, PassportModule],
+})
+```
+
+### protect routes with AuthGuard
+
+```typescript
+// src/auth/auth.controller.ts
+
+  @Post('/test')
+  @UseGuards(AuthGuard())
+  async test(@Req() req): Promise<string> {
+    console.log(req.user);
+    return 'You are authenticated';
+  }
+```
+
+check with postman by adding Authorization Bearer token with accessToken from signIn response
+in postman Headers -> Key: Authorization -> Value: Bearer <accessToken>
+
+### Custom decorator to get user
+
+```typescript
+// src/auth/get-user.decorator.ts
+
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
+import { UserEntity } from "./user.entity";
+
+export const GetUser = createParamDecorator((data: unknown, ctx: ExecutionContext): UserEntity => {
+  const request = ctx.switchToHttp().getRequest();
+  return request.user;
+});
+```
+
+use it in controller
+
+```typescript
+// src/auth/auth.controller.ts
+
+  @Post('/test')
+  @UseGuards(AuthGuard())
+  async test(@GetUser() user: UserEntity): Promise<UserEntity> {
+    return user;
+  }
+```
+
+### set guards for tasks.module.ts
+
+```typescript
+// src/tasks/tasks.module.ts
+//import auth module
+
+import {AuthModule} from 'src/auth/auth.module';
+
+@Module({
+  imports: [TypeOrmModule.forFeature([TaskEntity]), AuthModule],
+  controllers: [TasksController],
+  providers: [TasksService, TaskRepository]
+})
+```
+
+### protect tasks routes
+
+```typescript
+// src/tasks/tasks.controller.ts
+
+@Controller('tasks')
+@UseGuards(AuthGuard())
+export class TasksController {
+}
+```
+
+### conclusion
+Now your NestJS application has JWT authentication set up with user registration, login, and protected routes. You can further enhance this setup by adding features like role-based access control, password reset functionality, and more.
