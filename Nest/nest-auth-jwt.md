@@ -316,3 +316,85 @@ controller
     return this.authService.signIn(authCredentialsDto);
   }
 ```
+
+### JWT setup
+
+```bash
+bun add @nestjs/jwt @nestjs/passport passport passport-jwt
+```
+
+### JWT module configure jwt and passport
+
+```typescript
+// src/auth/auth.module.ts
+
+import { JwtModule } from '@nestjs/jwt';
+import {PassportModule} from '@nestjs/passport';
+
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([UserEntity]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: 'your_jwt_secret_key',
+      signOptions: { expiresIn: '1h' },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, UserRepository],
+})
+export class AuthModule {}
+```
+
+### JWT signInt
+
+create interface for payload in auth folder
+
+```typescript
+// src/auth/interfaces/jwt-payload.interface.ts
+export interface JwtPayload {
+  username: string;
+}
+```
+
+create interface signInResponse in auth folder
+
+```typescript
+// src/auth/interfaces/sign-in-response.interface.ts
+export interface ISignInResponse {
+  accessToken: string;
+}
+```
+
+in auth service signIn method
+
+```typescript
+// src/auth/auth.service.ts
+
+  async signIn(
+    authCredentialsDto: AuthCredentialsDto,
+  ): Promise<ISignInResponse | null> {
+    const username =
+      await this.userRepository.validateUserPassword(authCredentialsDto);
+    if (!username) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const payload: IJwtPayload = { username };
+    const accessToken = this.jwtService.sign(payload);
+    return { accessToken };
+  }
+```
+
+auth controller signIn method
+
+```typescript
+// src/auth/auth.controller.ts
+
+  @Post('/signin')
+  async signIn(
+    @Body() authCredentialsDto: AuthCredentialsDto,
+  ): Promise<ISignInResponse | null> {
+    return this.authService.signIn(authCredentialsDto);
+  }
+```
