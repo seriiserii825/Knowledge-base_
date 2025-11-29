@@ -117,6 +117,10 @@ export class AuthCredentialsDto {
   @IsString()
   @MinLength(8)
   @MaxLength(20)
+  @Matches(/(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*)/, {
+    message:
+      "password must contain at least one uppercase letter, one lowercase letter, and one number",
+  })
   password: string;
 }
 ```
@@ -180,5 +184,135 @@ constructor(private dataSource: DataSource) {
   @Delete('/user/:id')
   async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.authService.deleteUser(id);
+  }
+```
+
+### auth service signUp unique username
+
+```typescript
+// src/auth/user.repository.ts
+
+  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
+    const { username, password } = authCredentialsDto;
+    const user = new UserEntity();
+    user.username = username;
+    user.password = password;
+    try {
+      await user.save();
+    } catch (error) {
+      if ('code' in error && error.code === '23505') {
+        throw new ConflictException('Username already exists');
+      }
+      throw new InternalServerErrorException();
+    }
+  }
+```
+
+### hashed password
+
+```bash
+bun add bcrypt
+```
+
+user entity added salt and drop db, to recreate it
+
+```typescript
+// src/auth/user.entity.ts
+
+@Column()
+salt: string;
+```
+
+auth repository added salt and save to db
+
+```typescript
+// src/auth/user.repository.ts
+
+import * as bcrypt from "bcrypt";
+
+@Injectable()
+export class UserRepository extends Repository<UserEntity> {
+  constructor(private dataSource: DataSource) {
+    super(UserEntity, dataSource.createEntityManager());
+  }
+
+  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
+    const { username, password } = authCredentialsDto;
+    const user = new UserEntity();
+    const salt = await bcrypt.genSalt();
+    user.salt = salt;
+    user.username = username;
+    user.password = await this.hashPassword(password, salt);
+    try {
+      await user.save();
+    } catch (error) {
+      if ("code" in error && error.code === "23505") {
+        throw new ConflictException("Username already exists");
+      }
+      throw new InternalServerErrorException();
+    }
+  }
+
+  private async hashPassword(password: string, salt: string): Promise<string> {
+    return bcrypt.hash(password, salt);
+  }
+}
+```
+
+### validate user password
+
+user entity method
+
+```typescript
+// src/auth/user.entity.ts
+
+  @Column()
+  salt: string;
+
+  async validatePassword(password: string): Promise<boolean> {
+    const hashedPassword = await bcrypt.hash(password, this.salt);
+    return hashedPassword === this.password;
+  }
+```
+
+auth repository validate user
+
+```typescript
+// src/auth/user.repository.ts
+
+async validateUserPassword( authCredentialsDto: AuthCredentialsDto,): Promise<string | null> {
+    const { username, password } = authCredentialsDto;
+    const user = await this.findOne({ where: { username } });
+    if (user && await user.validatePassword(password)) {
+      return user.username;
+    } else {
+      return null;
+    }
+}
+
+```
+
+### signIn method in auth service
+
+```typescript
+// src/auth/auth.service.ts
+
+  async signIn( authCredentialsDto: AuthCredentialsDto,): Promise<string | null> {
+    const username = await this.userRepository.validateUserPassword(authCredentialsDto);
+    if (!username) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    return username;
+  }
+```
+
+controller
+
+```typescript
+// src/auth/auth.controller.ts
+
+  @Post('/signin')
+  async signIn( @Body() authCredentialsDto: AuthCredentialsDto,): Promise<string | null> {
+    return this.authService.signIn(authCredentialsDto);
   }
 ```
