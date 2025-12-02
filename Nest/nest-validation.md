@@ -3,7 +3,7 @@
 Выполни:
 
 ```bash
-npm install class-validator class-transformer
+bun add class-validator class-transformer
 ```
 
 или
