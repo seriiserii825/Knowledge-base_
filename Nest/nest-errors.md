@@ -1,5 +1,14 @@
 # NestJS — Все встроенные HTTP Exception классы
 
+### самые популярные
+
+- BadRequestException (400) - неправильные данные запроса
+- UnauthorizedException (401) - требуется аутентификация
+- ForbiddenException (403) - нет прав доступа
+- NotFoundException (404) - ресурс не найден
+- ConflictException (409) - конфликт данных (дубликат)
+- InternalServerErrorException (500) - внутренняя ошибка сервера
+
 | Exception Class                           | HTTP Code | Description                          | Example                                              |
 | ----------------------------------------- | --------- | ------------------------------------ | ---------------------------------------------------- |
 | **HttpException**                         | custom    | Base exception                       | `throw new HttpException('Message', 400)`            |
