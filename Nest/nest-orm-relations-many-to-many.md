@@ -89,3 +89,18 @@ async create(dto: CreateMovieDto): Promise<MovieEntity> {
     }
 }
 ```
+
+### movie find by id with relations
+
+```ts
+  async findById(id: number): Promise<MovieEntity> {
+    const movie = await this.movieRepository.findOne({
+      where: { id },
+      relations: ['actors'],
+    });
+    if (!movie) {
+      throw new NotFoundException('Movie not found');
+    }
+    return movie;
+  }
+```
