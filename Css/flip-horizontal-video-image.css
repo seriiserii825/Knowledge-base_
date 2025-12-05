@@ -1,0 +1,7 @@
+video {
+  transform: scaleX(-1); /* mirror horizontally */
+  transform-origin: center;
+  /* smooth GPU-accelerated transform */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
