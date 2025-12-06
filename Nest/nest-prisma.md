@@ -1,7 +1,45 @@
 ### install
 
 ```bash
-bun add prisma @prisma/client @prisma/adapter-pg
+bun add prisma @prisma/client @prisma/adapter-pg pg
+```
+
+### generate prisma module
+
+```bash
+nest g res prisma --no-spec
+```
+
+### initialize prisma
+
+```bash
+npx prisma init
+```
+
+### set database url in .env
+
+```env
+
+POSTGRES_USER="postgres"
+POSTGRES_PASSWORD="secret_pass"
+POSTGRES_HOST="localhost"
+POSTGRES_PORT="5432"
+POSTGRES_DB="nest_free_code"
+
+DATABASE_URL="postgresql://postgres:secret_pass@localhost:5432/nestjs_course?schema=public"
+```
+
+### prisma schema
+
+```prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
 ```
 
 ### prisma studio
@@ -16,40 +54,20 @@ npx prisma studio
 npx prisma db push
 ```
 
-### generate prisma module
-
-```bash
-nest g res prisma --no-spec
-```
-
-### prisma.module.ts
-
-```typescript
-//remove controller
-import { Module } from "@nestjs/common";
-import { PrismaService } from "./prisma.service";
-
-@Module({
-  providers: [PrismaService],
-  exports: [PrismaService],
-})
-export class PrismaModule {}
-```
-
 ### prisma.service.ts
 
 ```typescript
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { Pool } from 'pg';
+import { Injectable, OnModuleInit } from "@nestjs/common";
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
     const pool = new Pool({ connectionString: process.env.DATABASE_URL });
     const adapter = new PrismaPg(pool);
-    
+
     super({ adapter });
   }
 
