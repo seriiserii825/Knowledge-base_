@@ -19,6 +19,18 @@ docker ps - List all running containers
 docker rm container_id conainer_id - remove one or more containers
 ```
 
+## docker stop all container
+
+```bash
+docker stop $(docker ps -aq)
+```
+
+## remove all containers
+
+```bash
+docker rm $(docker ps -aq)
+```
+
 ## environment variables
 
 ```bash
@@ -37,6 +49,6 @@ env - List all environment variables
 docker exec -it container_id /bin/bash - Connect to a running container
 docker attach container_id - Attach to a running container
 docker exec -it DB_mysql /bin/bash - Connect to a running container named DB_mysql
-docker exec -it DB_mysql /bin/bash mysql -uroot -p - Connect to a MySQL 
+docker exec -it DB_mysql /bin/bash mysql -uroot -p - Connect to a MySQL
                             database inside container view environment variables
 ```
