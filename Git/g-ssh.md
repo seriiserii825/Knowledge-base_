@@ -70,6 +70,8 @@ Fix permissions (very important):
 chmod 600 ~/.ssh/config
 ```
 
+### 4.1 add you key to github account
+
 ### 5️⃣ Test connection
 
 ```bash
