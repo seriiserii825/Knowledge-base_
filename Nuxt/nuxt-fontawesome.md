@@ -40,4 +40,9 @@ copy from https://fontawesome.com/v6/docs/web/use-with/vue/add-icons
 
 ```vue
 <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
+
+<font-awesome-icon
+  @click="updateFunc(category.id)"
+  :icon="['fas', 'pen-to-square']"
+  class="inline-block cursor-pointer text-white transition-all hover:scale-110 hover:text-yellow-400" />
 ```
