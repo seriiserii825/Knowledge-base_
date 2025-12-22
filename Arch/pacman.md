@@ -36,6 +36,13 @@ sudo reflector \
 sudo pacman -Syyu
 ```
 
+### 3️⃣ Обновить систему
+
+```bash
+sudo reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+sudo pacman -Syu
+```
+
 # Remove VLC and its dependencies on Arch Linux
 
 ```bash
