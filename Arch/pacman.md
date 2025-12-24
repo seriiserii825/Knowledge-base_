@@ -13,36 +13,6 @@ ignore package
 IgnorePkg = package_name
 ```
 
-<!-- 1️⃣ Обновить список зеркал автоматически -->
-
-```bash
-sudo pacman -S reflector
-```
-
-```bash
-sudo reflector \
-         --country Moldova,Romania,Ukraine,Germany \
-         --protocol https \
-         --latest 10 \
-         --sort rate \
-         --save /etc/pacman.d/mirrorlist
-```
-
-Если Moldova нет — нормально, он просто пропустит
-
-### 2️⃣ Синхронизировать базы
-
-```bash
-sudo pacman -Syyu
-```
-
-### 3️⃣ Обновить систему
-
-```bash
-sudo reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-sudo pacman -Syu
-```
-
 # Remove VLC and its dependencies on Arch Linux
 
 ```bash
