@@ -4,7 +4,7 @@
 bun add -D eslint eslint-plugin-vue @typescript-eslint/parser @typescript-eslint/eslint-plugin typescript-eslint
 ```
 
-### eslint.config.js
+### eslint.config.mjs
 
 ```js
 import pluginVue from "eslint-plugin-vue";
@@ -27,6 +27,14 @@ export default [
   {
     files: ["**/*.ts", "**/*.tsx", "**/*.vue"],
     rules: {
+      "vue/no-v-html": "off",
+      "vue/max-attributes-per-line": [
+        "error",
+        {
+          singleline: 1,
+          multiline: 1,
+        },
+      ],
       "vue/attributes-order": [
         "error",
         {
@@ -72,7 +80,7 @@ export default [
 
 ```json
 {
-  "type": "module",
+  "prebuild": "sed -i -e 's/vite_dev = true;/vite_dev = false;/g' functions.php && npx stylelint '**/*.scss' --fix && vue-tsc --noEmit && eslint .",
   "lint": "eslint .",
   "lint:fix": "eslint . --fix"
 }
