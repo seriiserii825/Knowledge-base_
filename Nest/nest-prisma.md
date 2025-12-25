@@ -27,6 +27,30 @@ POSTGRES_PORT="5432"
 POSTGRES_DB="nest_free_code"
 
 DATABASE_URL="postgresql://postgres:secret_pass@localhost:5432/nestjs_course?schema=public"
+
+```
+
+### mysql
+
+```env
+.env
+MYSQL_USER="root"
+MYSQL_PASSWORD="root"
+MYSQL_HOST="localhost"
+MYSQL_PORT="3306"
+MYSQL_DB="teashop"
+DATABASE_URL="mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB}"
+
+schema
+
+generator client {
+  provider = "prisma-client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
 ```
 
 ### prisma schema
