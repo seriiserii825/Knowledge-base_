@@ -1,34 +1,46 @@
-## one to many
+### One-to-Many (Один ко многим)
+
+Один пользователь — много постов.
 
 ```prisma
-
-
-model Movie {
-  id           Int      @id @default(autoincrement())
-  title        String
-  description  String?
-  release_year Int
-  rating       Float    @default(0.0)
-  is_avalaible Boolean  @default(false)
-  genre        Genre    @default(DRAMA)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  reviews      Review[] @relation("movie_reviews")
-
-  @@map("movies")
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  posts Post[]
 }
 
-model Review {
-  id     Int    @id @default(autoincrement())
-  text   String
-  rating Float  @default(0.0)
-
-  movie    Movie @relation("movie_reviews", fields: [movie_id], references: [id], onDelete: Cascade)
-  movie_id Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("movies")
+model Post {
+  id Int @id @default(autoincrement())
+  title String
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
 }
+```
+
+NestJS использование:
+
+```typescript
+typescript; // Создание поста для пользователя
+await prisma.post.create({
+  data: {
+    title: "My Post",
+    author: { connect: { id: 1 } },
+  },
+});
+
+// Или через user
+await prisma.user.update({
+  where: { id: 1 },
+  data: {
+    posts: {
+      create: { title: "New Post" },
+    },
+  },
+});
+
+// Получение пользователя с постами
+await prisma.user.findUnique({
+  where: { id: 1 },
+  include: { posts: true },
+});
 ```

@@ -38,5 +38,3 @@ Shifv+v then S<ul>
 ```vim
 cstth2
 ```
-
-
