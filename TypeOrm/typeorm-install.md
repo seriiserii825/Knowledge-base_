@@ -1,7 +1,7 @@
 ## install with bun
 
 ```bash
-bun add typeorm @nestjs/typeorm typeorm-extensions pg
+bun add typeorm @nestjs/typeorm typeorm-extension pg
 ```
 
 src/config/data-source.ts
