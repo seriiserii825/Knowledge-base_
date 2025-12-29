@@ -6,12 +6,6 @@
 bun add class-validator class-transformer
 ```
 
-или
-
-```bash
-yarn add class-validator class-transformer
-```
-
 ### ✅ 2. Включить ValidationPipe глобально
 
 Открой main.ts и добавь:
