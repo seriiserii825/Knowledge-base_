@@ -8,11 +8,16 @@
 </div>
 <script>
   export default function fileInput() {
-    const file = document.querySelector('input[name="file"]');
+    const file = document.querySelector('input[name="file"]') as HTMLInputElement;
+    const form_file = document.querySelector('.form-file') as HTMLElement;
     if (file) {
-      file.addEventListener("change", (e) => {
+      file.addEventListener('change', (e) => {
+        const target = e.target as HTMLInputElement;
+        if (!target.files) {
+          return;
+        }
         // Get the selected file
-        const [file] = e.target.files;
+        const [file] = Array.from(target.files);
         // Get the file name and size
         const {
           name: fileName,
@@ -22,7 +27,7 @@
         const fileSize = (size / 1000).toFixed(2);
         // Set the text content
         const fileNameAndSize = `${fileName} - ${fileSize}KB`;
-        document.querySelector(".form-file").textContent = fileNameAndSize;
+        form_file.textContent = fileNameAndSize;
       });
     }
   }
