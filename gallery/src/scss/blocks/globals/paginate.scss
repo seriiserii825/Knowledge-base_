@@ -12,64 +12,48 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 6.4rem;
+    height: 7.5rem;
     cursor: pointer;
     &.disabled {
       cursor: not-allowed !important;
       opacity: 0.6 !important;
+      a {
+        cursor: not-allowed !important;
+      }
     }
     &--right {
-      position: relative;
-      transform: rotate(180deg);
+      svg {
+        position: relative;
+        transform: rotate(180deg);
+      }
     }
     a {
       position: relative;
       z-index: 2;
-      border-color: var(--contrast);
       &:hover {
-        &::before {
-          opacity: 1;
-        }
         svg {
           path {
-            stroke: white;
+            stroke: #f2d52a;
           }
         }
-      }
-      &::before {
-        content: '';
-        position: absolute;
-        top: 4px;
-        left: 4px;
-        display: block;
-        width: calc(100% - 8px);
-        height: calc(100% - 8px);
-        background: var(--contrast);
-        border-radius: 50%;
-        opacity: 0;
-        transition: all .4s;
-        z-index: 1;
-      }
-    }
-    svg {
-      position: relative;
-      z-index: 2;
-      @media screen and (max-width: 576px) {
-        transform: scale(0.5);
-      }
-      path {
-        stroke: var(--contrast);
-        transition: all 0.4s;
       }
     }
   }
   li {
-    color: white;
+    color: #666;
+    background: #e1e5ec;
     a:hover,
     &.active {
       a {
-        color: #62bb46;
-        background: rgba(255, 255, 255, 0.04);
+        color: #f2d52a;
+        background: #375297;
+      }
+    }
+    &:not(.paginate__arrow) {
+      a {
+        padding: 0.8rem;
+        justify-content: flex-start;
+        align-items: flex-end;
       }
     }
   }
@@ -77,26 +61,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 7.4rem;
-    height: 7.4rem;
-    font-size: 2rem;
-    border-radius: 48px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    width: 7.5rem;
+    height: 7.5rem;
+    font-size: 2.4rem;
+    font-weight: 600;
+    letter-spacing: 0.12rem;
+    color: #666;
     transition: all 0.4s;
     @media screen and (max-width: 576px) {
       width: 4rem;
       height: 4rem;
     }
     &:hover {
-      color: white;
-      background-color: var(--accent-dark);
+      color: #f2d52a;
+      background-color: #375297;
     }
     &.disabled {
       cursor: not-allowed !important;
       opacity: 0.6 !important;
     }
     &.active {
-      background: rgba(255, 255, 255, 0.08);
+      color: #f2d52a;
+      background-color: #375297;
     }
+  }
+  svg {
+    stroke: #375297;
   }
 }
