@@ -89,14 +89,14 @@ $image = $category['image'];
       </div>
     <?php endforeach; ?>
   </div>
-  <?php if ($total_pages > 1): ?>
+  <?php if ($total_pages > 1) : ?>
     <ul class="pagination">
       <li class="pagination__arrow">
         <a href="<?php echo goPrev($current_page); ?>">
           <?php get_template_part('template-parts/icons/icon-swiper'); ?>
         </a>
       </li>
-      <?php for ($i = 0; $i < $total_pages; $i++): ?>
+      <?php for ($i = 0; $i < $total_pages; $i++) : ?>
         <li>
           <a class="<?php echo $i + 1 == $current_page ? 'active' : null; ?>" href="?page_num=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a>
         </li>

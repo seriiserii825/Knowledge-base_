@@ -1,10 +1,10 @@
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 export default function menuScroll() {
   gsap.registerPlugin(ScrollTrigger);
-  const is_home = document.querySelector("body.home");
-  const menu_links = document.querySelectorAll("#js-main-menu a");
-  const logo = document.querySelector(".logo a");
+  const is_home = document.querySelector('body.home');
+  const menu_links = document.querySelectorAll('#js-main-menu a');
+  const logo = document.querySelector('.logo a');
   clickLinks();
   clickLogo();
   if (is_home) {
@@ -12,36 +12,38 @@ export default function menuScroll() {
   }
 
   function menuClose() {
-    const menu = document.querySelector("#js-main-menu");
-    const sandwichWrap = document.querySelector("#js-sandwitch-wrap");
-    menu?.classList.remove("fixed");
-    sandwichWrap?.classList.toggle("sandwitch--active");
+    const menu = document.querySelector('#js-main-menu');
+    const sandwichWrap = document.querySelector('#js-sandwitch-wrap');
+    menu?.classList.remove('fixed');
+    sandwichWrap?.classList.toggle('sandwitch--active');
   }
   function clickLinks() {
     menu_links.forEach((link) => {
-      link.addEventListener("click", function (e: any) {
+      link.addEventListener('click', function (e: Event) {
         e.preventDefault();
-        const li = link.closest("li");
+        const li = link.closest('li');
         if (li) {
-          li.classList.add("current-menu-item");
+          li.classList.add('current-menu-item');
         }
-        const href = e.currentTarget?.getAttribute("href");
-        const hash = href?.split("#")[1];
+        const href = (e.currentTarget as HTMLAnchorElement).getAttribute(
+          'href'
+        ) as string;
+        const hash = href?.split('#')[1];
         if (is_home) {
           if (hash) {
             // change hash in url without page reload
-            window.history.pushState(null, "", href);
-            const element = document.querySelector(href);
+            window.history.pushState(null, '', href);
+            const element = document.querySelector(href) as HTMLElement;
             const offset_top = 110;
             clearActive();
-            element.classList.add("active");
+            element.classList.add('active');
             const viewportOffset = element.getBoundingClientRect();
             const element_top = viewportOffset.top + window.scrollY;
             const offset_total = element_top - offset_top;
             // console.log("offset_total", offset_total);
             window.scrollTo({
               top: offset_total,
-              behavior: "smooth",
+              behavior: 'smooth'
             });
 
             menuClose();
@@ -59,12 +61,12 @@ export default function menuScroll() {
     });
   }
   function clickLogo() {
-    logo?.addEventListener("click", function (e: any) {
+    logo?.addEventListener('click', function (e: Event) {
       e.preventDefault();
       if (is_home) {
         window.scrollTo({
           top: 0,
-          behavior: "smooth",
+          behavior: 'smooth'
         });
       } else {
         window.location.href = window.location.origin;
@@ -74,8 +76,8 @@ export default function menuScroll() {
   function onScroll() {
     // Loop through all blocks
     menu_links.forEach((link) => {
-      const href = link.getAttribute("href");
-      const targetId = href?.split("#")[1]; // Extract the id from href (e.g., "#about" becomes "about")
+      const href = link.getAttribute('href');
+      const targetId = href?.split('#')[1]; // Extract the id from href (e.g., "#about" becomes "about")
 
       if (targetId) {
         const targetElement = document.getElementById(targetId);
@@ -84,12 +86,12 @@ export default function menuScroll() {
           // Create a ScrollTrigger for each block
           ScrollTrigger.create({
             trigger: targetElement,
-            start: "top center", // When the block's top reaches the center of the viewport
-            end: "bottom center", // When the block's bottom leaves the center of the viewport
+            start: 'top center', // When the block's top reaches the center of the viewport
+            end: 'bottom center', // When the block's bottom leaves the center of the viewport
             onEnter: () => setActive(link), // When the block enters the viewport
             onEnterBack: () => setActive(link), // When scrolling back up and the block enters again
             onLeave: () => removeActive(link), // When leaving the viewport
-            onLeaveBack: () => removeActive(link), // When scrolling back up and the block leaves
+            onLeaveBack: () => removeActive(link) // When scrolling back up and the block leaves
             // markers: true, // Enable this to see where the triggers start/end (for debugging)
           });
         }
@@ -98,19 +100,23 @@ export default function menuScroll() {
   }
 
   // Function to add the active class
-  function setActive(link: any) {
+  function setActive(link: Element) {
     clearActive();
-    link.closest('li').classList.add("current-menu-item"); // Add active class to the current link
+    const parent = link.closest('li');
+    if (!parent) return;
+    parent.classList.add('current-menu-item'); // Add active class to the current link
   }
 
   // Function to remove the active class
-  function removeActive(link: any) {
-    link.closest('li').classList.remove("current-menu-item"); // Remove active class from the current link
+  function removeActive(link: Element) {
+    const parent = link.closest('li');
+    if (!parent) return;
+    parent.classList.remove('current-menu-item'); // Remove active class from the current link
   }
 
   function clearActive() {
-    menu_links.forEach((link: any) => {
-      link.classList.remove("active");
+    menu_links.forEach((link: Element) => {
+      link.classList.remove('active');
     });
   }
 }

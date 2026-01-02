@@ -1,61 +1,106 @@
 <?php
-$works = get_field('works', 2);
 if (isset($_GET['pg'])) {
   $current_page = $_GET['pg'];
 } else {
   $current_page = 1;
 }
-$per_page = 2;
+$per_page = 3;
 $offset = ($current_page - 1) * $per_page;
-$works_posts = new WP_Query([
+
+$news_page_id = 903;
+$section_id = 'js-news-loop';
+
+$news = new WP_Query(array(
   'post_type' => 'post',
   'posts_per_page' => $per_page,
   'offset' => $offset,
-]);
-$total_posts = $works_posts->found_posts;
+));
+$posts = $news->posts;
+$total_posts = $news->found_posts;
 $total_pages = ceil($total_posts / $per_page);
 ?>
-<section class="works <?php echo $class; ?>">
-  <div class="works__body">
-    <?php if ($works_posts->have_posts()): ?>
-      <?php while ($works_posts->have_posts()): ?>
-        <?php $works_posts->the_post(); ?>
+<section class="news-loop" id="<?php echo $section_id; ?>">
+  <div class="container-big">
+    <div class="news-loop__wrap">
+      <?php foreach ($posts as $post): ?>
         <?php
-        $image = get_the_post_thumbnail_url();
-        $subtitle = get_the_title();
-        $text = get_the_excerpt();
-        $single_article = get_field('single_article');
-        $date = $single_article['date'];
-        $permalink = get_the_permalink();
+        $id = $post->ID;
+        $image = get_post_thumbnail_id($id);
+        $title = get_the_title($id);
+        $date = get_the_date('j F, Y', $id);
+        $excerpt = get_the_excerpt($id);
         ?>
-        <div class="works__item">
-          <div class="works__img">
-            <img src="<?php echo $image; ?>" alt="<?php echo $image; ?>" loading="lazy" />
-            <div class="works__info">
-              <div class="works__date"><?php echo $date; ?></div>
-              <h3 class="works__subtitle title"><?php echo $subtitle; ?></h3>
-            </div>
+        <article class="news-loop__item">
+          <div class="news-loop__img">
+            <?php create_picture(my_get_image_id($image)) ?>
           </div>
-          <div class="works__content">
-            <div class="works__text"><?php echo $text; ?></div>
-            <a href="<?php echo $permalink; ?>" class="btn"><?php echo $button_text; ?></a>
-          </div>
-        </div>
-      <?php endwhile; ?>
-      <?php wp_reset_postdata(); ?>
+          <div class="news-loop__date"><?php echo $date; ?></div>
+          <h2 class="news-loop__title"><?php echo $title; ?></h2>
+          <div class="news-loop__excerpt"><?php echo $excerpt; ?></div>
+          <?php btnComponent(get_the_permalink($id), 'Leggi tutto') ?>
+        </article>
+      <?php endforeach; ?>
+    </div>
+
+    <?php if ($total_pages > 1) : ?>
+      <?php
+      $current_page = max(1, min((int)$current_page, (int)$total_pages));
+      $window = 3; // how many pages to show around the current one
+      $prev_page = max(1, $current_page - 1);
+      $next_page = min($total_pages, $current_page + 1);
+      // Determine window range
+      $start = max(2, $current_page - 1);
+      $end   = min($total_pages - 1, $current_page + 1);
+      // Adjust if near the edges
+      if ($current_page <= 3) {
+        $start = 2;
+        $end = min($total_pages - 1, $window + 1);
+      } elseif ($current_page >= $total_pages - 2) {
+        $start = max(2, $total_pages - $window);
+        $end = $total_pages - 1;
+      }
+      ?>
+      <ul class="paginate">
+        <!-- Prev -->
+        <li class="paginate__arrow<?= $current_page == 1 ? ' disabled' : '' ?>">
+          <a href="<?php echo get_the_permalink($news_page_id); ?>?pg=<?php echo $prev_page; ?>#<?php echo $section_id; ?>">
+            <?php get_template_part('template-parts/icons/icon-paginate'); ?>
+          </a>
+        </li>
+        <!-- Always show first page -->
+        <li>
+          <a href="<?php echo get_the_permalink($news_page_id); ?>?pg=1#<?php echo $section_id; ?>" class="<?php echo $current_page == 1 ? 'active' : ''; ?>">01</a>
+        </li>
+        <!-- Left dots -->
+        <?php if ($start > 2) : ?>
+          <li class="paginate__dots">…</li>
+        <?php endif; ?>
+        <!-- Middle window -->
+        <?php for ($i = $start; $i <= $end; $i++) : ?>
+          <li>
+            <a href="<?php echo get_the_permalink($news_page_id); ?>?pg=<?php echo $i; ?>#<?php echo $section_id; ?>" class="<?php echo $current_page == $i ? 'active' : ''; ?>"><?php echo $i; ?></a>
+          </li>
+        <?php endfor; ?>
+        <!-- Right dots -->
+        <?php if ($end < $total_pages - 1) : ?>
+          <li class="paginate__dots">…</li>
+        <?php endif; ?>
+        <!-- Always show last page -->
+        <?php if ($total_pages > 1) : ?>
+          <?php
+          $i_str = $total_pages < 10 ? '0' . $total_pages : $total_pages;
+          ?>
+          <li>
+            <a href="<?php echo get_the_permalink($news_page_id); ?>?pg=<?php echo $total_pages; ?>#<?php echo $section_id; ?>" class="<?php echo $current_page == $total_pages ? 'active' : ''; ?>"><?php echo $i_str; ?></a>
+          </li>
+        <?php endif; ?>
+        <!-- Next -->
+        <li class="paginate__arrow paginate__arrow--right<?= $current_page == $total_pages ? ' disabled' : '' ?>">
+          <a href="<?php echo get_the_permalink($news_page_id); ?>?pg=<?php echo $next_page; ?>#<?php echo $section_id; ?>">
+            <?php get_template_part('template-parts/icons/icon-paginate'); ?>
+          </a>
+        </li>
+      </ul>
     <?php endif; ?>
   </div>
-  <?php if ($total_pages > 1): ?>
-    <ul class="paginate">
-      <li class="disabled paginate__arrow">
-        <?php get_template_part('template-parts/icons/icon-paginate'); ?>
-      </li>
-      <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-        <li class="<?php echo $current_page == $i ? 'active' : null; ?>"><a href="<?php echo get_the_permalink(435); ?>?pg=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-      <?php endfor; ?>
-      <li class="paginate__arrow paginate__arrow--right">
-        <?php get_template_part('template-parts/icons/icon-paginate'); ?>
-      </li>
-    </ul>
-  <?php endif; ?>
 </section>
