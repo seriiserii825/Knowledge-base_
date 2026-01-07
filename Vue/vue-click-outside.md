@@ -1,56 +1,37 @@
-### component
+### useClickOutside composable
 
-### composable
-```js
-
-import { onBeforeUnmount, onMounted } from "vue";
-export default function useDetectOutsideClick(component: any, callback: any) {
-  if (!component) return;
-  const listener = (event: Event) => {
-    if (
-      event.target !== component.value &&
-      event.composedPath().includes(component.value)
-    ) {
-      return;
-    }
-    if (typeof callback === "function") {
+```typescript
+// composables/useClickOutside.ts
+export function useClickOutside(elementRef: Ref<HTMLElement | null>, callback: () => void) {
+  function handler(event: PointerEvent) {
+    if (elementRef.value && !elementRef.value.contains(event.target as Node)) {
       callback();
     }
-  };
-  onMounted(() => {
-    window.addEventListener("click", listener);
-  });
-  onBeforeUnmount(() => {
-    window.removeEventListener("click", listener);
-  });
-
-  return { listener };
-}
-```
-
-```js
-const first_click = ref(false);
-function closePopup() {
-  second_store.active_allergents = [];
-}
-useDetectOutsideClick(componentRef, () => {
-  console.log(first_click.value, "first_click.value");
-  if (second_store.active_allergents.length && first_click.value) {
-    closePopup();
   }
-  first_click.value = true;
-});
+
+  onMounted(() => {
+    document.addEventListener("pointerdown", handler);
+  });
+
+  onUnmounted(() => {
+    document.removeEventListener("pointerdown", handler);
+  });
+}
 ```
 
-### html
+### Example usage
 
-````html
-<header class="alergenti-popup__header">
-  <h2 class="alergenti-popup__title">Allergeni</h2>
-  <div class="alergenti-popup__close" @click="closePopup">
-    <IPopupClose />
-  </div>
-</header>
-<div ref="componentRef" class="alergenti-popup__body alergenti-scrollbar">
-</div>
-````
+```vue
+<template>
+  <div ref="menuRef" class="menu">Click outside this menu to close it.</div>
+</template>
+<script lang="ts" setup>
+import { ref } from "vue";
+import { useClickOutside } from "./composables/useClickOutside";
+const menuRef = ref<HTMLElement | null>(null);
+const closeMenu = () => {
+  console.log("Menu closed");
+};
+useClickOutside(menuRef, closeMenu);
+</script>
+```
