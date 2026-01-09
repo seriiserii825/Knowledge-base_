@@ -1,7 +1,17 @@
 ### colors and fonts
 
-```js
+base.scss
 
+```scss
+:root {
+  --accent-light-color: #4a90ff;
+  --accent-color: #2463eb;
+  --accent-dark-color: #1a4bb8;
+  --text-color: #333333;
+}
+```
+
+```js
 /** @type {import('tailwindcss').Config} */
 export default {
   content: {
@@ -21,9 +31,9 @@ export default {
   },
   theme: {
     screens: {
-      sm: { max: "480px" },
-      md: { max: "768px" },
       lg: { max: "992px" },
+      md: { max: "768px" },
+      sm: { max: "576px" },
     },
     container: {
       padding: "20px",
@@ -31,20 +41,17 @@ export default {
     },
     extend: {
       colors: {
-        primary: {
-          light: "#6D28D9", //use in html class "text-primary-light"
-          DEFAULT: "#5B21B6", //use in html class "text-primary"
-          dark: "#4C1D95", //use in html class "text-primary-dark"
+        accent: {
+          light: "var(--accent-color-light)", //use in html class "text-accent-light"
+          DEFAULT: "var(--accent-color)", //use in html class "text-primary"
+          dark: "var(--accent-color-dark)", //use in html class "text-accent-dark"
         },
-        secondary: {
-          light: "#3B82F6", //use in html class "text-secondary-light"
-          DEFAULT: "#2563EB", //use in html class "text-secondary"
-          dark: "#1D4ED8", //use in html class "text-secondary-dark"
+        text: {
+          DEFAULT: "rgb(var(--text-color) / <alpha-value>)", //use in html class "text-text"
         },
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui"], // use in html class "font-sans"
-        serif: ["Merriweather", "ui-serif", "Georgia"], // use in html class "font-serif"
+        sans: ["Roboto", "ui-sans-serif", "system-ui"], // use in html class "font-sans"
       },
     },
   },

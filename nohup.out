@@ -1,0 +1,22 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1767787845.373757  120148 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
+Created TensorFlow Lite XNNPACK delegate for CPU.
+Attempting to use a delegate that only supports static-sized tensors with a graph that has dynamic-sized tensors (tensor#-1 is a dynamic-sized tensor).
+[120097:120153:0107/141045.555464:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[120097:120153:0107/141111.024668:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[120097:120153:0107/141200.844243:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: QUOTA_EXCEEDED
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1767788020.291132  124081 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
+Warning: vkCreateInstance: Found no drivers!
+Warning: vkCreateInstance failed with VK_ERROR_INCOMPATIBLE_DRIVER
+    at CheckVkSuccessImpl (../../third_party/dawn/src/dawn/native/vulkan/VulkanError.cpp:106)
+
+Warning: vkCreateInstance: Found no drivers!
+Warning: vkCreateInstance failed with VK_ERROR_INCOMPATIBLE_DRIVER
+    at CheckVkSuccessImpl (../../third_party/dawn/src/dawn/native/vulkan/VulkanError.cpp:106)
+
+Warning: Couldn't load Vulkan. Searched libvk_swiftshader.so.
+    at operator() (../../third_party/dawn/src/dawn/native/vulkan/BackendVk.cpp:374)
+
+[124081:124081:0107/141340.305149:ERROR:services/on_device_model/ml/gpu_blocklist.cc:120] Unable to get gpu adapter
+[120097:120097:0107/141340.305339:ERROR:services/on_device_model/public/cpp/service_client.cc:36] Unexpected on_device_model service disconnect: The device's GPU is not supported.
