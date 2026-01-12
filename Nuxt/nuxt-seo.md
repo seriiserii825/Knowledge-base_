@@ -104,3 +104,47 @@ useSeo({
 });
 </script>
 ```
+
+### also a plugin instead of nuxtconfig
+
+```typescript
+// plugins/canonical.ts
+export default defineNuxtPlugin(() => {
+  const route = useRoute();
+  const config = useRuntimeConfig();
+
+  // Canonical URL (динамический)
+  useHead({
+    link: [
+      {
+        rel: "canonical",
+        href: computed(() => `${config.public.baseUrl}${route.path}`),
+      },
+    ],
+  });
+
+  // SEO Meta tags
+  useSeoMeta({
+    // Basic
+    description:
+      "Il sondaggio ha l'obiettivo di analizzare in modo chiaro e completo come funzionano oggi le comunicazioni nella nostra azienda.",
+    robots: "index, follow",
+
+    // Open Graph
+    ogTitle: "Sondaggio comunicazione | Rewind e Altuofianco",
+    ogDescription:
+      "Il sondaggio ha l'obiettivo di analizzare in modo chiaro e completo come funzionano oggi le comunicazioni nella nostra azienda.",
+    ogType: "website",
+    ogUrl: computed(() => `${config.public.baseUrl}${route.path}`),
+    ogImage: `${config.public.baseUrl}/og-image.jpg`,
+    ogLocale: "it_IT",
+
+    // Twitter Card
+    twitterCard: "summary_large_image",
+    twitterTitle: "Sondaggio comunicazione | Rewind e Altuofianco",
+    twitterDescription:
+      "Il sondaggio ha l'obiettivo di analizzare in modo chiaro e completo come funzionano oggi le comunicazioni nella nostra azienda.",
+    twitterImage: `${config.public.baseUrl}/twitter-image.jpg`,
+  });
+});
+```
