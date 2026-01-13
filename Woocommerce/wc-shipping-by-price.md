@@ -88,6 +88,11 @@ const SELECTORS = {
   cartTotal: ".woocommerce-mini-cart__total .woocommerce-Price-amount bdi",
 } as const;
 
+const CLASSES = {
+  shippingCostHidden: "shipping-cost--hidden",
+  remainingAvailable: "shipping-cost__remaining--available",
+} as const;
+
 const WC_EVENTS = [
   "added_to_cart",
   "removed_from_cart",
@@ -192,7 +197,12 @@ class ShippingCalculator {
       const result: AjaxResponse = await response.json();
 
       if (result.success) {
-        this.render(result.data);
+        if (result.data.remaining === result.data.threshold) {
+          this.section.classList.add(CLASSES.shippingCostHidden);
+        } else {
+          this.section.classList.remove(CLASSES.shippingCostHidden);
+          this.render(result.data);
+        }
       }
     } catch (error) {
       console.error("Shipping calculation error:", error);
@@ -228,6 +238,11 @@ class ShippingCalculator {
     });
 
     this.remainingEl.textContent = remaining > 0 ? remainingText : deliveryAvailableText;
+    if (remaining <= 0) {
+      this.remainingEl.classList.add(CLASSES.remainingAvailable);
+    } else {
+      this.remainingEl.classList.remove(CLASSES.remainingAvailable);
+    }
   }
 }
 
