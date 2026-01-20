@@ -5,3 +5,9 @@ https://twitter.com/intent/tweet?url=
 https://wa.me/?text=
 https://api.whatsapp.com/send?text=
 https://t.me/share/url?url=
+
+<a href="https://t.me/username">Telegram</a>
+
+<!-- Напрямую открыть чат -->
+
+<a href="tg://resolve?domain=username">Open in Telegram</a>
