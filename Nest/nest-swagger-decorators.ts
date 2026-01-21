@@ -12,7 +12,7 @@ export function ApiUnauthorizedResponse() {
           statusCode: 401,
         },
       },
-    })
+    }),
   );
 }
 
@@ -29,7 +29,7 @@ export function ApiBadRequestResponse(message: string) {
           statusCode: 400,
         },
       },
-    })
+    }),
   );
 }
 
@@ -45,7 +45,7 @@ export function ApiNotFoundResponse(message: string) {
           statusCode: 404,
         },
       },
-    })
+    }),
   );
 }
 
