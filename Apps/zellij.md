@@ -27,3 +27,18 @@ after call inside any folder
 ```bash
 zellij --l layout-name
 ```
+
+### удалить неактивные сессии
+
+```bash
+zellij delete-all-sessions
+```
+
+### forever do not save sessions
+
+config.kdl
+
+```kdl
+
+session_serialization false
+```
