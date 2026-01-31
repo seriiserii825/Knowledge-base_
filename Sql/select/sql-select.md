@@ -21,6 +21,12 @@ SELECT * FROM users WHERE age > 25;
 SELECT * FROM users ORDER BY age DESC;  -- по убыванию
 SELECT * FROM users ORDER BY name ASC;   -- по возрастанию
 
+SELECT text, rating, createdAt
+FROM reviews
+ORDER BY rating DESC, createdAt DESC;
+
+SELECT id,title,price FROM products ORDER BY price DESC LIMIT 2 OFFSET 2;
+
 -- Ограничить количество результатов
 SELECT * FROM users LIMIT 5;
 
