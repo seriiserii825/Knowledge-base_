@@ -268,23 +268,66 @@ SELECT MAX("quantity") FROM order_items;
 
 **41.** Вывести количество товаров, среднюю цену, минимальную и максимальную цену
 
+```sql
+SELECT COUNT(*) AS product_count,
+       AVG(price) AS avg_price,
+       MIN(price) AS min_price,
+       MAX(price) AS max_price
+       FROM products;
+```
+
 **42.** Вывести количество отзывов, средний рейтинг, минимальный и максимальный рейтинг
+
+```sql
+SELECT  COUNT(*) AS review_count,
+        AVG(rating) AS avg_rating,
+        MIN(rating) AS avg_min,
+        MAX(rating) AS avg_max
+        FROM reviews;
+```
 
 **43.** Вывести количество заказов, общую сумму всех заказов, среднюю сумму заказа
 
+```sql
+SELECT  COUNT(*) AS order_count,
+        SUM(total) AS order_total,
+        AVG(total) AS avg_order
+        FROM orders;
+```
+
 **44.** Для товаров дороже 100: вывести количество, среднюю цену, минимальную и максимальную цену
+
+```sql
+SELECT  COUNT(*) AS products_count,
+        AVG(price) AS avg_products,
+        MIN(price) AS min_price,
+        MAX(price) AS max_price
+        FROM products WHERE price > 100;
+```
 
 **45.** Для отзывов с рейтингом >= 4: вывести количество и средний рейтинг
 
+```sql
+SELECT  COUNT(*) AS count,
+        AVG(rating) AS avg
+        FROM reviews WHERE rating >= 4;
+```
+
 **46.** Для заказов со статусом 'PAID': вывести количество и общую сумму
 
-**47.** Для товаров из магазина 3: вывести количество, сумму всех цен, среднюю цену
+```sql
+SELECT  COUNT(*) AS count,
+SUM(total) AS SUM
+FROM orders WHERE status = 'PAID';
+```
 
 **48.** Вычислить разницу между максимальной и минимальной ценой товара
 
-**49.** Вычислить процент товаров с описанием от общего количества товаров (подсказка: COUNT(description) _ 100.0 / COUNT(_))
+```sql
 
-**50.** Для позиций заказов: вывести общее количество строк, общее количество товаров (SUM quantity), среднее количество товаров в позиции, общую сумму (SUM price)
+SELECT MAX(price) - MIN(price)
+FROM products;
+```
 
 ---
 
