@@ -1,359 +1,240 @@
-# 30 Простых Задач на INNER JOIN
+# SQL JOIN Задачи
 
-## Структура базы данных
+## Базовые JOIN (1-10)
 
-**Таблицы:**
+### 1. Продукты и магазины
 
-- `users` (id, name, email, password, picture, role, createdAt, updatedAt)
-- `stores` (id, title, description, user_id, picture, createdAt, updatedAt)
-- `categories` (id, title, description, store_id, createdAt, updatedAt)
-- `colors` (id, name, value, store_id, createdAt, updatedAt)
-- `products` (id, title, description, price, images, store_id, category_id, color_id, user_id, createdAt, updatedAt)
-- `orders` (id, status, total, user_id, createdAt, updatedAt)
-- `order_items` (id, order_id, quantity, price, product_id, store_id, createdAt, updatedAt)
-- `reviews` (id, text, rating, user_id, product_id, store_id, createdAt, updatedAt)
-
----
-
-## Задачи
-
-### Задача 1
-
-Получить список всех продуктов с названием их магазина.
+Вывести все продукты с названиями магазинов, где они продаются.
 
 ```sql
-SELECT p.id as product_id, p.title as product_title, s.title as store_title FROM products p
-INNER JOIN stores s ON p.store_id = s.id ORDER BY p.id;
-```
-
-### Задача 2
-
-Вывести все заказы с именами пользователей, которые их сделали.
-
-```sql
-SELECT u.name as user_name, o.id as order_id
-FROM orders o
-INNER JOIN
-users u ON o.user_id = u.id;
-```
-
-### Задача 3
-
-Показать все отзывы с названием продукта, которому они принадлежат.
-
-```sql
-SELECT p.title AS product_name, r.*
-FROM reviews r
-JOIN products p ON r.product_id = p.id
-ORDER BY p.title, r.id;
-```
-
-### Задача 4
-
-Получить список всех продуктов с названием их категории.
-
-```sql
-SELECT p.id as product_id, p.title as product_title, c.title as category_title
-FROM products p
-JOIN categories c
-ON p.category_id = c.id
-ORDER BY c.title
-```
-
-### Задача 5
-
-Вывести все магазины с именами их владельцев.
-
-```sql
-SELECT s.id as store_id, s.title as store_title, u.name as user_name
-FROM stores s
-JOIN users u
-ON s.user_id = u.id
-```
-
-### Задача 6
-
-Показать все продукты с названием их цвета.
-
-```sql
--- select string_agg(column_name, ', ' ORDER BY ordinal_position) as columns FROM information_schema.columns WHERE table_name = 'products';
--- select string_agg(column_name, ', ' ORDER BY ordinal_position) as columns FROM information_schema.columns WHERE table_name = 'colors';
-SELECT p.id as product_id, p.title as product_title, c.name as color_name, c.value as color_value
-FROM products p
-JOIN colors c
-ON p.color_id = c.id
-ORDER BY c.name
-```
-
-### Задача 7
-
-Получить список всех элементов заказа с названием продукта.
-
-```sql
-SELECT o.id as order_id, o.price as order_price, p.title as product_title
-FROM order_items o
-JOIN products p
-ON o.product_id = p.id
-```
-
-### Задача 8
-
-Вывести все категории с названием магазина, к которому они относятся.
-
-```sql
-SELECT s.title as store_title, c.id as category_id, c.title as category_title
-FROM categories c
-JOIN stores s
-ON c.store_id = s.id
-ORDER BY s.title
-```
-
-### Задача 9
-
-Показать все цвета с названием магазина.
-
-```sql
-SELECT c.id as color_id, c.name as color_name, s.title as store_title
-FROM colors c
-JOIN stores s
-ON c.store_id = s.id
-```
-
-### Задача 10
-
-Получить все отзывы с именами пользователей, которые их оставили.
-
-```sql
-SELECT r.id, r.rating as review_rating, u.name as user_name
-FROM reviews r
-JOIN users u
-ON r.user_id = u.id
-```
-
-### Задача 11
-
-Вывести продукты дороже 1000 рублей с названием их магазина.
-
-```sql
-SELECT p.title as product_title, p.price as product_price, s.title as store_title
+SELECT p.title as product_title, s.title as store_title
 FROM products p
 JOIN stores s
 ON p.store_id = s.id
-WHERE p.price > 100
-ORDER BY p.price
 ```
 
-### Задача 12
+### 2. Пользователи и их заказы
 
-Показать заказы со статусом 'PAID' и именами пользователей.
-
-```sql
-SELECT o.id,o.status as order_status, o.total as order_total, u.email
-FROM orders o
-JOIN users u
-ON o.user_id = u.id
-WHERE o.status = 'PAID'
-
-
-```
-
-### Задача 13
-
-Получить отзывы с рейтингом выше 4 и названием продукта.
-
-```sql
-SELECT r.id, r.rating as review_rating, p.title as product_title
-FROM reviews r
-JOIN products p
-ON r.product_id = p.id
-WHERE r.rating >= 4
-ORDER BY r.rating, p.title
-```
-
-### Задача 14
-
-Вывести продукты из категории с id=1 вместе с названием категории.
-
-```sql
-SELECT p.id, p.title as product_title, c.id, c.title as category_name
-FROM products p
-JOIN categories c
-ON p.category_id = c.id
-WHERE c.id = 9
-```
-
-### Задача 15
-
-Показать все заказы пользователя с email='user@example.com'.
-
-```sql
-SELECT o.id, o.total as order_total, u.email as user_email
-FROM orders o
-JOIN users u
-ON o.user_id = u.id
-WHERE u.email = 'givi@gmail.com'
-```
-
-### Задача 16
-
-Получить количество продуктов в каждом магазине (название магазина и количество).
-
-```sql
-SELECT s.title as store_title, COUNT(p.id) as products_count
-FROM stores s
-JOIN products p
-ON s.id = p.store_id
-GROUP BY s.title
-```
-
-### Задача 17
-
-Вывести количество заказов для каждого пользователя (имя пользователя и количество).
+Показать всех пользователей и количество их заказов (включая пользователей без заказов).
 
 ```sql
 SELECT u.email as user_email, COUNT(o.id) as orders_count
 FROM users u
-JOIN orders o
+LEFT JOIN orders o
 ON o.user_id = u.id
 GROUP BY u.email
-ORDER BY COUNT(o.id)
+ORDER BY COUNT(o.id) DESC
 ```
 
-### Задача 18
+### 3. Категории без продуктов
 
-Показать среднюю цену продуктов в каждой категории (название категории и средняя цена).
+Найти все категории, в которых нет ни одного продукта.
 
 ```sql
-SELECT c.title as category_title, ROUND(AVG(p.price)) as products_avg
+SELECT c.title, COUNT(p.id) as product_id
+FROM categories c
+LEFT JOIN products p
+ON p.category_id = c.id
+GROUP BY c.title
+HAVING COUNT(p.id) = 0
+```
+
+### 4. Самый активный покупатель
+
+Найти пользователя с наибольшим количеством заказов (имя пользователя и количество заказов).
+
+```sql
+SELECT u.email, COUNT(o.id) as orders_count
+FROM users u
+JOIN orders o
+ON o.user_id = u.id
+GROUP BY u.id
+ORDER BY COUNT(o.id) DESC
+LIMIT 1
+```
+
+### 6. Магазины и их выручка
+
+Показать каждый магазин и общую сумму продаж всех его продуктов.
+
+```sql
+SELECT s.title, COALESCE(SUM(oi.quantity * oi.price), 0) AS total_sales
+FROM stores s
+JOIN order_items oi
+ON oi.store_id = s.id
+GROUP BY s.title
+```
+
+### 7. Продукты без отзывов
+
+Найти все продукты, на которые не оставлено ни одного отзыва.
+
+```sql
+SELECT p.title, r.id
+FROM products p
+LEFT JOIN reviews r
+ON r.product_id = p.id
+WHERE r.id IS NULL
+```
+
+### 8. Топ-3 категории по количеству продуктов
+
+Вывести три категории с наибольшим количеством продуктов.
+
+```sql
+SELECT c.title, COUNT(p.id) as product_count
 FROM categories c
 JOIN products p
 ON p.category_id = c.id
 GROUP BY c.title
-ORDER BY ROUND(AVG(p.price))
+ORDER BY COUNT(p.id) DESC
+LIMIT 3
 ```
 
-### Задача 19
+### 9. Пользователи и их последний заказ
 
-Получить общую сумму всех заказов для каждого пользователя (имя и сумма).
+Показать каждого пользователя и дату его последнего заказа.
 
 ```sql
-SELECT u.email, SUM(o.total) as orders_total
+SELECT u.email, MAX(o."createdAt") as last_date
 FROM users u
 JOIN orders o
 ON o.user_id = u.id
 GROUP BY u.email
 ```
 
-### Задача 20
+### 10. Средний чек по магазинам
 
-Вывести количество отзывов для каждого продукта (название продукта и количество отзывов).
+Вычислить средний размер заказа для каждого магазина.
 
 ```sql
-SELECT p.title, COUNT(r.id) as reviews_count
+SELECT s.title, ROUND(AVG(o.total), 2)
+FROM stores s
+JOIN orders o
+ON o.store_id = s.id
+GROUP BY s.id
+```
+
+## Средний уровень (11-20)
+
+### 11. Продукты с высоким рейтингом
+
+Найти продукты со средним рейтингом выше 4.5 и минимум 10 отзывами.
+
+```sql
+SELECT p.title, AVG(r.rating) as avg_rating, COUNT(r.id) review_count
 FROM products p
 JOIN reviews r
-ON r.product_id = p.id
-GROUP BY p.title
-ORDER BY COUNT(r.id)
+ON p.id = r.product_id
+GROUP BY p.id
+HAVING AVG(r.rating) > 3 AND COUNT(r.id) >= 6
 ```
 
-### Задача 21
+### 12. Магазины без продаж
 
-Показать продукты и их магазины, отсортированные по цене от большей к меньшей.
+Найти магазины, у которых нет ни одного проданного продукта (нет заказов).
 
 ```sql
-SELECT p.title as product_title, p.price as product_price, s.title as store_title
-FROM products p
-JOIN stores s
-ON p.store_id = s.id
-ORDER BY p.price DESC
+SELECT s.title, COUNT(o.id)
+FROM stores s
+LEFT JOIN orders o
+ON o.store_id = s.id
+GROUP BY s.id
+HAVING COUNT(o.id) = 0
 ```
 
-### Задача 22
+### 13. Самый популярный продукт по категориям
 
-Получить заказы с общей суммой более 5000 рублей с именами пользователей.
-
-```sql
-SELECT o.total as order_total, u.email as user_email
-FROM orders o
-JOIN users u
-ON o.user_id = u.id
-WHERE o.total > 500
-```
-
-### Задача 23
-
-Вывести все элементы заказа с названием продукта и ценой, где количество больше 2.
-
-```sql
-SELECT p.title as product_name, p.price as product_price, o.quantity as order_quantity
-FROM order_items o
-JOIN products p
-ON o.product_id = p.id
-WHERE o.quantity >= 2;
-```
-
-### Задача 24
-
-Показать продукты, созданные в 2024 году, с названием их магазина.
-
-```sql
-SELECT p.title as product_title, p."createdAt", s.title as store_title
-FROM products p
-JOIN stores s
-ON p.store_id = s.id
-WHERE EXTRACT(YEAR FROM p."createdAt") = 2024
-```
-
-### Задача 27
-
-Показать продукты с их категорией и цветом (три таблицы).
-
-```sql
-SELECT p.title as product_title, ct.title as category_title, c.name as color_name, c.value as color_value
-FROM products p
-JOIN categories ct
-ON p.category_id = ct.id
-JOIN colors c
-ON p.color_id = c.id
-ORDER BY p.title, ct.title
-```
-
-### Задача 28
-
-Получить заказы с информацией о пользователе и количестве позиций в заказе.
+Для каждой категории найти продукт с наибольшим количеством отзывов.
 
 ```sql
 SELECT
-    ord.id as order_id,
-    ord.status,
-    ord.total,
-    u.email as user_email,
-    u.name as user_name,
-    COUNT(oi.id) as items_count,
-    SUM(oi.quantity) as total_quantity,
-    ord."createdAt"
-FROM orders ord
-JOIN users u ON ord.user_id = u.id
-LEFT JOIN order_items oi ON oi.order_id = ord.id
-GROUP BY ord.id, u.email, u.name
-ORDER BY ord."createdAt" DESC;
+    c.title AS category_title,
+    p.title AS product_title,
+    COUNT(r.id) AS review_count
+FROM categories c
+JOIN products p ON p.category_id = c.id
+LEFT JOIN reviews r ON r.product_id = p.id
+GROUP BY c.id, c.title, p.id, p.title
+HAVING COUNT(r.id) = (
+    SELECT MAX(review_count)
+    FROM (
+        SELECT COUNT(r2.id) AS review_count
+        FROM products p2
+        LEFT JOIN reviews r2 ON r2.product_id = p2.id
+        WHERE p2.category_id = c.id
+        GROUP BY p2.id
+    ) AS category_reviews
+)
+ORDER BY review_count DESC;
 ```
 
-### Задача 29
+### 14. Пользователи, купившие из разных категорий
 
-Вывести топ-5 самых дорогих продуктов с названием магазина и категории.
+Найти пользователей, которые купили продукты минимум из 3 разных категорий.
 
-### Задача 30
+### 15. Динамика продаж по месяцам
 
-Показать среднюю оценку (rating) для каждого продукта вместе с названием продукта и количеством отзывов.
+Показать общую сумму продаж по каждому месяцу за последний год.
 
----
+### 16. Продукты одновременно в нескольких магазинах
 
-## Примечания
+Найти продукты, которые продаются в более чем одном магазине (если структура БД это позволяет).
 
-- Все задачи решаются с использованием INNER JOIN
-- Используйте алиасы для таблиц (например, u для users, s для stores)
-- Обращайте внимание на названия столбцов с внешними ключами (они заканчиваются на \_id)
-- Для агрегатных функций используйте GROUP BY
-- Для фильтрации агрегированных данных используйте HAVING
+### 17. Категории с самой высокой средней ценой
+
+Вывести топ-5 категорий с самой высокой средней ценой продукта.
+
+### 18. Пользователи без покупок за последние 6 месяцев
+
+Найти пользователей, которые зарегистрированы, но не делали заказов последние 6 месяцев.
+
+### 19. Отзывы с текстом и без
+
+Показать количество отзывов с текстовым комментарием и без него по каждому продукту.
+
+### 20. Корреляция цены и рейтинга
+
+Вывести продукты, сгруппированные по ценовым диапазонам (0-1000, 1000-5000, 5000+) и их средний рейтинг.
+
+## Продвинутый уровень (21-30)
+
+### 21. Пользователи, купившие похожие продукты
+
+Найти пары пользователей, которые купили хотя бы 3 одинаковых продукта.
+
+### 22. Продукты с противоречивыми отзывами
+
+Найти продукты, у которых есть отзывы и с рейтингом 5, и с рейтингом 1 (большой разброс мнений).
+
+### 23. Самая прибыльная категория для каждого магазина
+
+Для каждого магазина определить категорию, которая приносит наибольшую выручку.
+
+### 24. Цепочка рекомендаций
+
+Найти продукты, которые часто покупают вместе (в одном заказе) с конкретным продуктом.
+
+### 25. Рост продаж год к году
+
+Сравнить общую выручку текущего года с предыдущим годом по каждому магазину (процент роста).
+
+### 26. Пользователи-рецензенты
+
+Найти пользователей, которые оставляют отзывы, но сами ничего не покупали.
+
+### 27. Продукты вне своей ценовой категории
+
+Найти продукты, цена которых отклоняется от средней цены категории более чем на 50%.
+
+### 28. Сезонность продаж по категориям
+
+Определить, в какие месяцы каждая категория продаётся лучше всего.
+
+### 29. Клиентская база магазинов
+
+Найти пересечение клиентов между магазинами (сколько пользователей покупали в обоих магазинах).
+
+### 30. RFM-анализ упрощённый
+
+Для каждого пользователя вычислить: давность последней покупки (Recency), частоту покупок (Frequency) и общую сумму покупок (Monetary).
