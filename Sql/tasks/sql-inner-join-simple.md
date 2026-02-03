@@ -248,17 +248,50 @@ GROUP BY u.email
 
 Вывести количество отзывов для каждого продукта (название продукта и количество отзывов).
 
+```sql
+SELECT p.title, COUNT(r.id) as reviews_count
+FROM products p
+JOIN reviews r
+ON r.product_id = p.id
+GROUP BY p.title
+ORDER BY COUNT(r.id)
+```
+
 ### Задача 21
 
 Показать продукты и их магазины, отсортированные по цене от большей к меньшей.
+
+```sql
+SELECT p.title as product_title, p.price as product_price, s.title as store_title
+FROM products p
+JOIN stores s
+ON p.store_id = s.id
+ORDER BY p.price DESC
+```
 
 ### Задача 22
 
 Получить заказы с общей суммой более 5000 рублей с именами пользователей.
 
+```sql
+SELECT o.total as order_total, u.email as user_email
+FROM orders o
+JOIN users u
+ON o.user_id = u.id
+WHERE o.total > 500
+```
+
 ### Задача 23
 
 Вывести все элементы заказа с названием продукта и ценой, где количество больше 2.
+
+```sql
+SELECT p.title as product_name, p.price as product_price, o.quantity as order_quantity
+FROM order_items o
+JOIN products p
+ON o.product_id = p.id
+WHERE o.quantity >= 2;
+```
 
 ### Задача 24
 
