@@ -30,6 +30,13 @@ INNER JOIN stores s ON p.store_id = s.id ORDER BY p.id;
 
 Вывести все заказы с именами пользователей, которые их сделали.
 
+```sql
+SELECT u.name as user_name, o.id as order_id
+FROM orders o
+INNER JOIN
+users u ON o.user_id = u.id;
+```
+
 ### Задача 3
 
 Показать все отзывы с названием продукта, которому они принадлежат.
