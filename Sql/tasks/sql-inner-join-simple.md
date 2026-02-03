@@ -112,9 +112,23 @@ ORDER BY s.title
 
 Показать все цвета с названием магазина.
 
+```sql
+SELECT c.id as color_id, c.name as color_name, s.title as store_title
+FROM colors c
+JOIN stores s
+ON c.store_id = s.id
+```
+
 ### Задача 10
 
 Получить все отзывы с именами пользователей, которые их оставили.
+
+```sql
+SELECT r.id, r.rating as review_rating, u.name as user_name
+FROM reviews r
+JOIN users u
+ON r.user_id = u.id
+```
 
 ### Задача 11
 
