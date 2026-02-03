@@ -41,13 +41,35 @@ users u ON o.user_id = u.id;
 
 Показать все отзывы с названием продукта, которому они принадлежат.
 
+```sql
+SELECT p.title AS product_name, r.*
+FROM reviews r
+JOIN products p ON r.product_id = p.id
+ORDER BY p.title, r.id;
+```
+
 ### Задача 4
 
 Получить список всех продуктов с названием их категории.
 
+```sql
+SELECT p.id as product_id, p.title as product_title, c.title as category_title
+FROM products p
+JOIN categories c
+ON p.category_id = c.id
+ORDER BY c.title
+```
+
 ### Задача 5
 
 Вывести все магазины с именами их владельцев.
+
+```sql
+SELECT s.id as store_id, s.title as store_title, u.name as user_name
+FROM stores s
+JOIN users u
+ON s.user_id = u.id
+```
 
 ### Задача 6
 
