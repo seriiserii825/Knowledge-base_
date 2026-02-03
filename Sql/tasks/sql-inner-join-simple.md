@@ -297,21 +297,48 @@ WHERE o.quantity >= 2;
 
 Показать продукты, созданные в 2024 году, с названием их магазина.
 
-### Задача 25
-
-Получить все магазины с количеством их продуктов, где продуктов больше 10.
-
-### Задача 26
-
-Вывести пользователей и количество их магазинов.
+```sql
+SELECT p.title as product_title, p."createdAt", s.title as store_title
+FROM products p
+JOIN stores s
+ON p.store_id = s.id
+WHERE EXTRACT(YEAR FROM p."createdAt") = 2024
+```
 
 ### Задача 27
 
 Показать продукты с их категорией и цветом (три таблицы).
 
+```sql
+SELECT p.title as product_title, ct.title as category_title, c.name as color_name, c.value as color_value
+FROM products p
+JOIN categories ct
+ON p.category_id = ct.id
+JOIN colors c
+ON p.color_id = c.id
+ORDER BY p.title, ct.title
+```
+
 ### Задача 28
 
 Получить заказы с информацией о пользователе и количестве позиций в заказе.
+
+```sql
+SELECT
+    ord.id as order_id,
+    ord.status,
+    ord.total,
+    u.email as user_email,
+    u.name as user_name,
+    COUNT(oi.id) as items_count,
+    SUM(oi.quantity) as total_quantity,
+    ord."createdAt"
+FROM orders ord
+JOIN users u ON ord.user_id = u.id
+LEFT JOIN order_items oi ON oi.order_id = ord.id
+GROUP BY ord.id, u.email, u.name
+ORDER BY ord."createdAt" DESC;
+```
 
 ### Задача 29
 
