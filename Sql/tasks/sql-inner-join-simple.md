@@ -134,37 +134,115 @@ ON r.user_id = u.id
 
 Вывести продукты дороже 1000 рублей с названием их магазина.
 
+```sql
+SELECT p.title as product_title, p.price as product_price, s.title as store_title
+FROM products p
+JOIN stores s
+ON p.store_id = s.id
+WHERE p.price > 100
+ORDER BY p.price
+```
+
 ### Задача 12
 
 Показать заказы со статусом 'PAID' и именами пользователей.
+
+```sql
+SELECT o.id,o.status as order_status, o.total as order_total, u.email
+FROM orders o
+JOIN users u
+ON o.user_id = u.id
+WHERE o.status = 'PAID'
+
+
+```
 
 ### Задача 13
 
 Получить отзывы с рейтингом выше 4 и названием продукта.
 
+```sql
+SELECT r.id, r.rating as review_rating, p.title as product_title
+FROM reviews r
+JOIN products p
+ON r.product_id = p.id
+WHERE r.rating >= 4
+ORDER BY r.rating, p.title
+```
+
 ### Задача 14
 
 Вывести продукты из категории с id=1 вместе с названием категории.
+
+```sql
+SELECT p.id, p.title as product_title, c.id, c.title as category_name
+FROM products p
+JOIN categories c
+ON p.category_id = c.id
+WHERE c.id = 9
+```
 
 ### Задача 15
 
 Показать все заказы пользователя с email='user@example.com'.
 
+```sql
+SELECT o.id, o.total as order_total, u.email as user_email
+FROM orders o
+JOIN users u
+ON o.user_id = u.id
+WHERE u.email = 'givi@gmail.com'
+```
+
 ### Задача 16
 
 Получить количество продуктов в каждом магазине (название магазина и количество).
+
+```sql
+SELECT s.title as store_title, COUNT(p.id) as products_count
+FROM stores s
+JOIN products p
+ON s.id = p.store_id
+GROUP BY s.title
+```
 
 ### Задача 17
 
 Вывести количество заказов для каждого пользователя (имя пользователя и количество).
 
+```sql
+SELECT u.email as user_email, COUNT(o.id) as orders_count
+FROM users u
+JOIN orders o
+ON o.user_id = u.id
+GROUP BY u.email
+ORDER BY COUNT(o.id)
+```
+
 ### Задача 18
 
 Показать среднюю цену продуктов в каждой категории (название категории и средняя цена).
 
+```sql
+SELECT c.title as category_title, ROUND(AVG(p.price)) as products_avg
+FROM categories c
+JOIN products p
+ON p.category_id = c.id
+GROUP BY c.title
+ORDER BY ROUND(AVG(p.price))
+```
+
 ### Задача 19
 
 Получить общую сумму всех заказов для каждого пользователя (имя и сумма).
+
+```sql
+SELECT u.email, SUM(o.total) as orders_total
+FROM users u
+JOIN orders o
+ON o.user_id = u.id
+GROUP BY u.email
+```
 
 ### Задача 20
 
