@@ -75,13 +75,38 @@ ON s.user_id = u.id
 
 Показать все продукты с названием их цвета.
 
+```sql
+-- select string_agg(column_name, ', ' ORDER BY ordinal_position) as columns FROM information_schema.columns WHERE table_name = 'products';
+-- select string_agg(column_name, ', ' ORDER BY ordinal_position) as columns FROM information_schema.columns WHERE table_name = 'colors';
+SELECT p.id as product_id, p.title as product_title, c.name as color_name, c.value as color_value
+FROM products p
+JOIN colors c
+ON p.color_id = c.id
+ORDER BY c.name
+```
+
 ### Задача 7
 
 Получить список всех элементов заказа с названием продукта.
 
+```sql
+SELECT o.id as order_id, o.price as order_price, p.title as product_title
+FROM order_items o
+JOIN products p
+ON o.product_id = p.id
+```
+
 ### Задача 8
 
 Вывести все категории с названием магазина, к которому они относятся.
+
+```sql
+SELECT s.title as store_title, c.id as category_id, c.title as category_title
+FROM categories c
+JOIN stores s
+ON c.store_id = s.id
+ORDER BY s.title
+```
 
 ### Задача 9
 
