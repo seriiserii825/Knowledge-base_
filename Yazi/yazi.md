@@ -4,15 +4,11 @@
 sudo pacman -S yazi
 ```
 
-# Linux/macOS
+### view permisions
 
-git clone -b yazi-0.2.5 https://github.com/dedukun/bookmarks.yazi.git ~/.config/yazi/plugins/bookmarks.yazi
-
-https://github.com/dedukun/bookmarks.yazi
-
-# Add the plugin
-
-ya pack -a dedukun/bookmarks
+```bash
+M + p # view permissions
+```
 
 # Install plugin
 
