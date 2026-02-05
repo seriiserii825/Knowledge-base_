@@ -1,1 +1,19 @@
 sudo apt-get install wicd
+~/Documents/bash on  main ⌚ 23:14:10
+nmcli con add type wifi ifname wlp3s0 con-name "Xiaomi11T" ssid "Xiaomi 11T"
+
+Connection 'Xiaomi11T' (51bacc4f-96c3-40e4-9c8c-d3db5bfffdb0) successfully added.
+
+~/Documents/bash on  main ⌚ 23:15:12
+nmcli con modify "Xiaomi11T" wifi-sec.key-mgmt wpa-psk
+nmcli con modify "Xiaomi11T" wifi-sec.psk "serii1122"
+
+$ nmcli con add type wifi ifname wlp3s0 con-name "Burduja" ssid "Burduja"
+
+~/Documents/Knowledge-base_ on  main! ⌚ 23:20:37
+nmcli con modify "Burduja" wifi-sec.key-mgmt wpa-psk
+
+nmcli con modify "Burduja" wifi-sec.psk "14031981"
+
+nmcli con up "Burduja"
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/11)
