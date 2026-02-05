@@ -1,4 +1,3 @@
-
 import Swiper from "swiper";
 import { Pagination } from "swiper/modules"; // ✅ JS logic for pagination
 
