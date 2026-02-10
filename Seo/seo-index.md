@@ -1,3 +1,5 @@
+### seo index
+
 1. Redirect 301 when change page url
 2. Title, desc, h1 - он должен быть. В моделях эти поля required.
 3. Сайт открывается для индескации только после production
