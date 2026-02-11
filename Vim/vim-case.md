@@ -1,7 +1,6 @@
 # case
 
 ```vim
-
 g~ Toggle case of current character
 gu - Lowercase current character
 guu Lowercase entire line
