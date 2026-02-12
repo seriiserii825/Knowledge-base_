@@ -19,7 +19,7 @@ gc+r+symbol+enter
 ### n lines
 
 ```vim
-gc+r+symbol+n+enter
+gc+r+symbol+n+j(down)
 ```
 
 ## copy from tag or a word
