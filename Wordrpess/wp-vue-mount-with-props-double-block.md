@@ -1,6 +1,7 @@
 # mount with props
 
 vue-functions.php
+
 ```php
 <?php
 add_shortcode('custom-gallery', 'customGallery');
@@ -26,8 +27,8 @@ function ourRooms($atts, $content = null)
 ```
 
 vue-app.ts
-```ts
 
+```ts
 import { createApp } from "vue";
 import CustomGalleryView from "./views/CustomGalleryView.vue";
 import OurRoomsSliderView from "./views/OurRoomsSliderView.vue";
@@ -61,13 +62,7 @@ function mountWithProps(selector: string, component: any) {
 ```
 
 inside vue component
-```vue
 
-const props = defineProps({
-  acf: {
-    type: String,
-    required: false,
-    default: "",
-  },
-});
+```vue
+const props = defineProps({ acf: { type: String, required: false, default: "", }, });
 ```
