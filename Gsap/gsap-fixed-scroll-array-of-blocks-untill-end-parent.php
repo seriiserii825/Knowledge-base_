@@ -61,40 +61,50 @@
     const section = document.querySelector(
       '.our-products__container'
     ) as HTMLElement;
-    const boxes = document.querySelectorAll(
-      '.our-products__body'
-    ) as NodeListOf < HTMLElement > ;
+    const boxes = Array.from(
+      document.querySelectorAll('.our-products__body')
+    ) as HTMLElement[];
 
-    if (!boxes.length) return;
+    if (!section || boxes.length < 2) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Создаём триггеры
-    boxes.forEach((box) => makeTrigger(box, section));
+    const lastBox = boxes[boxes.length - 1];
 
-    // 2. После полной загрузки страницы и всех картинок – пересчитываем
+    // 1) Все предыдущие держим до момента, когда последний дошёл до top 100
+    boxes.slice(0, -1).forEach((box) => {
+      const item = box.querySelector('.our-products__item') as HTMLElement;
+
+      ScrollTrigger.create({
+        trigger: box,
+        start: 'top 100',
+        endTrigger: lastBox,
+        end: 'top 100', // 👈 ВСЕ отпустятся одновременно
+
+        pin: item,
+        pinSpacing: false,
+        anticipatePin: 1,
+        invalidateOnRefresh: true
+        // markers: true,
+      });
+    });
+
+    // 2) Последний “липнет” и сразу отпускает, чтобы поехал дальше со страницей
+    {
+      const item = lastBox.querySelector('.our-products__item') as HTMLElement;
+
+      ScrollTrigger.create({
+        trigger: lastBox,
+        start: 'top 100',
+        end: '+=1', // 👈 буквально 1px пина, без “докруток”
+        pin: item,
+        pinSpacing: false,
+        anticipatePin: 1,
+        invalidateOnRefresh: true
+        // markers: true,
+      });
+    }
+
     window.addEventListener('load', () => ScrollTrigger.refresh());
-
-    // 3. Один debounced resize listener вместо одного на каждый блок
-    let resizeTimer: ReturnType < typeof setTimeout > ;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
-    });
-  }
-
-  function makeTrigger(box: HTMLElement, section: HTMLElement) {
-    const item = box.querySelector('.our-products__item') as HTMLElement;
-
-    ScrollTrigger.create({
-      trigger: box,
-      start: 'top 100',
-      endTrigger: section,
-      end: () => `bottom bottom`,
-      // markers: true,
-      pin: item,
-      pinSpacing: false,
-      anticipatePin: 1
-    });
   }
 </script>
