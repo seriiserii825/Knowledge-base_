@@ -14,6 +14,7 @@ sudo systemctl disable lightdm
 
 ```bash
 sudo systemctl stop lightdm
+sudo pacman -R lightdm lightdm-gtk-greeter
 ```
 
 ### 3️⃣ Enable SDDM
