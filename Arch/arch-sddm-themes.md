@@ -34,6 +34,13 @@ reboot
 /usr/share/sddm/themes/
 ```
 
+### install themes
+
+```bash
+yay -S sddm-sugar-candy-git
+yay -S sddm-theme-catppuccin
+```
+
 ### try themes
 
 ```
