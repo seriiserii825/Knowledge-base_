@@ -1,8 +1,40 @@
-const url = new URL('https://example.com?foo=1&bar=2');
-const params = new URLSearchParams(url.search);
-You can get params also using a shorthand .searchParams property on the URL object, like this:
+export default function productsLoopFilter() {
 
-const params = new URL('https://example.com?foo=1&bar=2').searchParams;
-params.get('foo'); // "1"
-params.get('bar'); // "2" 
-You read/set parameters through the get(KEY), set(KEY, VALUE), append(KEY, VALUE) API. You can also iterate over all values for (let p of params) {}.
+  if (current_taglia) {
+    menu_category_links.forEach((link) => {
+      addParamToLinks(link, "taglia", current_taglia);
+    });
+    main_menu_links.forEach((link, index) => {
+      const indexes = [1, 2];
+      if (indexes.includes(index)) return;
+      addParamToLinks(link, "taglia", current_taglia);
+    });
+  }
+
+  size_select.addEventListener("change", () => {
+    addParamToUrl("taglia", size_select.value);
+    window.location.reload();
+  });
+
+  function addParamToUrl(param: string, value: string) {
+    const url = new URL(window.location.href);
+    url.searchParams.set(param, value);
+    window.history.pushState({}, "", url.toString());
+  }
+
+  function getParamFromUrl(param: string): string | null {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(param);
+  }
+
+  function addParamToLinks(link: HTMLAnchorElement, param: string, value: string) {
+    const url = new URL(link.href);
+    if (value === "") {
+      url.searchParams.delete(param);
+      link.setAttribute("href", url.toString());
+      return;
+    }
+    url.searchParams.set(param, value);
+    link.setAttribute("href", url.toString());
+  }
+}
