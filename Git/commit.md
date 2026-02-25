@@ -1,11 +1,26 @@
+### Rename last pushed commit
 
-If you want to remove the 2 (two) last commits, there is an easy command to do that:
+```bash
+# Step 1: change the message (opens editor)
+git commit --amend
+
+#               or directly (no editor):
+git commit --amend -m "fix: staff SEO title & description check + h1"
+
+# Step 2: force-push  (most important part!)
+git push --force-with-lease origin <branch-name>
+
+# Example:
+git push --force-with-lease origin master
+# or if your branch is called feat/staff-seo
+git push --force-with-lease origin feat/staff-seo
+```
+
+### If you want to remove the 2 (two) last commits, there is an easy command to do that:
 
 ```
 git reset --hard HEAD~2
 ```
-
-You can change the `2` for any number of last commits you want to remove.
 
 And to push this change to remote, you need to do a `git push` with the _force_ (`-f`) parameter:
 
@@ -28,16 +43,3 @@ git reset .
 git reset --staged .
 git clean -nd show files
 git clean -fd remove fles
-
-# pull all
-
-git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
-git fetch --all
-git pull --all
-
-and after made and checkout to branch
-
-## gitignore
-after add to gitignore rm
-git rm -r --cached dir
-git rm --cached filename
