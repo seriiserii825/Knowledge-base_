@@ -1,3 +1,9 @@
+### clipmenu
+
+```bash
+sudo pacman -S clipmenu
+```
+
 ### install packages
 
 ```bash
