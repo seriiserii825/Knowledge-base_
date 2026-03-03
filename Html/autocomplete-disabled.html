@@ -1,0 +1,45 @@
+<form onSubmit="{onSubmit}" autocomplete="off" className="max-w-lg mx-auto flex flex-col gap-4">
+  <input
+    type="email"
+    name="my-email"
+    autocomplete="nope"
+    placeholder="Email"
+    aria-invalid="{!form.email"
+    &&
+    firstTouch}
+    value="{form.email}"
+    onChange="{(e)"
+    ="" />
+  setForm({ ...form, email: e.target.value })} className="border p-2 rounded" /> {firstTouch &&
+  !form.email &&
+  <ShowError error="Email is required!" />
+  }
+  <input
+    type="password"
+    name="my-password"
+    placeholder="Password"
+    autocomplete="new-password"
+    aria-invalid="{!form.password"
+    &&
+    firstTouch}
+    value="{form.password}"
+    onChange="{(e)"
+    ="" />
+  setForm({ ...form, password: e.target.value })} className="border p-2 rounded" /> {firstTouch &&
+  !form.password &&
+  <ShowError error="Password is required!" />
+  }
+  <input
+    type="password"
+    name="my-confirm-password"
+    placeholder="Confirm Password"
+    value="{form.confirmPassword}"
+    onChange="{(e)"
+    ="" />
+  setForm({ ...form, confirmPassword: e.target.value })} aria-invalid={!passwordsMatch &&
+  firstTouch} className="border p-2 rounded" /> {firstTouch && !passwordsMatch &&
+  <ShowError error="Passwords do not match!" />
+  }
+
+  <button type="submit" className=" bg-blue-500 text-white p-2 rounded">Register</button>
+</form>
