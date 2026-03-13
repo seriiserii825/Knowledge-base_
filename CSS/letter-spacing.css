@@ -1,0 +1,10 @@
+body {
+  font-size: clamp(32px, 3.5vw, 64px);
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -2.6px;
+}
+
+/* -2.6px переводим в em относительно минимального размера шрифта 32px: */
+
+/* -2.6 / 32 = -0.08125em */
