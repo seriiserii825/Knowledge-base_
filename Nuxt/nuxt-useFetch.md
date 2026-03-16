@@ -1,92 +1,78 @@
-# useFetch
-
-## Reactive url
+### 1. Page component — await data before render
 
 ```vue
 <script setup lang="ts">
-import useApiUrl from "~/composables/useApiUrl";
-import type { TPost } from "~/types/TPost";
-
-const userId = ref(1);
-
-const api_url = useApiUrl();
-
-const { data, error, pending } = await useFetch<TPost[]>(`${api_url}/posts`, {
-  method: "GET",
-  // ofetch option: use `query` (NOT body) for ?userId=...
-  query: computed(() => ({ userId: userId.value })),
-  watch: [userId], // refetch when userId changes
-  key: () => `posts-${userId.value}`, // per-user cache key
-});
-if (error.value) {
-  console.error("Error fetching posts:", error.value);
-}
+// Navigation is BLOCKED until this resolves
+const { data: posts } = await useFetch("/api/posts");
 </script>
 
 <template>
-  <div class="home-page">
-    <h1>Home</h1>
-    <input type="text" v-model="userId" placeholder="Enter User ID" />
-    <p v-if="pending">Loading posts...</p>
-    <ul v-else>
-      <li v-for="post in data" :key="post.id">
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.body }}</p>
-        <hr />
-      </li>
-    </ul>
+  <div>
+    <PostCard v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
 ```
 
-## Call multiple times when input changed
+### 2. Add a loading bar between navigations (in app.vue)
+
+```vue
+<template>
+  <NuxtLoadingIndicator />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+</template>
+```
+
+### 3. Lazy / non-blocking fetch — don't await
 
 ```vue
 <script setup lang="ts">
-import useApiUrl from "~/composables/useApiUrl";
-import type { TPost } from "~/types/TPost";
-
-const userId = ref(1);
-
-const api_url = useApiUrl();
-
-async function fetchPosts() {
-  const { data, error } = await useFetch<TPost[]>(`${api_url}/posts`, {
-    method: "POST",
-    key: () => `posts-${userId.value}`, // per-user cache key
-  });
-  if (error.value) {
-    console.error("Error fetching posts:", error.value);
-  }
-}
+// Navigation proceeds immediately, data loads in background
+const { data, status } = useFetch("/api/posts");
 </script>
 
 <template>
-  <div class="home-page">
-    <h1>Home</h1>
-    <input type="text" v-model="userId" placeholder="Enter User ID" />
-    <button @click="fetchPosts">fetch posts</button>
+  <div v-if="status === 'pending'">Loading...</div>
+  <PostCard v-else v-for="post in data" :key="post.id" />
+</template>
+```
+
+### 4. <Suspense> with a fallback for child components
+
+```vue
+<!-- parent.vue -->
+<template>
+  <Suspense>
+    <template #default>
+      <AsyncChildComponent />
+      <!-- has await useFetch inside -->
+    </template>
+    <template #fallback>
+      <div>Loading...</div>
+      <!-- shown while child resolves -->
+    </template>
+  </Suspense>
+</template>
+```
+
+### Your layout — one small improvement
+
+```vue
+<template>
+  <div>
+    <UIHeader v-if="data" :menu-items="data" />
+    <div class="min-h-[60vh]">
+      <slot />
+      <!-- pages with await useFetch are auto-suspended here -->
+    </div>
+    <UIFooter />
   </div>
 </template>
 ```
 
-**to stop watching a ref, use `watch: false`**
-
-or can use refresh
+Since you await useFetch in the layout itself, the entire layout blocks until the menu data is ready — which is fine. But if you want the layout shell to appear immediately while only the <slot> content suspends, remove the await:
 
 ```vue
-
-const { data, error, refresh } = await useFetch<TPost[]>(`${api_url}/posts`, {
-  method: "POST",
-  key: () => `posts-${userId.value}`, // per-user cache key
-  immediate: false, // do not fetch immediately
-  watch: false,
-});
-if (error.value) {
-  console.error("Error fetching posts:", error.value);
-}
-
-async function fetchPosts() {
-  refresh()
-}
+const { data, status } = useFetch<IMenuItem[]>(...) // no await
 ```
