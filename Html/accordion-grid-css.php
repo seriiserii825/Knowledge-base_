@@ -1,68 +1,99 @@
-<div class="services__item">
-  <div class="services__img">
-    <img src="<?php echo $image['url']; ?>" class="services__image" alt="<?php echo $image['alt']; ?>" />
-  </div>
-  <div class="services__content">
-    <h3 class="services__subtitle"><?php echo $subtitle; ?></h3>
-    <div class="services__text text">
-      <div class="wrapper">
-        <div class="inner">
-          <?php echo $text; ?>
+<div class="accordion" id="accordion">
+  <div class="accordion__item">
+    <button class="accordion__header">
+      Заголовок
+      <svg class="accordion__icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="9" y1="3" x2="9" y2="15" />
+        <line x1="3" y1="9" x2="15" y2="9" />
+      </svg>
+    </button>
+    <div class="accordion__body">
+      <div class="accordion__inner">
+        <div class="accordion__content">
+          Контент...
         </div>
       </div>
     </div>
   </div>
 </div>
 <style>
-  .wrapper {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.5s ease-out;
+  .accordion__item {
+    border-bottom: 0.5px solid #e0e0e0;
   }
 
-  .wrapper.is-open {
+  .accordion__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    cursor: pointer;
+    user-select: none;
+    font-size: 15px;
+    font-weight: 500;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  .accordion__icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.35s ease;
+  }
+
+  .accordion__item.is-open .accordion__icon {
+    transform: rotate(45deg);
+  }
+
+  .accordion__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease;
+  }
+
+  .accordion__item.is-open .accordion__body {
     grid-template-rows: 1fr;
   }
 
-  .inner {
+  .accordion__inner {
     overflow: hidden;
+  }
+
+  .accordion__content {
+    padding: 0 0 16px;
   }
 </style>
 <script>
-  export default function servicesText() {
-    const items = document.querySelectorAll(".services__item");
+  function initAccordion(selector, {
+    exclusive = false
+  } = {}) {
+    const accordion = document.querySelector(selector);
+    if (!accordion) return;
+
+    const items = accordion.querySelectorAll(".accordion__item");
+
     items.forEach((item) => {
-      item.addEventListener("mouseenter", (e) => {
-        const wrapper = item.querySelector(".wrapper");
-        if (!wrapper) return;
-        if (wrapper.classList.contains("is-open")) return;
-        wrapper.classList.add("is-open");
-      });
-    });
-  }
+      const header = item.querySelector(".accordion__header");
+      if (!header) return;
 
-  // toggleAll
-  export default function whyUsAccordion() {
-    const headers = document.querySelectorAll(".why-us__header");
+      header.addEventListener("click", () => {
+        const isOpen = item.classList.contains("is-open");
 
-    headers.forEach((header, index) => {
-      header.addEventListener("click", (e) => {
-        headers.forEach((elem, inner_index) => {
-          if (index === inner_index) return;
-          const item = elem.closest(".why-us__item");
-          const wrapper = item.querySelector(".why-us__body");
-          if (!wrapper) return;
-          wrapper.classList.remove("is-open");
-        });
-        const item = e.currentTarget.closest(".why-us__item");
-        const wrapper = item.querySelector(".why-us__body");
-        if (!wrapper) return;
-        if (wrapper.classList.contains("is-open")) {
-          wrapper.classList.remove("is-open");
-          return;
+        if (exclusive) {
+          items.forEach((i) => i.classList.remove("is-open"));
         }
-        wrapper.classList.add("is-open");
+
+        item.classList.toggle("is-open", !isOpen);
       });
     });
   }
+
+  // initAccordion("#my-accordion", { exclusive: true }) // закрывает остальные
+  // initAccordion("#my-accordion", { exclusive: false }) // все независимы
+  // использование
+  initAccordion("#accordion", {
+    exclusive: true
+  });
 </script>
