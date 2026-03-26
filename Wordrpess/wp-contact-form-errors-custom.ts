@@ -8,7 +8,7 @@ const fieldMessages: Record<string, string> = {
 export default function cf7Messages(): void {
   const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
-      for (const node of mutation.addedNodes) {
+      for (const node of Array.from(mutation.addedNodes)) {
         if (!(node instanceof HTMLElement)) continue;
         if (!node.classList.contains("wpcf7-not-valid-tip")) continue;
 
