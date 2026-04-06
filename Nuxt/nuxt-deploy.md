@@ -31,7 +31,7 @@ in package json add 2 scripts with name from ecosystem file
 "update": "git pull && bun install && bun run build && pm2 restart nuxt-roman-timoshyuk"
 ```
 
-### 3\.  Start the App with PM2
+### 3\. Start the App with PM2
 
 on the server install packages and make build
 `bun install && bun run build`
