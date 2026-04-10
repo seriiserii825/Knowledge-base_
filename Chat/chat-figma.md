@@ -3,6 +3,7 @@
 Самый простой способ — официальный плагин:
 
     claude plugin install figma@claude-plugins-official
+claude mcp add --scope user --transport http figma https://mcp.figma.com/mcp
 
 После установки перезапусти Claude Code, введи /plugin, перейди во вкладку **Installed**, выбери **Figma** и пройди авторизацию через браузер.  
 GitHub
