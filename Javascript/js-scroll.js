@@ -1,7 +1,8 @@
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import ScrollToPlugin from 'gsap/ScrollToPlugin';
 export default function menuScroll() {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
   const is_home = document.querySelector('body.home');
   const menu_links = document.querySelectorAll('#js-main-menu a');
   const logo = document.querySelector('.logo a');
@@ -33,19 +34,15 @@ export default function menuScroll() {
           if (hash) {
             // change hash in url without page reload
             window.history.pushState(null, '', href);
-            const element = document.querySelector(href) as HTMLElement;
-            const offset_top = 110;
+            const element = document.querySelector('#' + hash) as HTMLElement;
+            if (!element) return;
             clearActive();
             element.classList.add('active');
-            const viewportOffset = element.getBoundingClientRect();
-            const element_top = viewportOffset.top + window.scrollY;
-            const offset_total = element_top - offset_top;
-            // console.log("offset_total", offset_total);
-            window.scrollTo({
-              top: offset_total,
-              behavior: 'smooth'
+            gsap.to(window, {
+              duration: 0.4,
+              scrollTo: { y: element, offsetY: 50 },
+              ease: 'linear'
             });
-
             menuClose();
           } else {
             window.location.href = href;
@@ -64,10 +61,7 @@ export default function menuScroll() {
     logo?.addEventListener('click', function (e: Event) {
       e.preventDefault();
       if (is_home) {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
+        gsap.to(window, { duration: 0.8, scrollTo: 0, ease: 'power2.inOut' });
       } else {
         window.location.href = window.location.origin;
       }
