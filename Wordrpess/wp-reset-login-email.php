@@ -9,10 +9,10 @@ $password = 'securepassword123';
 $email    = 'admin@example.com';
 
 if (!username_exists($username) && !email_exists($email)) {
-    $user_id = wp_create_user($username, $password, $email);
-    $user = new WP_User($user_id);
-    $user->set_role('administrator');
-    echo "Admin user created successfully.";
+  $user_id = wp_create_user($username, $password, $email);
+  $user = new WP_User($user_id);
+  $user->set_role('administrator');
+  echo "Admin user created successfully.";
 } else {
-    echo "User already exists.";
+  echo "User already exists.";
 }
