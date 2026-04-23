@@ -1,0 +1,9 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.grid-item:last-child {
+  grid-column: -1 / 1;
+}
