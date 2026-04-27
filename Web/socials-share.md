@@ -11,3 +11,7 @@ https://t.me/share/url?url=
 <!-- Напрямую открыть чат -->
 
 <a href="tg://resolve?domain=username">Open in Telegram</a>
+
+<!-- Post inspector linkedin: -->
+
+https://www.linkedin.com/post-inspector/inspect/https:%2F%2Fcairepro.altuofianco.com%2Fla-cooperativa-come-sistema-dimpresa-intervento-alluniversita-degli-studi-di-parma%2F
