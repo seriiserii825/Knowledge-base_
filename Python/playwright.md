@@ -2,6 +2,7 @@
 
 ```python
 uv run playwright install
+sudo pacman -S icu libxml2 flite libmanette
 ```
 
 ### open browser
