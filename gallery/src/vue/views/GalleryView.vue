@@ -1,65 +1,65 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { axiosWp } from "../utils/axiosWp";
-import { TGalleryItem, TGalleryResponse } from "../types/TGalleryResponse";
-import Paginate from "../components/Paginate.vue";
-import GalleryPopup from "../components/Gallery/GalleryPopup.vue";
-const title = ref("Gallery");
-const gallery = ref<TGalleryItem[]>([]);
-const per_page = ref(10);
-const current_page = ref(1);
-const gallery_ref = ref<HTMLElement | null>(null);
-const show_popup = ref(false);
-const gallery_items = ref<TGalleryItem[][]>([]);
-const current_index = ref(0);
+  import { onMounted, ref } from "vue";
+  import { axiosWp } from "../utils/axiosWp";
+  import { TGalleryItem, TGalleryResponse } from "../types/TGalleryResponse";
+  import Paginate from "../components/Paginate.vue";
+  import GalleryPopup from "../components/Gallery/GalleryPopup.vue";
+  const title = ref("Gallery");
+  const gallery = ref<TGalleryItem[]>([]);
+  const per_page = ref(10);
+  const current_page = ref(1);
+  const gallery_ref = ref<HTMLElement | null>(null);
+  const show_popup = ref(false);
+  const gallery_items = ref<TGalleryItem[][]>([]);
+  const current_index = ref(0);
 
-function showPopup(url: string) {
-  const index = gallery.value.findIndex((item) => item.url === url);
-  if (index !== -1) {
-    show_popup.value = true;
-    current_index.value = index;
-  }
-}
-
-async function getData() {
-  const url = window.location.origin + "/wp-json/gallery/v1/all";
-  try {
-    const resonse = await axiosWp.get(url);
-    const data = resonse.data as TGalleryResponse;
-    title.value = data.title;
-    gallery.value = data.gallery;
-    if (data.per_page) {
-      per_page.value = parseInt(data.per_page);
+  function showPopup(url: string) {
+    const index = gallery.value.findIndex((item) => item.url === url);
+    if (index !== -1) {
+      show_popup.value = true;
+      current_index.value = index;
     }
-    const total = data.gallery.length;
-    const total_pages = Math.ceil(total / per_page.value);
-    for (let i = 0; i < total_pages; i++) {
-      const start = i * per_page.value;
-      const end = start + per_page.value;
-      gallery_items.value.push(data.gallery.slice(start, end));
+  }
+
+  async function getData() {
+    const url = window.location.origin + "/wp-json/gallery/v1/all";
+    try {
+      const resonse = await axiosWp.get(url);
+      const data = resonse.data as TGalleryResponse;
+      title.value = data.title;
+      gallery.value = data.gallery;
+      if (data.per_page) {
+        per_page.value = parseInt(data.per_page);
+      }
+      const total = data.gallery.length;
+      const total_pages = Math.ceil(total / per_page.value);
+      for (let i = 0; i < total_pages; i++) {
+        const start = i * per_page.value;
+        const end = start + per_page.value;
+        gallery_items.value.push(data.gallery.slice(start, end));
+      }
+    } catch (error) {
+      console.log(error, "error from Gallery view");
     }
-  } catch (error) {
-    console.log(error, "error from Gallery view");
   }
-}
 
-function updateCurrentPage(page: number) {
-  current_page.value = 0;
-  if (gallery_ref.value) {
-    const scrollTop = gallery_ref.value.getBoundingClientRect().top + window.scrollY - 100;
-    window.scrollTo({
-      top: scrollTop,
-      behavior: "smooth",
-    });
+  function updateCurrentPage(page: number) {
+    current_page.value = 0;
+    if (gallery_ref.value) {
+      const scrollTop = gallery_ref.value.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({
+        top: scrollTop,
+        behavior: "smooth",
+      });
+    }
+    setTimeout(() => {
+      current_page.value = page;
+    }, 50);
   }
-  setTimeout(() => {
-    current_page.value = page;
-  }, 50);
-}
 
-onMounted(async () => {
-  await getData();
-});
+  onMounted(async () => {
+    await getData();
+  });
 </script>
 
 <template>
@@ -102,13 +102,13 @@ onMounted(async () => {
   </div>
 </template>
 <style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
 </style>
