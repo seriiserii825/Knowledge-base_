@@ -1,4 +1,7 @@
 <?php  
+
+define('WP_HTTP_BLOCK_EXTERNAL', true); // block external HTTP on local to prevent timeout slowdowns
+
 define('WP_DEBUG', true);
 define('WP_DEBUG_LOG', true);
 define('WP_DEBUG_DISPLAY', false);
