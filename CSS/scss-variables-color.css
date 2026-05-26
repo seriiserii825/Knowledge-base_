@@ -1,0 +1,14 @@
+@use "sass:color";
+
+$accent: #01a0d3;
+
+:root {
+  --accent: #{$accent};
+  --accent-hover: #{color.adjust($accent, $lightness: -10%)};
+  --accent-dark: rgba(1, 160, 211, 0.2);
+  --accent-light: rgb(173, 21, 21);
+  --body-bg: #0d2b4f;
+  --contrast: rgb(15, 119, 57);
+  --font-1: "Roboto", sans-serif;
+  --text-color: #333;
+}
