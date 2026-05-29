@@ -1,0 +1,13 @@
+.grid-accordion {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+
+  &.is-open {
+    grid-template-rows: 1fr;
+  }
+
+  > * {
+    overflow: hidden; /* // обязательно для trick'а */
+  }
+}
