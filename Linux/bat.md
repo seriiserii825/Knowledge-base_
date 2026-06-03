@@ -1,3 +1,3 @@
-# install deb package
+# install deb package in ubuntu
 
 https://github.com/sharkdp/bat/releases
