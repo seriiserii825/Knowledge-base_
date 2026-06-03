@@ -1,4 +1,4 @@
-# html break words
+# html break words add to base.scss
 
 ## on line
 
@@ -16,7 +16,7 @@
 ```css
 .clamp-2 {
   display: -webkit-box;
-  -webkit-line-clamp: 2;          /* number of lines */
+  -webkit-line-clamp: 2; /* number of lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
