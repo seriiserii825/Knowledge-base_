@@ -1,4 +1,4 @@
-# remove
+# remove php
 
 sudo apt-get purge 'php*'
 sudo apt-get purge php7.*
