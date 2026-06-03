@@ -1,6 +1,6 @@
 # React Router DOM
 
-## Установка
+## Install
 
 ```bash
 npm install react-router-dom
@@ -20,7 +20,7 @@ import App from "./App";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <App />
-  </BrowserRouter>
+  </BrowserRouter>,
 );
 ```
 
