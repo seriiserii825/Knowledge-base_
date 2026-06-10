@@ -16,4 +16,5 @@ git symbolic-ref HEAD refs/heads/main
 
 Bash
 
+git remote set-url origin git@bitbucket.org:blueline-wordpress-sites/bs-portfolio-altuofianco.git
 git push --mirror origin
