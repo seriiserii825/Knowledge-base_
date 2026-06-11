@@ -19,29 +19,55 @@ bun add -D gen-env-types
 ```
 
 ```bash
-bun ad env:types
+bun run env:types
 ```
 
 На выходе `env.d.ts`:
 
 ```typescript
-declare namespace NodeJS {
-  export interface ProcessEnv {
-    DATABASE_URL: string;
-    MAIL_HOST: string;
-    MAIL_PASSWORD: string;
-    // ...остальные ключи из .env
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      DATABASE_URL: string;
+      MAIL_HOST: string;
+      MAIL_PASSWORD: string;
+      // ...остальные ключи из .env
+    }
   }
 }
+
+export {};
 ```
 
-Перегенерировать после любых изменений `.env` — пакет сохраняет ручные правки
-(например, union-типы вроде `NODE_ENV: "development" | "production"`).
+Перегенерировать после любых изменений `.env` (`bun run env:types`) — файл полностью
+перезаписывается, **не редактировать вручную**.
 
-> Из-за встроенной в `@types/node` индекс-сигнатуры `[key: string]: string`
-> `keyof NodeJS.ProcessEnv` схлопывается до `string`, поэтому строковый литерал
-> для автокомплита в утилите ниже не подсказывается — это нормально, проверка
-> идёт только на этапе доступа к `process.env.XXX` / `configService.get('XXX')`.
+## Автокомплит ключей (RemoveIndexSignature)
+
+`@types/node` объявляет `NodeJS.ProcessEnv` с индекс-сигнатурой
+`[key: string]: string | undefined`. Из-за неё `keyof NodeJS.ProcessEnv`
+схлопывается до `string`, и автокомплит конкретных имён переменных пропадает.
+
+Фикс — мапированный тип, убирающий ключи-сигнатуры (`string`/`number`/`symbol`)
+и оставляющий только литералы (`MAIL_HOST`, `MAIL_PASSWORD`, ...):
+
+```ts
+type RemoveIndexSignature<T> = {
+  [K in keyof T as string extends K
+    ? never
+    : number extends K
+      ? never
+      : symbol extends K
+        ? never
+        : K]: T[K];
+};
+
+type TEnvVariables = keyof RemoveIndexSignature<NodeJS.ProcessEnv>;
+```
+
+`TEnvVariables` теперь — объединение литералов всех ключей из `env.d.ts`,
+обновляется само после каждого `bun run env:types`, без отдельного
+вручную поддерживаемого списка.
 
 ---
 
@@ -49,7 +75,19 @@ declare namespace NodeJS {
 
 ```ts
 // get-env-variable.util.ts
-export default function getEnvVariable<T = string>(variable: keyof NodeJS.ProcessEnv): T {
+type RemoveIndexSignature<T> = {
+  [K in keyof T as string extends K
+    ? never
+    : number extends K
+      ? never
+      : symbol extends K
+        ? never
+        : K]: T[K];
+};
+
+type TEnvVariables = keyof RemoveIndexSignature<NodeJS.ProcessEnv>;
+
+export default function getEnvVariable<T = string>(variable: TEnvVariables): T {
   const value = process.env[variable];
   if (value === undefined) {
     throw new Error(`Missing env variable: ${variable}`);
@@ -91,9 +129,21 @@ export class CoreModule {}
 // get-env-variables.utils.ts
 import { ConfigService } from "@nestjs/config";
 
+type RemoveIndexSignature<T> = {
+  [K in keyof T as string extends K
+    ? never
+    : number extends K
+      ? never
+      : symbol extends K
+        ? never
+        : K]: T[K];
+};
+
+type TEnvVariables = keyof RemoveIndexSignature<NodeJS.ProcessEnv>;
+
 export default function getEnvVariables<T = string>(
   configService: ConfigService,
-  variable: keyof NodeJS.ProcessEnv,
+  variable: TEnvVariables,
 ): T {
   return configService.getOrThrow<T>(variable);
 }
