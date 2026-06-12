@@ -1,4 +1,5 @@
 # fold levels
+
 ```
 zj moves the cursor to the next fold.
 [z moves the cursor to the start of the current fold.
@@ -6,7 +7,7 @@ zj moves the cursor to the next fold.
 zk moves the cursor to the previous fold.
 zo opens a fold at the cursor.
 zO opens all folds at the cursor.
-zc closes a fold under cursor. 
+zc closes a fold under cursor.
 zC closes all folds untill parrent when cursor is in a child
 zM closes all open folds.
 zR open all folds
