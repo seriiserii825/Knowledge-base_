@@ -1,5 +1,9 @@
 Инструкция по получению ключа MapTiler:
 
+## keys
+
+https://cloud.maptiler.com/account/keys/
+
 1. Зайди на cloud.maptiler.com и зарегистрируйся (бесплатно, через email или Google/GitHub).
 2. После входа попадёшь в Dashboard — там сразу будет создан Default key (или создай новый через раздел "API keys" → "Create a new key").
 3. Скопируй ключ — это строка вида AbCdEf12345....
