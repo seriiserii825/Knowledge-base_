@@ -1,3 +1,4 @@
+https://webperf-snippets.nucliweb.net/Interaction/Input-Latency-Breakdown
 <template>
   <div ref="container_ref" class="my-slider">
     <div class="my-slider__wrap">
