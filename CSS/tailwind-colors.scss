@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+body {
+  color: white;
+  background: #000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+@theme {
+  --color-dark: #000;
+  --color-light: #fff;
+  --color-primary: #ae7aff;
+}
+
+@layer components {
+  .btn {
+    @apply border-0 bg-primary text-dark py-2.5 px-5 font-bold text-sm;
+  }
+}
