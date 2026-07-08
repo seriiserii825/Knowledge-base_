@@ -1,0 +1,45 @@
+<!-- Аккордеон на grid-template-rows: 0fr -> 1fr -->
+<!--
+  Суть трюка: grid-template-rows нельзя анимировать от 0 к auto напрямую,
+  но можно анимировать между fr-единицами (0fr -> 1fr). Контейнер с
+  display: grid и одной строкой становится "высотой в долю себя", и эта
+  доля тянется до размера контента, когда стоит 1fr.
+
+  overflow: hidden на прямом ребёнке обязателен: пока transition идёт,
+  реальная высота ребёнка больше текущей высоты строки грида, и без
+  overflow: hidden контент просто вылезал бы наружу вместо обрезки.
+-->
+
+<div class="accordion-item">
+  <button class="accordion-header" type="button">Заголовок</button>
+
+  <div class="grid-accordion">
+    <div class="grid-accordion__inner">Любой контент — текст, картинки, что угодно.</div>
+  </div>
+</div>
+
+<style>
+  /* --- вот это и есть весь трюк, больше ничего не нужно --- */
+  .grid-accordion {
+    display: grid;
+    grid-template-rows: 0fr; /* закрыто */
+    transition: grid-template-rows 0.35s ease;
+  }
+
+  .grid-accordion.is-open {
+    grid-template-rows: 1fr; /* открыто */
+  }
+
+  .grid-accordion > * {
+    overflow: hidden; /* без этого контент не обрежется во время анимации */
+  }
+</style>
+
+<script>
+  // клик по заголовку переключает класс is-open на соседнем .grid-accordion
+  document.querySelectorAll('.accordion-header').forEach((header) => {
+    header.addEventListener('click', () => {
+      header.nextElementSibling.classList.toggle('is-open');
+    });
+  });
+</script>
