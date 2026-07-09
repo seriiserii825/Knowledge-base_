@@ -1,0 +1,56 @@
+<script charset="utf-8">
+  import { Pipe, PipeTransform } from '@angular/core';
+
+  @Pipe({
+    name: 'sortData',
+  })
+  export class SortDataPipe implements PipeTransform {
+    transform<T>(arr: T[], property: keyof T): T[] {
+      arr.sort((a: T, b: T) => {
+        if (a[property] < b[property]) {
+          return -1;
+        }
+        if (a[property] > b[property]) {
+          return 1;
+        }
+        return 0;
+      });
+      return arr;
+    }
+  }
+</script>
+<script charset="utf-8">
+  import { JsonPipe } from '@angular/common';
+  import { Component, signal } from '@angular/core';
+  import { RouterOutlet } from '@angular/router';
+  import { SortDataPipe } from './pipes/sort-data-pipe';
+
+  interface IUser {
+    age: number;
+  }
+
+  @Component({
+    selector: 'app-root',
+    imports: [RouterOutlet, JsonPipe, SortDataPipe],
+    templateUrl: './app.html',
+    styleUrl: './app.css',
+  })
+  export class App {
+    ageOfUsers = signal<IUser[]>([{ age: 25 }, { age: 30 }, { age: 20 }, { age: 35 }]);
+
+    constructor() {
+      setTimeout(() => {
+        this.ageOfUsers.update((users) => [...users, { age: 28 }]);
+      }, 2000);
+    }
+  }
+</script>
+
+<main class="min-h-full">
+  <ul>
+    @for (user of ageOfUsers() | sortData: 'age'; track user.age) {
+    <li>{{ user.age }}</li>
+    }
+  </ul>
+  <router-outlet></router-outlet>
+</main>
