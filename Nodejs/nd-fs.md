@@ -1,4 +1,4 @@
-### 📖 Чтение файлов
+### 📖 Чтение файлов в node.js
 
 ```ts
 fs.readFile(path, options, callback) — читает весь файл целиком.
