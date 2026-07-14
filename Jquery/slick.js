@@ -4,13 +4,10 @@
 
 // swipe: false,
 
-custom_slider.on(
-  "beforeChange",
-  function (event, slick, currentSlide, nextSlide) {
-    images.removeClass("active");
-    images[nextSlide].classList.add("active");
-  }
-);
+custom_slider.on("beforeChange", function (event, slick, currentSlide, nextSlide) {
+  images.removeClass("active");
+  images[nextSlide].classList.add("active");
+});
 
 $(window).on("load resize orientationchange", function () {
   let blogSlider = $("#js-blog");
@@ -53,36 +50,38 @@ $(window).on("load resize orientationchange", function () {
 
 //equal height
 
-slider.slick({
-  slidesToShow: 2,
-  slidesToScroll: 1,
-  dots: false,
-  arrows: false,
-  responsive: [
-    {
-      breakpoint: 992,
-      settings: {
-        slidesToShow: 2,
-      }
-    },
-    {
-      breakpoint: 576,
-      settings: {
-        slidesToShow: 1,
-      }
-    }
-  ]
-}).on('setPosition', function (event, slick) {
-  slick.$slides.css('height', slick.$slideTrack.height() + 'px');
-});
+slider
+  .slick({
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    dots: false,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  })
+  .on("setPosition", function (event, slick) {
+    slick.$slides.css("height", slick.$slideTrack.height() + "px");
+  });
 
-// show 3 slides and crop for right and left
+// show 3 slides and crop for right
 
 $(document).ready(function () {
-  $('.carousel').slick({
+  $(".carousel").slick({
     slidesToShow: 3, // Number of slides to show at once
     centerMode: true, // Enable center mode
-    centerPadding: '20%', // Adjust the padding for the left and right sides
+    centerPadding: "20%", // Adjust the padding for the left and right sides
     focusOnSelect: true, // Set the clicked slide as the center slide
     variableWidth: true, // Variable width to allow for cropping
     responsive: [
@@ -90,20 +89,19 @@ $(document).ready(function () {
         breakpoint: 768,
         settings: {
           slidesToShow: 1, // Show 1 slide on smaller screens
-          centerPadding: '0', // Remove cropping on smaller screens
-        }
-      }
-    ]
+          centerPadding: "0", // Remove cropping on smaller screens
+        },
+      },
+    ],
   });
 });
 
-
 // custom navigation
 function inspirationSlider() {
-  const slider = $('.inspiration__wrap');
-  const prev_btn = $('.inspiration__btn--prev');
-  const next_btn = $('.inspiration__btn--next');
-  const dots_li = $('.inspiration__dots li');
+  const slider = $(".inspiration__wrap");
+  const prev_btn = $(".inspiration__btn--prev");
+  const next_btn = $(".inspiration__btn--next");
+  const dots_li = $(".inspiration__dots li");
   slider.slick({
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -111,26 +109,26 @@ function inspirationSlider() {
     arrows: false,
     dots: false,
   });
-  prev_btn.on('click', function () {
-    slider.slick('slickPrev');
-    const current = slider.slick('slickCurrentSlide');
-    dots_li.removeClass('active');
-    dots_li.eq(current).addClass('active');
+  prev_btn.on("click", function () {
+    slider.slick("slickPrev");
+    const current = slider.slick("slickCurrentSlide");
+    dots_li.removeClass("active");
+    dots_li.eq(current).addClass("active");
   });
-  next_btn.on('click', function () {
-    slider.slick('slickNext');
-    const current = slider.slick('slickCurrentSlide');
-    dots_li.removeClass('active');
-    dots_li.eq(current).addClass('active');
+  next_btn.on("click", function () {
+    slider.slick("slickNext");
+    const current = slider.slick("slickCurrentSlide");
+    dots_li.removeClass("active");
+    dots_li.eq(current).addClass("active");
   });
-  dots_li.on('click', function () {
+  dots_li.on("click", function () {
     const index = $(this).index();
-    slider.slick('slickGoTo', index);
-    dots_li.removeClass('active');
-    $(this).addClass('active');
+    slider.slick("slickGoTo", index);
+    dots_li.removeClass("active");
+    $(this).addClass("active");
   });
-  slider.on('afterChange', function (event, slick, currentSlide) {
-    dots_li.removeClass('active');
-    dots_li.eq(currentSlide).addClass('active');
+  slider.on("afterChange", function (event, slick, currentSlide) {
+    dots_li.removeClass("active");
+    dots_li.eq(currentSlide).addClass("active");
   });
 }
