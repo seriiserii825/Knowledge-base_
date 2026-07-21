@@ -1,0 +1,90 @@
+<!-- Grid-аккордеон во Vue (компонент + переиспользуемый CSS-класс) -->
+<!--
+  Тот же трюк, что и в accordion-grid-slide.html (grid-template-rows: 0fr -> 1fr),
+  только вынесен в отдельный Vue-компонент с v-model, чтобы состояние open/close
+  жило снаружи (можно завязать на несколько триггеров, роутить через query-параметр
+  и т.д.), а сам компонент был просто "обёрткой-аниматором" вокруг слота.
+
+  Важно: прямой ребёнок .grid-accordion (тот, что с overflow: hidden) не должен
+  иметь padding — на 0fr это обрежет контент криво (паддинг "утечёт"). Весь padding
+  вешается на элемент ВНУТРИ слота (на "внука"), а не на обёртку.
+
+  Компонент ничего не знает про контент — можно вкладывать один GridAccordion
+  в другой (например: всегда виден первый абзац текста, а "Показать ещё"
+  раскрывает вложенный аккордеон с остальным текстом).
+-->
+
+<!-- GridAccordion.vue -->
+<script setup lang="ts">
+  const is_open = defineModel<boolean>();
+</script>
+
+<template>
+  <div class="grid-accordion" :class="{ 'is-open': is_open }">
+    <div>
+      <slot />
+    </div>
+  </div>
+</template>
+
+<!-- grid-accordion.scss -->
+<style>
+  .grid-accordion {
+    display: grid;
+    transition: grid-template-rows 0.35s ease;
+    grid-template-rows: 0fr;
+
+    &.is-open {
+      grid-template-rows: 1fr;
+    }
+
+    /* прямой ребёнок — только overflow: hidden, без padding */
+    > * {
+      overflow: hidden;
+    }
+  }
+</style>
+
+<!-- Пример использования: заголовок с toggle-иконкой + аккордеон -->
+<script setup lang="ts">
+  import { ref } from "vue";
+
+  import GridAccordion from "@/modules/grid-accordion/GridAccordion.vue";
+
+  const is_open = ref(true);
+</script>
+
+<template>
+  <section class="some-block">
+    <div class="some-block__toggle" @click="is_open = !is_open">
+      <h2>Заголовок</h2>
+    </div>
+
+    <GridAccordion v-model="is_open">
+      <!-- padding вешается тут, на "внука", а не на .grid-accordion -->
+      <div class="some-block__body">Любой контент — текст, картинки, список, что угодно.</div>
+    </GridAccordion>
+  </section>
+</template>
+
+<!-- Пример вложенных аккордеонов: первый блок виден всегда,
+     кнопка "Показать ещё" раскрывает второй, вложенный -->
+<script setup lang="ts">
+  import { ref } from "vue";
+
+  import GridAccordion from "@/modules/grid-accordion/GridAccordion.vue";
+
+  const is_rest_open = ref(false);
+</script>
+
+<template>
+  <div class="first-block">Первый абзац, виден сразу.</div>
+
+  <GridAccordion v-model="is_rest_open">
+    <div class="rest-block">Остальной контент, скрыт до клика.</div>
+  </GridAccordion>
+
+  <button @click="is_rest_open = !is_rest_open">
+    {{ is_rest_open ? 'Показать меньше' : 'Показать ещё' }}
+  </button>
+</template>
