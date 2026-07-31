@@ -1,4 +1,4 @@
-# Better Auth + Next.js 16 + Prisma — Полная инструкция
+# Better Auth + Next.js 16 + Prisma
 
 ## 1. Установка
 
