@@ -1,6 +1,6 @@
 ## export
 
-file - export to dotfiles/filezilla
+file - export to dotfiles/apps/filezilla.zip.gpg
 is already in .gpgrc
 
 ## import
