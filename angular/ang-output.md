@@ -1,52 +1,33 @@
-# Output (события от child к parent)
+## Child → Parent — `output()`
 
-`output()` — способ дочернего компонента "выстрелить" событием наружу, к родителю. Работает связкой: `emit()` в child + event binding `(...)` в родителе.
+### Child
 
-## В дочернем компоненте
+```ts
+selected = output<string>();
 
-```typescript
-import { Component, output } from "@angular/core";
-
-@Component({
-  selector: "app-child",
-  template: `<button (click)="onClick()">change name</button>`,
-})
-export class Child {
-  nameChange = output<string>();
-
-  onClick() {
-    this.nameChange.emit("name from child");
-  }
+selectUser() {
+  this.selected.emit('Sergiu');
 }
 ```
 
-## В родителе
+### Parent
 
 ```html
-<app-child (nameChange)="setNewName($event)"></app-child>
+<app-user (selected)="onSelected($event)" />
 ```
 
-```typescript
-setNewName(value: string) {
-  this.name.set(value);
+```ts
+onSelected(name: string) {
+  console.log(name);
 }
 ```
 
-## Как это работает
+### Child HTML:
 
-- Имя свойства output (`nameChange`) — это и есть имя события в шаблоне родителя: `(nameChange)`. Метод, который вызывает `.emit()` (в примере `onClick`), к имени события отношения не имеет и может называться как угодно.
-- `.emit(value)` передаёт значение наружу; в родителе оно доступно через `$event`.
-- output — просто "труба наружу", без встроенной логики. Родитель сам решает, что делать со значением (например, записать в signal через `.set()`).
+(click)="selected.emit(value)"
 
-## Частая ошибка
+        ↓
 
-Слушать в родителе имя метода из child вместо имени output:
+### Parent HTML:
 
-```html
-<!-- неправильно: changeNameFromChild — это метод child, а не output -->
-<app-child (changeNameFromChild)="setNewName($event)"></app-child>
-```
-
-Angular не выдаёт ошибку компиляции на несуществующий output в некоторых случаях — просто обработчик никогда не вызовется, потому что событие с таким именем никто не эмитит.
-
-Вторая типичная ловушка: даже если emit долетел, но input в родителе привязан к литералу (`[name]="'hello world'"`) вместо сигнала/переменной (`[name]="name()"`), child всё равно не увидит изменений — потому что новое значение вообще никуда не прокидывается обратно во view.
+(selected)="onSelected($event)"
