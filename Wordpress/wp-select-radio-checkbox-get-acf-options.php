@@ -22,7 +22,21 @@ function acf_get_repeater_field_choices(string $parent_name, string $repeater_na
   return $target_field['choices'] ?? [];
 }
 
-// Вариант 2: поле — обычное top-level поле (не вложено в repeater)
+// Вариант 2: поле лежит внутри group напрямую, без repeater
+// (например group('staff') > checkbox('some_field'))
+function acf_get_group_field_choices(string $group_name, string $field_name): array
+{
+  $group_field = get_field_object($group_name);
+  if (!$group_field) {
+    return [];
+  }
+
+  $target_field = array_column($group_field['sub_fields'], null, 'name')[$field_name] ?? null;
+
+  return $target_field['choices'] ?? [];
+}
+
+// Вариант 3: поле — обычное top-level поле (не вложено ни во что)
 function acf_get_field_choices(string $field_name): array
 {
   $field = get_field_object($field_name);
@@ -32,6 +46,7 @@ function acf_get_field_choices(string $field_name): array
 
 // Использование:
 // $category_options = acf_get_repeater_field_choices('staff', 'items', 'category');
+// $some_options = acf_get_group_field_choices('staff', 'some_field');
 // $status_options = acf_get_field_choices('status');
 //
 // foreach ($category_options as $value => $label) {
