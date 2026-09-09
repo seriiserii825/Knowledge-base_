@@ -1,25 +1,43 @@
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+# NVM
 
-#install
+## Install
 
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 ```
 
-nvm ls-remote | grep -i "latest lts"
+Restart terminal or reload shell config.
+
+## Versions
+
+```bash
+nvm ls                 # installed
+nvm ls-remote --lts    # available LTS
+nvm current            # current version
 ```
 
-// в моём случае результат таков
-v4.9.1 (Latest LTS: Argon)
-v6.17.1 (Latest LTS: Boron)
-v8.15.1 (Latest LTS: Carbon)
-v10.15.3 (Latest LTS: Dubnium)
-nvm install 12.22.9
-nvm ls
-nvm use <version_number>
-nvm uninstall <version_number>
+## Install / Use / Remove
 
-# set default version
+```bash
+nvm install 22
+nvm use 22
+nvm uninstall 20
+```
 
-nvm alias default 16
+## Set default
 
+```bash
+nvm alias default 22
+```
+
+## NVM directory
+
+```bash
 echo "$NVM_DIR"
+```
+
+Example:
+
+```text
 /home/serii/.config/nvm
+```
