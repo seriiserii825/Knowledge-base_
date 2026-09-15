@@ -1,523 +1,408 @@
-### Create new module
+# NestJS: авторизация access/refresh token (JWT + httpOnly cookie)
+
+Собрано по образцу `nest-teashop-angular`, с исправлением найденных в нём багов (см. раздел «Баги в исходном проекте» в конце — обязательно прочитать).
+
+## Идея флоу
+
+- **accessToken** — короткоживущий (например 1h), отдаётся в теле ответа, кладётся на фронте в память/стор, летает в заголовке `Authorization: Bearer <token>`.
+- **refreshToken** — долгоживущий (например 7d), кладётся в `httpOnly` cookie, недоступен из JS, летает сам браузером при запросах с `credentials: 'include'`.
+- Логин/регистрация выдают обе пары. Когда accessToken протухает — фронт стучится на `POST /auth/login/access-token`, сервер читает refreshToken из cookie и выдаёт новую пару.
+- Logout — cookie с refreshToken затирается (`expires: new Date(0)`).
+
+## 1. Зависимости
 
 ```bash
-nest g module auth
+npm i @nestjs/jwt @nestjs/passport passport passport-jwt argon2 cookie-parser
+npm i -D @types/passport-jwt @types/cookie-parser
+# опционально, для Google OAuth:
+npm i passport-google-oauth20
+npm i -D @types/passport-google-oauth20
 ```
 
-### Create controller and service
+## 2. .env
 
-```bash
-nest g controller auth --no-spec && nest g service auth --no-spec
+```
+JWT_SECRET=long_random_string
+JWT_ACCESS_EXPIRES_IN=1h
+JWT_REFRESH_EXPIRES_IN=7d
+SERVER_DOMAIN=localhost   # домен, на который ставится cookie
+CLIENT_URL=http://localhost:5173
 ```
 
-### Create a user entity
+`JWT_ACCESS_EXPIRES_IN` / `JWT_REFRESH_EXPIRES_IN` — строки в формате [ms](https://github.com/vercel/ms) (`1h`, `7d`, `15m`...), их понимает `jwt.sign`.
 
-```typescript
-// src/auth/user.entity.ts
+## 3. `src/config/jwt.config.ts`
 
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+```ts
+import { ConfigService } from "@nestjs/config";
+import { JwtModuleOptions } from "@nestjs/jwt";
 
-@Entity()
-export class UserEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
-  username: string;
-
-  @Column()
-  password: string;
-}
+export const getJwtConfig = async (configService: ConfigService): Promise<JwtModuleOptions> => ({
+  secret: configService.getOrThrow<string>("JWT_SECRET"),
+});
 ```
 
-### Create UserRepository
+## 4. `src/auth/dto/auth.dto.ts`
 
-```typescript
-// src/auth/user.repository.ts
+```ts
+import { IsEmail, IsOptional, IsString, MinLength } from "class-validator";
 
-import { Repository } from "typeorm";
-import { UserEntity } from "./user.entity";
-import { Injectable } from "@nestjs/common";
-
-@Injectable()
-export class UserRepository extends Repository<UserEntity> {}
-```
-
-inject it in AuthModule and register the entity
-
-```typescript
-// src/auth/auth.module.ts
-@Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
-  controllers: [AuthController],
-  providers: [AuthService, UserRepository]
-})
-```
-
-### inject UserRepository in AuthService
-
-```typescript
-@Injectable()
-export class AuthService {
-  constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) {}
-}
-```
-
-### Create DTOs for user registration and login
-
-```typescript
-// src/auth/dto/auth-credentials.dto.ts
-
-export class AuthCredentialsDto {
-  username: string;
-  password: string;
-}
-```
-
-### signUp in repository
-
-```typescript
-// src/auth/user.repository.ts
-async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-  const {username, password} = authCredentialsDto;
-  const user = new UserEntity();
-  user.username = username;
-  user.password = password;
-  await user.save();
-}
-```
-
-### signUp in service
-
-```typescript
-// src/auth/auth.service.ts
-
-export class AuthService {
-  constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) {}
-
-  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    return this.userRepository.signUp(authCredentialsDto);
-  }
-}
-```
-
-### validation for authCredentialsDto
-
-```typescript
-// src/auth/dto/auth-credentials.dto.ts
-
-import { IsString, MaxLength, MinLength } from "class-validator";
-
-export class AuthCredentialsDto {
+export class AuthDto {
+  @IsOptional()
   @IsString()
-  @MinLength(4)
-  @MaxLength(20)
-  username: string;
+  name?: string;
 
+  @IsEmail()
+  email: string;
+
+  @MinLength(6)
   @IsString()
-  @MinLength(8)
-  @MaxLength(20)
-  @Matches(/(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*)/, {
-    message:
-      "password must contain at least one uppercase letter, one lowercase letter, and one number",
-  })
   password: string;
 }
 ```
 
-### signUp in controller
+Важно: `password` обязателен для обычного логина/регистрации (не `@IsOptional`). Опциональным он может быть только для отдельного OAuth-флоу — там его лучше вообще не пропускать через этот DTO.
 
-```typescript
-// src/auth/auth.controller.ts
+## 5. `src/auth/auth.module.ts`
 
-export class AuthController {
-  constructor(private authService: AuthService) {}
-
-  @Post("/signup")
-  async signUp(@Body() authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    return this.authService.signUp(authCredentialsDto);
-  }
-}
-```
-
-### user repository with orm
-
-```typescript
-// src/auth/user.repository.ts
-
-constructor(private dataSource: DataSource) {
-    super(UserEntity, dataSource.createEntityManager());
-}
-```
-
-### auth service get all
-
-```typescript
-// src/auth/auth.service.ts
-  async getAllUsers(): Promise<UserEntity[]> {
-    return this.userRepository.find();
-  }
-```
-
-### auth controller get all
-
-```typescript
-// src/auth/auth.controller.ts
-  @Get('/users')
-  async getAllUsers(): Promise<UserEntity[]> {
-    return this.authService.getAllUsers();
-  }
-```
-
-### delete user in auth service
-
-```typescript
-
-  async deleteUser(id: number): Promise<void> {
-    await this.userRepository.delete(id);
-  }
-```
-
-### delete user in auth controller
-
-```typescript
-  @Delete('/user/:id')
-  async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.authService.deleteUser(id);
-  }
-```
-
-### auth service signUp unique username
-
-```typescript
-// src/auth/user.repository.ts
-
-  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    const { username, password } = authCredentialsDto;
-    const user = new UserEntity();
-    user.username = username;
-    user.password = password;
-    try {
-      await user.save();
-    } catch (error) {
-      if ('code' in error && error.code === '23505') {
-        throw new ConflictException('Username already exists');
-      }
-      throw new InternalServerErrorException();
-    }
-  }
-```
-
-### hashed password
-
-```bash
-bun add bcrypt
-```
-
-user entity added salt and drop db, to recreate it
-
-```typescript
-// src/auth/user.entity.ts
-
-@Column()
-salt: string;
-```
-
-auth repository added salt and save to db
-
-```typescript
-// src/auth/user.repository.ts
-
-import * as bcrypt from "bcrypt";
-
-@Injectable()
-export class UserRepository extends Repository<UserEntity> {
-  constructor(private dataSource: DataSource) {
-    super(UserEntity, dataSource.createEntityManager());
-  }
-
-  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    const { username, password } = authCredentialsDto;
-    const user = new UserEntity();
-    const salt = await bcrypt.genSalt();
-    user.salt = salt;
-    user.username = username;
-    user.password = await this.hashPassword(password, salt);
-    try {
-      await user.save();
-    } catch (error) {
-      if ("code" in error && error.code === "23505") {
-        throw new ConflictException("Username already exists");
-      }
-      throw new InternalServerErrorException();
-    }
-  }
-
-  private async hashPassword(password: string, salt: string): Promise<string> {
-    return bcrypt.hash(password, salt);
-  }
-}
-```
-
-### validate user password
-
-user entity method
-
-```typescript
-// src/auth/user.entity.ts
-
-  @Column()
-  salt: string;
-
-  async validatePassword(password: string): Promise<boolean> {
-    const hashedPassword = await bcrypt.hash(password, this.salt);
-    return hashedPassword === this.password;
-  }
-```
-
-auth repository validate user
-
-```typescript
-// src/auth/user.repository.ts
-
-async validateUserPassword( authCredentialsDto: AuthCredentialsDto,): Promise<string | null> {
-    const { username, password } = authCredentialsDto;
-    const user = await this.findOne({ where: { username } });
-    if (user && await user.validatePassword(password)) {
-      return user.username;
-    } else {
-      return null;
-    }
-}
-
-```
-
-### signIn method in auth service
-
-```typescript
-// src/auth/auth.service.ts
-
-  async signIn( authCredentialsDto: AuthCredentialsDto,): Promise<string | null> {
-    const username = await this.userRepository.validateUserPassword(authCredentialsDto);
-    if (!username) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-    return username;
-  }
-```
-
-controller
-
-```typescript
-// src/auth/auth.controller.ts
-
-  @Post('/signin')
-  async signIn( @Body() authCredentialsDto: AuthCredentialsDto,): Promise<string | null> {
-    return this.authService.signIn(authCredentialsDto);
-  }
-```
-
-### JWT setup
-
-```bash
-bun add @nestjs/jwt @nestjs/passport passport passport-jwt
-```
-
-### JWT module configure jwt and passport
-
-```typescript
-// src/auth/auth.module.ts
-
+```ts
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
-import { PassportModule } from "@nestjs/passport";
+import { getJwtConfig } from "../config/jwt.config.js";
+import { UserModule } from "../user/user.module.js";
+import { AuthController } from "./auth.controller.js";
+import { AuthService } from "./auth.service.js";
+import { JwtStrategy } from "./strategies/jwt.strategy.js";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity]),
-    PassportModule.register({ defaultStrategy: "jwt" }),
-    JwtModule.register({
-      secret: "your_jwt_secret_key",
-      signOptions: { expiresIn: "1h" },
+    UserModule,
+    ConfigModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getJwtConfig,
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, UserRepository],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}
 ```
 
-### JWT signInt
+## 6. `src/auth/auth.service.ts`
 
-create interface for payload in auth folder
+Ключевые моменты по сравнению с исходником:
 
-```typescript
-// src/auth/interfaces/jwt-payload.interface.ts
-export interface JwtPayload {
-  username: string;
-}
-```
+- логин **обязан** сверять пароль через `argon2.verify`, иначе это не авторизация, а угадывание email;
+- срок жизни cookie считается через `ms()`, а не `parseInt()` от строки вида `"7d"`.
 
-create interface signInResponse in auth folder
+```ts
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
+import { Response } from "express";
+import { hash, verify } from "argon2";
+import ms from "ms";
+import { UserService } from "../user/user.service.js";
+import { AuthDto } from "./dto/auth.dto.js";
+import { User } from "../user/entities/user.entity.js";
 
-```typescript
-// src/auth/interfaces/sign-in-response.interface.ts
-export interface ISignInResponse {
+interface Tokens {
   accessToken: string;
+  refreshToken: string;
+}
+
+interface AuthResult extends Tokens {
+  user: User;
+}
+
+@Injectable()
+export class AuthService {
+  REFRESH_TOKEN_NAME = "refreshToken";
+
+  constructor(
+    private jwt: JwtService,
+    private userService: UserService,
+    private configService: ConfigService,
+  ) {}
+
+  async login(dto: AuthDto): Promise<AuthResult> {
+    const user = await this.validateUser(dto);
+    const tokens = this.generateTokens(user.id);
+    return { user, ...tokens };
+  }
+
+  async register(dto: AuthDto): Promise<AuthResult> {
+    const oldUser = await this.userService.findByEmail(dto.email);
+    if (oldUser) {
+      throw new BadRequestException("User already exists");
+    }
+    const user = await this.userService.create({
+      ...dto,
+      password: await hash(dto.password),
+    });
+    const tokens = this.generateTokens(user.id);
+    return { user, ...tokens };
+  }
+
+  async getNewTokens(refreshToken: string): Promise<AuthResult> {
+    const result = await this.jwt.verifyAsync(refreshToken).catch(() => null);
+    if (!result) {
+      throw new UnauthorizedException("Invalid refresh token");
+    }
+    const user = await this.userService.findOne(result.id);
+    const tokens = this.generateTokens(user.id);
+    return { user, ...tokens };
+  }
+
+  generateTokens(userId: string): Tokens {
+    const data = { id: userId };
+
+    const accessToken = this.jwt.sign(data, {
+      expiresIn: this.configService.getOrThrow("JWT_ACCESS_EXPIRES_IN"),
+    });
+
+    const refreshToken = this.jwt.sign(data, {
+      expiresIn: this.configService.getOrThrow("JWT_REFRESH_EXPIRES_IN"),
+    });
+    return { accessToken, refreshToken };
+  }
+
+  private async validateUser(dto: AuthDto): Promise<User> {
+    const user = await this.userService.findByEmail(dto.email);
+    if (!user || !user.password) {
+      throw new NotFoundException("User not found");
+    }
+    const isValid = await verify(user.password, dto.password);
+    if (!isValid) {
+      throw new UnauthorizedException("Invalid credentials");
+    }
+    return user;
+  }
+
+  async validateOAuthLogin(profile: { email: string; name: string }): Promise<AuthResult> {
+    let user = await this.userService.findByEmail(profile.email);
+    if (!user) {
+      user = await this.userService.create({
+        email: profile.email,
+        name: profile.name,
+      });
+    }
+    const tokens = this.generateTokens(user.id);
+    return { user, ...tokens };
+  }
+
+  addRefreshTokenToResponse(res: Response, refreshToken: string): void {
+    const expiresIn = new Date(
+      Date.now() + ms(this.configService.getOrThrow("JWT_REFRESH_EXPIRES_IN")),
+    );
+
+    res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
+      httpOnly: true,
+      domain: this.configService.getOrThrow("SERVER_DOMAIN"),
+      expires: expiresIn,
+      secure: true,
+      sameSite: "none", // на локальной разработке без https — 'lax' и secure: false
+    });
+  }
+
+  removeRefreshTokenFromResponse(res: Response): void {
+    res.cookie(this.REFRESH_TOKEN_NAME, "", {
+      httpOnly: true,
+      domain: this.configService.getOrThrow("SERVER_DOMAIN"),
+      expires: new Date(0),
+      secure: true,
+      sameSite: "none",
+    });
+  }
 }
 ```
 
-in auth service signIn method
+`ms` — пакет `npm i ms` (+ `@types/ms`), либо посчитать вручную по regex `/(\d+)([dhm])/`.
 
-```typescript
-// src/auth/auth.service.ts
+## 7. `src/auth/auth.controller.ts`
 
-  async signIn(
-    authCredentialsDto: AuthCredentialsDto,
-  ): Promise<ISignInResponse | null> {
-    const username =
-      await this.userRepository.validateUserPassword(authCredentialsDto);
-    if (!username) {
-      throw new UnauthorizedException('Invalid credentials');
+```ts
+import { Body, Controller, HttpCode, Post, Req, Res, UnauthorizedException } from "@nestjs/common";
+import type { Request, Response } from "express";
+import { AuthService } from "./auth.service.js";
+import { AuthDto } from "./dto/auth.dto.js";
+
+@Controller("auth")
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @HttpCode(200)
+  @Post("login")
+  async login(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
+    const { refreshToken, ...response } = await this.authService.login(dto);
+    this.authService.addRefreshTokenToResponse(res, refreshToken);
+    return response;
+  }
+
+  @HttpCode(200)
+  @Post("login/access-token")
+  async getNewTokens(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const refreshTokenFromCookie = req.cookies[this.authService.REFRESH_TOKEN_NAME];
+
+    if (!refreshTokenFromCookie) {
+      this.authService.removeRefreshTokenFromResponse(res);
+      throw new UnauthorizedException("Refresh token not found");
     }
 
-    const payload: IJwtPayload = { username };
-    const accessToken = this.jwtService.sign(payload);
-    return { accessToken };
+    const { refreshToken, ...response } =
+      await this.authService.getNewTokens(refreshTokenFromCookie);
+
+    this.authService.addRefreshTokenToResponse(res, refreshToken);
+    return response;
   }
+
+  @HttpCode(201)
+  @Post("register")
+  async register(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
+    const { refreshToken, ...response } = await this.authService.register(dto);
+    this.authService.addRefreshTokenToResponse(res, refreshToken);
+    return response;
+  }
+
+  @HttpCode(200)
+  @Post("logout")
+  async logout(@Res({ passthrough: true }) res: Response) {
+    this.authService.removeRefreshTokenFromResponse(res);
+    return { message: "Logged out successfully" };
+  }
+}
 ```
 
-auth controller signIn method
+## 8. `src/auth/strategies/jwt.strategy.ts`
 
-```typescript
-// src/auth/auth.controller.ts
+Обязательно кидать `UnauthorizedException`, а не голый `Error` — иначе Nest вернёт 500 вместо 401.
 
-  @Post('/signin')
-  async signIn(
-    @Body() authCredentialsDto: AuthCredentialsDto,
-  ): Promise<ISignInResponse | null> {
-    return this.authService.signIn(authCredentialsDto);
-  }
-```
-
-### JWT Strategy
-
-```typescript
-// src/auth/jwt.strategy.ts
-
+```ts
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Strategy, ExtractJwt } from "passport-jwt";
-import { UserRepository } from "./user.repository";
-import { IJwtPayload } from "./interfaces/jwt-payload.interface";
-import { UserEntity } from "./user.entity";
+import { ExtractJwt, Strategy } from "passport-jwt";
+import { UserService } from "../../user/user.service.js";
 
+@Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) {
+  constructor(
+    configService: ConfigService,
+    private userService: UserService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: "your_jwt_secret_key", // the same as in auth.module.ts
+      ignoreExpiration: false,
+      secretOrKey: configService.getOrThrow<string>("JWT_SECRET"),
     });
   }
-  async validate(payload: IJwtPayload): Promise<UserEntity> {
-    const { username } = payload;
-    const user = await this.userRepository.findOne({
-      where: { username },
-    });
+
+  async validate(payload: { id: string }) {
+    const user = await this.userService.findOne(payload.id).catch(() => null);
     if (!user) {
-      throw new Error("Unauthorized");
+      throw new UnauthorizedException("User not found");
     }
     return user;
   }
 }
 ```
 
-### provide JwtStrategy in AuthModule
+## 9. Guard + декораторы
 
-```typescript
-// src/auth/auth.module.ts
+`src/auth/guards/jwt-auth.guard.ts`:
 
-@Module({
-  imports: [
-    TypeOrmModule.forFeature([UserEntity]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.register({
-      secret: 'your_jwt_secret_key',
-      signOptions: { expiresIn: '1h' },
-    }),
-  ],
-  controllers: [AuthController],
-  providers: [AuthService, UserRepository, JwtStrategy],
-  exports: [JwtStrategy, PassportModule],
-})
+```ts
+import { AuthGuard } from "@nestjs/passport";
+
+export class JwtAuthGuard extends AuthGuard("jwt") {}
 ```
 
-### protect routes with AuthGuard
+`src/auth/decorators/auth.decorator.ts`:
 
-```typescript
-// src/auth/auth.controller.ts
+```ts
+import { UseGuards } from "@nestjs/common";
+import { JwtAuthGuard } from "../guards/jwt-auth.guard.js";
 
-  @Post('/test')
-  @UseGuards(AuthGuard())
-  async test(@Req() req): Promise<string> {
-    console.log(req.user);
-    return 'You are authenticated';
-  }
+export const Auth = () => UseGuards(JwtAuthGuard);
 ```
 
-check with postman by adding Authorization Bearer token with accessToken from signIn response
-in postman Headers -> Key: Authorization -> Value: Bearer <accessToken>
+`src/user/decorators/user.decorator.ts`:
 
-### Custom decorator to get user
-
-```typescript
-// src/auth/get-user.decorator.ts
-
+```ts
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
-import { UserEntity } from "./user.entity";
+import { User } from "../entities/user.entity.js";
 
-export const GetUser = createParamDecorator((data: unknown, ctx: ExecutionContext): UserEntity => {
+export const CurrentUser = createParamDecorator((data: keyof User, ctx: ExecutionContext) => {
   const request = ctx.switchToHttp().getRequest();
-  return request.user;
+  const user = request.user as User;
+  return data ? user?.[data] : user;
 });
 ```
 
-use it in controller
+Использование на защищённом роуте:
 
-```typescript
-// src/auth/auth.controller.ts
-
-  @Post('/test')
-  @UseGuards(AuthGuard())
-  async test(@GetUser() user: UserEntity): Promise<UserEntity> {
-    return user;
-  }
-```
-
-### set guards for tasks.module.ts
-
-```typescript
-// src/tasks/tasks.module.ts
-//import auth module
-
-import {AuthModule} from 'src/auth/auth.module';
-
-@Module({
-  imports: [TypeOrmModule.forFeature([TaskEntity]), AuthModule],
-  controllers: [TasksController],
-  providers: [TasksService, TaskRepository]
-})
-```
-
-### protect tasks routes
-
-```typescript
-// src/tasks/tasks.controller.ts
-
-@Controller('tasks')
-@UseGuards(AuthGuard())
-export class TasksController {
+```ts
+@Auth()
+@Get('me')
+getMe(@CurrentUser() user: User) {
+  return user;
 }
 ```
 
-### conclusion
-Now your NestJS application has JWT authentication set up with user registration, login, and protected routes. You can further enhance this setup by adding features like role-based access control, password reset functionality, and more.
+## 10. `src/main.ts`
+
+```ts
+import { NestFactory } from "@nestjs/core";
+import { ValidationPipe } from "@nestjs/common";
+import cookieParser from "cookie-parser";
+import { AppModule } from "./app.module.js";
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
+  app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: process.env.CLIENT_URL ?? "http://localhost:5173",
+    credentials: true, // именно "credentials", не "credential"
+  });
+  await app.listen(process.env.PORT ?? 3000);
+}
+await bootstrap();
+```
+
+На фронте запросы должны идти с `credentials: 'include'` (fetch) или `withCredentials: true` (axios), иначе браузер не пришлёт/не сохранит cookie с refreshToken.
+
+## 11. (Опционально) Google OAuth поверх этой же схемы
+
+`src/auth/strategies/google.strategy.ts` в `validate()` формирует профиль пользователя и вызывает `done(null, profile)`, обработчик `GET google/callback` в `src/auth/auth.controller.ts` получает `req.user`, зовёт `authService.validateOAuthLogin(req.user)`, ставит cookie с refreshToken и редиректит на фронт с `accessToken` в query-параметре (`?accessToken=...`).
+
+Минус такого способа — accessToken в URL может осесть в истории браузера/логах. Если это критично — вместо query-параметра лучше отдать одноразовый код через query, а сам accessToken выдать отдельным запросом с фронта на бэк по этому коду.
+
+---
+
+## Баги в исходном проекте (nest-teashop-angular), которые НЕ надо копировать
+
+1. **Критично — вход без проверки пароля.** В `src/auth/auth.service.ts` метод `validateUser()` только ищет пользователя по email и ничего не сравнивает с `dto.password`. Пароль при регистрации хешируется (`argon2.hash`), но при логине никогда не проверяется (`argon2.verify` нигде не вызывается). Итог: `POST /auth/login` пускает по любому паролю (или вообще без него, т.к. `password` в DTO помечен `@IsOptional()`), лишь бы email существовал. В Postman это будет "работать", потому что баг именно в том, что сервер вообще не проверяет пароль. Нужно добавить `argon2.verify(user.password, dto.password)` и сделать `password` обязательным полем в `AuthDto`.
+2. **CORS: `credential: true` вместо `credentials: true`.** Опции у `enableCors`/пакета `cors` нет поля `credential` — валидное имя `credentials`. Из-за опечатки браузер не получит заголовок `Access-Control-Allow-Credentials: true`, и при кросс-доменных запросах с `sameSite: 'none'` cookie с refreshToken не будет ни отправляться, ни приниматься. Через Postman это не проявляется, потому что Postman не соблюдает CORS.
+3. **`expandHeaders: 'set-cookie'`** — не существующая опция у `cors` (там есть `exposedHeaders`). Скорее всего просто мёртвый код, но если задумывалось "открыть" заголовок `Set-Cookie` для JS на фронте — эта опция ничего не делает (и для httpOnly-cookie это в любом случае не нужно, браузер сам их обрабатывает).
+4. **Расчёт срока жизни cookie через `parseInt(EXPIRE_DAY_REFRESH_TOKEN)`.** Работает случайно, пока `JWT_REFRESH_EXPIRES_IN="7d"` (parseInt возьмёт "7" и прибавит как дни). Если это значение поменяют на `"12h"` или `"30m"`, `parseInt` всё равно вернёт "12"/"30" и они будут прибавлены как **дни**, а не часы/минуты — cookie проживёт совсем не тот срок, что сам JWT. Нужно парсить через `ms()` или явную единицу измерения.
+5. **`src/auth/strategies/jwt.strategy.ts` — `validate()` кидает `new Error(...)`** вместо `UnauthorizedException`. Passport не оборачивает произвольный `Error` в 401 — Nest вернёт 500 Internal Server Error вместо ожидаемого 401, если токен валиден, а пользователь уже удалён из базы.
+6. **access и refresh токены не различаются.** Оба подписываются одним секретом с одинаковым payload `{ id }`, без поля-метки типа токена. Это значит, что accessToken технически можно подсунуть как refreshToken (и наоборот) в `getNewTokens`/`jwtFromRequest`. Не критично при текущей архитектуре (refresh читается только из httpOnly cookie, а не из тела/заголовка), но при малейшем изменении флоу это станет дырой. Стоит добавлять `{ id, type: 'refresh' }` и проверять `type` при рефреше.
+7. **Нет отзыва refresh-токенов.** Токены полностью stateless — разлогинить пользователя "принудительно" (например, при смене пароля или краже токена) нельзя, только подождать истечения срока действия. Если это важно для проекта — нужно хранить refreshToken (или его хэш/jti) в БД и сверять при рефреше.
+
+### Чеклист для нового проекта
+
+- [ ] `argon2.verify` на логине, `password` обязателен в DTO
+- [x] `credentials: true` в `enableCors` (не `credential`) — исправлено в `src/main.ts`
+- [x] `ms()` вместо `parseInt()` для срока жизни cookie — исправлено в `src/auth/auth.service.ts`
+- [x] `UnauthorizedException` в `JwtStrategy.validate` — исправлено в `src/auth/strategies/jwt.strategy.ts`
+- [ ] `type: 'access' | 'refresh'` в payload токенов + проверка при рефреше
+- [ ] (опционально) хранение refresh-токенов в БД для возможности отзыва
