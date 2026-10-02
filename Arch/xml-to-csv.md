@@ -6,4 +6,8 @@ ssconvert "CLIENTI-CON-INDIRIZZO.xlsx" "clienti.csv"
 column -s, -t < clienti.csv > clienti.txt
 ```
 
+<<<<<<< Updated upstream
 # test
+=======
+# new changes
+>>>>>>> Stashed changes
