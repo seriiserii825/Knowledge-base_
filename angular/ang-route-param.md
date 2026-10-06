@@ -41,3 +41,18 @@ export class ProductPage {
 ```
 
 Use Observable when the param can change while the same component stays mounted.
+
+## get product by id
+
+```ts
+export class SingleProductPage {
+  productService = inject(ProductService);
+  route = inject(ActivatedRoute);
+
+  product$ = this.route.paramMap.pipe(
+    map((params) => params.get("id")!),
+    switchMap((id) => this.productService.getOne(id)),
+    map((response) => response),
+  );
+}
+```
