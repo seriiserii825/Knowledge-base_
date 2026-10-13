@@ -60,20 +60,20 @@ sudo systemctl enable --now earlyoom
 
 По умолчанию срабатывает, только когда **и** RAM, **и** swap < 10%. Со zram это поздно: пока zram заполнится, система уже тормозит. Поэтому настроить порог только по RAM.
 
-В `/etc/default/earlyoom` добавить `-m 15,8 -s 100` в начало `EARLYOOM_ARGS`:
+В `/etc/default/earlyoom` добавить `-m 15,8 -s 100,100` в начало `EARLYOOM_ARGS`:
 
 ```bash
-EARLYOOM_ARGS="-m 15,8 -s 100 -r 3600 -n --avoid '(^|/)(init|systemd|Xorg|sshd)$'"
+EARLYOOM_ARGS="-m 15,8 -s 100,100 -r 3600 -n --avoid '(^|/)(init|systemd|Xorg|sshd)$'"
 ```
 
 - `-m 15,8` — `SIGTERM` при available RAM < 15% (~2.4 GiB из 16), `SIGKILL` при < 8%.
-- `-s 100` — не ждать заполнения swap/zram.
+- `-s 100,100` — не ждать заполнения swap/zram (для SIGTERM и SIGKILL; просто `-s 100` оставит SIGKILL на 50% swap).
 
 Перезапустить и проверить:
 
 ```bash
 sudo systemctl restart earlyoom
-journalctl -u earlyoom -n 5   # "mem avail <= 15.00% and swap free <= 100.00%"
+journalctl -u earlyoom -n 5   # SIGTERM 15% / SIGKILL 8%, swap free <= 100% в обеих строках
 ```
 
 Если убивает слишком часто — снизить до `-m 10,5`.
