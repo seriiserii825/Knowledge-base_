@@ -1,48 +1,16 @@
-# Arch Linux: RAM, ZRAM и earlyoom
+# Arch Linux: защита от зависаний при нехватке RAM
 
-## Проверка памяти
+Схема: **ZRAM** сжимает редко используемую память, **earlyoom** закрывает процесс, когда RAM почти кончилась, — до того, как система зависнет.
 
-```bash
-free -h
-swapon --show
-zramctl
-```
+## Шаг 1. ZRAM — сжатый swap в RAM
 
-В `free -h` ориентируйся прежде всего на `available`: это приблизительный объём памяти, доступный новым приложениям. `buff/cache` — кэш, который Linux может освобождать по мере необходимости. Если строка `Swap` показывает `0B`, активного Swap нет.
-
-Процессы по потреблению RAM:
-
-```bash
-ps aux --sort=-%mem | head -15
-htop
-```
-
-Мониторинг в реальном времени:
-
-```bash
-watch -n 1 free -h
-```
-
-## Если система уже зависла
-
-1. Попробуй `Ctrl + Alt + F3` для перехода в текстовую консоль (TTY).
-2. Войди и найди наиболее прожорливый процесс: `ps aux --sort=-%mem | head`.
-3. Заверши его командой `kill PID`; если не помогло — `kill -9 PID` (можно потерять несохранённые данные).
-4. Если клавиатура поддерживает Magic SysRq и эта функция включена: `Alt + SysRq (PrtSc) + F` запускает OOM killer. На ноутбуках иногда нужен `Fn`.
-5. Если ничего не реагирует, остаётся принудительное выключение удержанием кнопки питания. Это крайняя мера.
-
-## ZRAM — сжатый Swap в RAM
-
-ZRAM позволяет хранить страницы Swap в сжатом виде в оперативной памяти. Он не резервирует весь указанный объём сразу и не использует диск; при сжатии расходует ресурсы процессора.
-
-Установка:
+Установить:
 
 ```bash
 sudo pacman -S zram-generator
-sudo nano /etc/systemd/zram-generator.conf
 ```
 
-Содержимое файла:
+Создать `/etc/systemd/zram-generator.conf`:
 
 ```ini
 [zram0]
@@ -50,81 +18,88 @@ zram-size = ram / 2
 compression-algorithm = zstd
 ```
 
-Применение:
+Запустить (после перезагрузки поднимается сам):
 
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl start systemd-zram-setup@zram0.service
 ```
 
-Проверка:
+Проверить:
 
 ```bash
-free -h
-swapon --show
-zramctl
+zramctl         # /dev/zram0 zstd 7.8G ... [SWAP]
+swapon --show   # zram0 с PRIO 100
 ```
 
-Для системы с примерно 15–16 GiB RAM получаем около 7.8 GiB логического Swap. `USED: 0B` означает, что сейчас он не используется — это нормально. После перезагрузки конфигурация будет применяться автоматически.
+Диск не используется; память под zram занимается по мере заполнения.
 
-## earlyoom — защита от зависаний
+## Шаг 2. swappiness — чтобы ZRAM реально использовался
 
-`earlyoom` контролирует нехватку RAM и Swap, чтобы раньше ядра завершить один из процессов. Он работает и без Swap.
+По умолчанию `vm.swappiness = 60`, и ядро неохотно сжимает память в zram. Для zram ArchWiki советует 180:
+
+```bash
+echo 'vm.swappiness = 180' | sudo tee /etc/sysctl.d/99-zram.conf
+sudo sysctl --system
+```
+
+Проверить:
+
+```bash
+cat /proc/sys/vm/swappiness   # 180
+```
+
+## Шаг 3. earlyoom — закрывать процесс до зависания
+
+Установить и включить:
 
 ```bash
 sudo pacman -S earlyoom
 sudo systemctl enable --now earlyoom
 ```
 
-Проверка и журнал:
+По умолчанию срабатывает, только когда **и** RAM, **и** swap < 10%. Со zram это поздно: пока zram заполнится, система уже тормозит. Поэтому настроить порог только по RAM.
+
+В `/etc/default/earlyoom` добавить `-m 15,8 -s 100` в начало `EARLYOOM_ARGS`:
 
 ```bash
-systemctl is-active earlyoom
-systemctl status earlyoom
-journalctl -u earlyoom -b
+EARLYOOM_ARGS="-m 15,8 -s 100 -r 3600 -n --avoid '(^|/)(init|systemd|Xorg|sshd)$'"
 ```
 
-По умолчанию при одновременном снижении **доступной RAM и свободного Swap** ниже ~10% он отправляет выбранному процессу `SIGTERM`, а ниже ~5% — `SIGKILL`. Выбирает процесс по оценке OOM, не обязательно самый большой. Несохранённые данные могут потеряться.
+- `-m 15,8` — `SIGTERM` при available RAM < 15% (~2.4 GiB из 16), `SIGKILL` при < 8%.
+- `-s 100` — не ждать заполнения swap/zram.
 
-При желании можно увеличить пороги. Сначала проверь настройки установленной службы:
-
-```bash
-systemctl cat earlyoom
-```
-
-Если служба читает `/etc/default/earlyoom`, там можно задать:
-
-```bash
-EARLYOOM_ARGS="-m 15,8 -s 15,8"
-```
-
-Здесь 15% — порог `SIGTERM`, 8% — `SIGKILL`, отдельно для памяти и Swap. После изменения:
+Перезапустить и проверить:
 
 ```bash
 sudo systemctl restart earlyoom
+journalctl -u earlyoom -n 5   # "mem avail <= 15.00% and swap free <= 100.00%"
 ```
 
-Обычно разумно сначала оставить стандартные пороги.
+Если убивает слишком часто — снизить до `-m 10,5`.
 
 ## Итоговая проверка
 
 ```bash
-free -h
-swapon --show
+free -h                         # Swap: 7.8Gi
 zramctl
-systemctl is-active earlyoom
+cat /proc/sys/vm/swappiness     # 180
+systemctl is-active earlyoom    # active
 ```
 
-Пример успешной настройки:
+## Диагностика
 
-```text
-Mem:     15Gi total, 4.6Gi used, 10Gi available
-Swap:   7.8Gi total, 0B used
-/dev/zram0: zstd, 7.8G, PRIO 100
-earlyoom: active
+```bash
+free -h                          # смотреть на available, не на free
+ps aux --sort=-%mem | head -15   # самые прожорливые процессы
+journalctl -u earlyoom -b        # кого и когда убил earlyoom
 ```
 
-**Итог:** ZRAM помогает эффективнее использовать память благодаря сжатию; earlyoom снижает риск зависания при её нехватке. Полной гарантии от зависаний нет.
+Если система всё же зависла:
+
+1. `Ctrl + Alt + F3` → TTY, `ps aux --sort=-%mem | head`, `kill PID` (или `kill -9 PID`).
+2. `Alt + SysRq + F` — ручной вызов OOM killer (если SysRq включён).
+3. Крайняя мера — кнопка питания.
 
 ## Ссылки
 
