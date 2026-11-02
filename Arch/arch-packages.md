@@ -1,6 +1,27 @@
-git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-sudo pacman -S exa ripgrep universal-ctags fd the_silver_searcher
-sudo pacman -S python-pynvim
+# Обновление пакетов: -Syu vs -Syyu
+
+## `pacman -Syu` / `yay -Syu`
+
+Обычное обновление: синхронизирует базы пакетов (если они изменились) и
+накатывает обновления. Этого достаточно для повседневного использования.
+
+## `pacman -Syyu` / `yay -Syyu`
+
+Двойное `y` форсирует **полную** перезагрузку баз пакетов, даже если pacman
+считает их уже актуальными. `yay -Syyu` передаёт `-Syy` дальше в pacman для
+официальных репозиториев; на AUR-часть это не влияет — там нет понятия
+"база", yay сверяет версии напрямую через AUR RPC.
+
+Использовать `-Syyu` стоит не всегда, а точечно, когда:
+- после `-Syu` всё равно вылезают ошибки вида `404` / `failed retrieving
+  file` / `target not found` — классика рассинхрона зеркал (локальная база
+  уже знает о новой версии пакета, а конкретное зеркало ещё не успело её
+  раздать);
+- только что поменял/обновил `/etc/pacman.d/mirrorlist`.
+
+Делать `-Syyu` всегда вместо `-Syu` не нужно — это лишний трафик и время на
+полную перезагрузку баз при каждом обновлении, когда обычно ничего не
+изменилось.
+
+**Практика:** по умолчанию `-Syu`, и только при ошибках зеркал — разово
+`-Syyu`.
