@@ -2,12 +2,11 @@
 
 ```bash
 # Step 1: change the message (opens editor)
-git commit --amend
-
-#               or directly (no editor):
 git commit --amend -m "fix: staff SEO title & description check + h1"
 
 # Step 2: force-push  (most important part!)
+git push --force-with-lease
+# if have multiple branches, specify the branch name:
 git push --force-with-lease origin <branch-name>
 
 # Example:
@@ -39,7 +38,4 @@ git push --force
 
 # Откатить изменения
 
-git reset .
-git reset --staged .
-git clean -nd show files
-git clean -fd remove fles
+git reset . git reset --staged . git clean -nd show files git clean -fd remove fles
