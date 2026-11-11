@@ -6,6 +6,21 @@
 
 ```bash
 docker volume ls - List all volumes
+docker system df -v
+```
+
+### Sort by size
+
+```bash
+docker system df -v |
+awk '/^Local Volumes space usage:/{inside=1; next}
+inside && /^Build cache usage:/{exit}
+inside && NF>=3 && $1!="VOLUME" && $1!="NAME" {
+    size=$NF
+        if (size ~ /^[[:alpha:]]+$/) size=$(NF-1) size
+            print size, $1
+}' |
+sort -hr
 ```
 
 ### Remove Volumes
