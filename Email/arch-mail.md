@@ -29,7 +29,7 @@
   sudo pacman -Syu
   go-arch mail
   ```
-- [ ] Проверить keyring (mailnag хранит там пароли): `pgrep -al gnome-keyring`.
+- [x] Проверить keyring (mailnag хранит там пароли): `pgrep -al gnome-keyring`.
 - [ ] mailnag: `mailnag-config` → те же три ящика (п. 3), **сразу включить Push-IMAP** у Яндекса и Hostinger.
 - [ ] Thunderbird: Gmail через вход в Google, Яндекс и Hostinger вручную (п. 4).
 - [ ] Пароли те же: пароль приложения Яндекса можно использовать на нескольких машинах, новый не нужен.
