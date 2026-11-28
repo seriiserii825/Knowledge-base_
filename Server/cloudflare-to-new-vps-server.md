@@ -28,6 +28,30 @@ curl -I http://<NEW_IP>
 curl -I --resolve seriiburduja.org:443:<NEW_IP> https://seriiburduja.org -k
 ```
 
+Если `curl` сразу падает с `Failed to connect ... Could not connect to server` (за десятки мс) — на порту никто не
+слушает (сервер пустой / веб-сервер не запущен). Таймаут вместо мгновенной ошибки — режет файрвол.
+
+### Тестовая страница на пустом сервере
+
+Если приложения ещё нет — поднимите заглушку, чтобы проверить сеть, файрвол и потом DNS:
+
+```bash
+mkdir -p ~/test-site
+echo '<h1>Hello from new VPS</h1>' > ~/test-site/index.html
+
+docker run -d --name test-site -p 80:80 \
+  -v ~/test-site:/usr/share/nginx/html:ro nginx:alpine
+
+curl -I http://localhost      # на сервере → 200 OK
+curl -I http://<NEW_IP>       # с локальной машины → 200 OK
+```
+
+Когда настоящее приложение готово — убрать заглушку (освободить порт 80):
+
+```bash
+docker rm -f test-site
+```
+
 ## 1. Узнайте IP нового сервера
 
 ```bash
